@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,9 @@ public class ScheduledFragment extends Fragment {
     private Button signInButton;
     private RequestQueue requestQueue;
     private TextView textViewServerResponse;
-    private String serverUrl = "http://10.0.2.2/task_manager/v1/register";
+    private Button logInButton;
+    private TextView textViewApiKey;
+    private String serverUrl = "http://10.0.2.2/task_manager/v1";
 
     public ScheduledFragment() {
     }
@@ -69,12 +72,14 @@ public class ScheduledFragment extends Fragment {
         editTextPassword = (EditText) getView().findViewById(R.id.editTextPassword);
         signInButton = (Button) getView().findViewById(R.id.signInButton);
         textViewServerResponse = (TextView) getView().findViewById(R.id.textViewServerResponse);
+        textViewApiKey = (TextView) getView().findViewById(R.id.textViewApiKey);
+        logInButton = (Button) getView().findViewById(R.id.logInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "sending request", Toast.LENGTH_LONG).show();
 
-                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, serverUrl,
+                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, serverUrl + "/register",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -126,6 +131,71 @@ public class ScheduledFragment extends Fragment {
                 requestQueue.add(jsonObjRequest);
 
             }
+        });
+
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "sending request", Toast.LENGTH_LONG).show();
+
+                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, serverUrl + "/login",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(getActivity(), "onResponse", Toast.LENGTH_LONG).show();
+                                textViewServerResponse.setText(response);
+                                char[] apikey = new char[32];
+                                response.getChars(response.indexOf("apiKey")+9,response.indexOf("apiKey")+32+9,apikey,0);
+                                textViewApiKey.setText("ApiKey:"+ String.copyValueOf(apikey));
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "onErrorResponse", Toast.LENGTH_LONG).show();
+                        VolleyLog.d("volley", "Error: " + error.getMessage());
+                        error.printStackTrace();
+
+                        NetworkResponse response = error.networkResponse;
+                        if (error instanceof ServerError && response != null) {
+                            try {
+                                String res = new String(response.data,
+                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                // Now you can use any deserializer to make sense of data
+                                JSONObject obj = new JSONObject(res);
+                                textViewServerResponse.setText(obj.toString());
+                            } catch (UnsupportedEncodingException e1) {
+                                // Couldn't properly decode data to string
+                                e1.printStackTrace();
+                            } catch (JSONException e2) {
+                                // returned data is not JSONObject?
+                                e2.printStackTrace();
+                            }
+                        }
+
+                    }
+                }) {
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=UTF-8";
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("email", editTextMail.getText().toString());
+                        params.put("password", editTextPassword.getText().toString());
+                        return params;
+                    }
+
+                };
+
+                requestQueue.add(jsonObjRequest);
+
+            }
+
+
         });
 
 
