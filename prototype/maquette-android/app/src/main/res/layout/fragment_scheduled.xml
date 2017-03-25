@@ -65,4 +65,28 @@
         android:layout_height="wrap_content"
         android:text="ApiKey:" />
 
+    <Button
+        android:id="@+id/buttonSendPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Position" />
+
+    <TextView
+        android:id="@+id/textViewPosition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Position: " />
+
+    <Button
+        android:id="@+id/buttonGetUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Close Users" />
+
+    <TextView
+        android:id="@+id/textViewListUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Users:" />
+
 </LinearLayout>
