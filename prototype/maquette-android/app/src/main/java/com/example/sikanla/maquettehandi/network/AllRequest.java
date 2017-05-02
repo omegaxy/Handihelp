@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -15,42 +14,45 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Sikanla on 02/05/2017.
  */
 
-public class Login extends Thread {
+public class AllRequest extends Thread {
 
     private RequestQueue requestQueue;
-    private String email;
-    private String password;
+    private String route;
+    private Map parameters;
 
-    public Login(Context context, String email, String password) {
+    public AllRequest(Context context, Map<String, String> parameters, String route) {
         requestQueue = Volley.newRequestQueue(context);
-        this.email = email;
-        this.password = password;
+        this.route = route;
+        this.parameters = parameters;
     }
 
     public void run() {
-        sendRequest(email, password);
+        sendRequest(parameters, route);
     }
 
-    public void sendRequest(final String email, final String password) {
-        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST, StaticInformations.SERVERURL + "/login",
+    public void sendRequest(final Map parameters, final String route) {
+
+        StringRequest jsonObjRequest = new StringRequest(com.android.volley.Request.Method.POST, StaticInformations.SERVERURL + route,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            StaticInformations.setApikey(jsonObject.getString("apiKey"));
-                            Log.e("Apikey", jsonObject.getString("apiKey"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        //depending on the route chose a different method to use the response with
+                        switch (route) {
+                            case "/login":
+                                try {
+                                    login(response);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            //case "/register": etc...
                         }
-                        //response.getChars(response.indexOf("apiKey") + 9, response.indexOf("apiKey") + 32 + 9, apikey, 0);
                     }
                 },
                 new Response.ErrorListener() {
@@ -68,16 +70,19 @@ public class Login extends Thread {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
+                return parameters;
             }
-
         };
-
         requestQueue.add(jsonObjRequest);
 
+    }
+
+    private void login(String response) throws JSONException {
+        //extract Apikey from server response
+        JSONObject jsonObject = new JSONObject(response);
+        StaticInformations.setApikey(jsonObject.getString("apiKey"));
+        //log in android monitor for better debugging
+        Log.e("Apikey", jsonObject.getString("apiKey"));
     }
 
 

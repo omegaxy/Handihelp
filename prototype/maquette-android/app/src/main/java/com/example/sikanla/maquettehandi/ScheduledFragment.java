@@ -1,36 +1,13 @@
 package com.example.sikanla.maquettehandi;
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.sikanla.maquettehandi.network.AllRequest;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +38,12 @@ public class ScheduledFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
+        //example of AllRequest use
+        Map<String,String> parameters = new HashMap<>();
+        parameters.put("email","bob@mail.com");
+        parameters.put("password","bob");
+        Thread thread = new AllRequest(getActivity(),parameters,"/login");
+        thread.start();
 
 /*
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
