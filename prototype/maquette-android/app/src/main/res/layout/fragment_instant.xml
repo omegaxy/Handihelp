@@ -41,11 +41,11 @@
         android:layout_above="@+id/floatingActionButton" />
 
     <Button
-        android:text="Find Help"
+        android:text="Test Profil Dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="162dp"
-        android:id="@+id/button"
+        android:id="@+id/button11"
         android:layout_below="@+id/textView_instant"
         android:layout_centerHorizontal="true" />
 
