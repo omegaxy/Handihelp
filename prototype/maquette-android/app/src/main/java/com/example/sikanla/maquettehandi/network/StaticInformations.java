@@ -1,7 +1,5 @@
 package com.example.sikanla.maquettehandi.network;
 
-import android.widget.Toast;
-
 /**
  * Created by Sikanla on 02/05/2017.
  */
