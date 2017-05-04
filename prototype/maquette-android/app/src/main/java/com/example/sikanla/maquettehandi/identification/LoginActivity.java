@@ -2,6 +2,8 @@ package com.example.sikanla.maquettehandi.identification;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,19 +39,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private String email, password;
 
-    private RequestQueue requestQueue;
-
-    private String serverUrl = "http://10.0.2.2/task_manager/v1";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestQueue = Volley.newRequestQueue(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
         emailEditText = (EditText) findViewById(R.id.aa);
         passwordEditText = (EditText) findViewById(R.id.pass);
         loginButton = (Button) findViewById(R.id.loginbutton);
+        loginButton.setEnabled(false);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +58,55 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        emailEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!isEmailValid(s) || passwordEditText.getText().toString().isEmpty()) {
+                    loginButton.setEnabled(false);
+                } else {
+                    loginButton.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        passwordEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //On user changes the text
+                if(!isEmailValid(emailEditText.getText()) || s=="" ) {
+                    loginButton.setEnabled(false);
+                } else {
+                    loginButton.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+
+        });
+
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void loginToServer(final String email, final String password) {
