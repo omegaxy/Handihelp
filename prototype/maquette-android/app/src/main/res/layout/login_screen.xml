@@ -13,7 +13,7 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/aa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,4 +36,15 @@
         android:text="Se connecter"
         android:textAlignment="center"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/errortv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Erreur, vérifier vos identifiants"
+        android:textAlignment="center"
+        android:textColor="@color/color1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
 </LinearLayout>

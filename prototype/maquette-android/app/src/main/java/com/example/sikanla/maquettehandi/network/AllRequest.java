@@ -25,11 +25,19 @@ public class AllRequest extends Thread {
     private RequestQueue requestQueue;
     private String route;
     private Map parameters;
+    private CallBackConnector callBackConnector;
 
-    public AllRequest(Context context, Map<String, String> parameters, String route) {
+    public interface CallBackConnector {
+
+        void CallBackOnConnect(String response);
+    }
+
+
+    public AllRequest(Context context, Map<String, String> parameters, String route, CallBackConnector callBackConnector) {
         requestQueue = Volley.newRequestQueue(context);
         this.route = route;
         this.parameters = parameters;
+        this.callBackConnector = callBackConnector;
     }
 
     public void run() {
@@ -45,11 +53,7 @@ public class AllRequest extends Thread {
                         //depending on the route chose a different method to use the response with
                         switch (route) {
                             case "/login":
-                                try {
-                                    login(response);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                callBackConnector.CallBackOnConnect(response);
                                 break;
                             //case "/register": etc...
                         }
@@ -75,14 +79,6 @@ public class AllRequest extends Thread {
         };
         requestQueue.add(jsonObjRequest);
 
-    }
-
-    private void login(String response) throws JSONException {
-        //extract Apikey from server response
-        JSONObject jsonObject = new JSONObject(response);
-        StaticInformations.setApikey(jsonObject.getString("apiKey"));
-        //log in android monitor for better debugging
-        Log.e("Apikey", jsonObject.getString("apiKey"));
     }
 
 
