@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.AllRequest;
-import com.example.sikanla.maquettehandi.network.StaticInformations;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private String email, password;
     private  TextView warnTv;
-
-    private AllRequest.CallBackConnector callBackConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +51,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!isEmailValid(s) || passwordEditText.getText().toString().isEmpty()) {
@@ -68,32 +63,24 @@ public class LoginActivity extends AppCompatActivity {
                     loginButton.setEnabled(true);
                 }
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //On user changes the text
-                if (!isEmailValid(emailEditText.getText()) || s == "") {
+                if (!isEmailValid(emailEditText.getText()) || s.toString().isEmpty()) {
                     loginButton.setEnabled(false);
                 } else {
                     loginButton.setEnabled(true);
                 }
             }
-
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
 
         });
 
@@ -111,13 +98,20 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new AllRequest(this, parameters, "/login", new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
+                User user=new User();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get("error").toString() == "false") {
+                       // todo  user.saveUserOnPhone(jsonObject.getString("apiKey"),);...
                         warnTv.setVisibility(View.INVISIBLE);
-                        StaticInformations.setApikey(jsonObject.getString("apiKey"));
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
+                        user.setApikey(jsonObject.getString("apiKey"));
+                        //not yet available, must update server
+                        //sInf.setFirstName(jsonObject.getString("firstname"));
+                        //sInf.setSurName(jsonObject.getString("surname"));
+                        //sInf.setBirthYear(jsonObject.getInt("age"));
+                        user.setEmail(jsonObject.getString("email"));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
                     else {
                         warnTv.setVisibility(View.VISIBLE);
@@ -125,13 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
         thread.start();
-
-
     }
 }
 

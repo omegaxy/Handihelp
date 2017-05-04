@@ -1,7 +1,6 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -11,8 +10,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -21,6 +18,8 @@ import java.util.Map;
  */
 
 public class AllRequest extends Thread {
+    public static String SERVERURL = "http://178.62.33.9/task_manager/v1";
+
 
     private RequestQueue requestQueue;
     private String route;
@@ -46,7 +45,7 @@ public class AllRequest extends Thread {
 
     public void sendRequest(final Map parameters, final String route) {
 
-        StringRequest jsonObjRequest = new StringRequest(com.android.volley.Request.Method.POST, StaticInformations.SERVERURL + route,
+        StringRequest jsonObjRequest = new StringRequest(com.android.volley.Request.Method.POST, SERVERURL + route,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
