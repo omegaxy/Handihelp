@@ -33,13 +33,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        final User user= new User();
         floatingActionButton = new FloatingActionButton(this);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"User: "+user.getFirstName()+" "+user.getAge()+" "+ user.getBirthYear() ,Toast.LENGTH_LONG).show();
+                Bundle args =new Bundle();
+                User user = new User();
+                args.putString("firstname", user.getFirstName());
+                args.putInt("birth_year", user.getAge());
+                PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
+                pickAideDialogFragment.setArguments(args);
+                pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
             }
         });
 
