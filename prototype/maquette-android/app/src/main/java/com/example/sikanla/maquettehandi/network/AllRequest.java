@@ -18,8 +18,7 @@ import java.util.Map;
  */
 
 public class AllRequest extends Thread {
-    public static String SERVERURL = "http://178.62.33.9/task_manager/v1";
-
+    public  String SERVERURL = "http://178.62.33.9/handi_help_server/v1";
 
     private RequestQueue requestQueue;
     private String route;
@@ -27,7 +26,6 @@ public class AllRequest extends Thread {
     private CallBackConnector callBackConnector;
 
     public interface CallBackConnector {
-
         void CallBackOnConnect(String response);
     }
 
@@ -43,7 +41,7 @@ public class AllRequest extends Thread {
         sendRequest(parameters, route);
     }
 
-    public void sendRequest(final Map parameters, final String route) {
+    private void sendRequest(final Map parameters, final String route) {
 
         StringRequest jsonObjRequest = new StringRequest(com.android.volley.Request.Method.POST, SERVERURL + route,
                 new Response.Listener<String>() {

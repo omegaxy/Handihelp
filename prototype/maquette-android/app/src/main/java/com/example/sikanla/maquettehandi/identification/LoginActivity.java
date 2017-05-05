@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.MainActivity;
@@ -28,13 +30,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
     private String email, password;
-    private  TextView warnTv;
+    private TextView warnTv;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emailEditText = (EditText) findViewById(R.id.aa);
         passwordEditText = (EditText) findViewById(R.id.pass);
         warnTv = (TextView) findViewById(R.id.errortv);
@@ -47,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = emailEditText.getText().toString();
                 password = passwordEditText.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
+
                 loginToServer(email, password);
 
             }
@@ -54,7 +60,9 @@ public class LoginActivity extends AppCompatActivity {
 
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!isEmailValid(s) || passwordEditText.getText().toString().isEmpty()) {
@@ -63,13 +71,17 @@ public class LoginActivity extends AppCompatActivity {
                     loginButton.setEnabled(true);
                 }
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //On user changes the text
@@ -79,8 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                     loginButton.setEnabled(true);
                 }
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
         });
 
@@ -90,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private void loginToServer(final String email, final String password) {
+    private void loginToServer(String email, String password) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("email", email);
         parameters.put("password", password);
@@ -98,23 +112,22 @@ public class LoginActivity extends AppCompatActivity {
         Thread thread = new AllRequest(this, parameters, "/login", new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
-                User user=new User();
+                Log.e("in callback: ", response);
+                User user = new User();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get("error").toString() == "false") {
-                       // todo  user.saveUserOnPhone(jsonObject.getString("apiKey"),);...
+                        user.saveUserOnPhone(jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                                jsonObject.getString("firstname"), jsonObject.getString("surname"),
+                                jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                         warnTv.setVisibility(View.INVISIBLE);
-
-                        user.setApikey(jsonObject.getString("apiKey"));
-                        //not yet available, must update server
-                        //sInf.setFirstName(jsonObject.getString("firstname"));
-                        //sInf.setSurName(jsonObject.getString("surname"));
-                        //sInf.setBirthYear(jsonObject.getInt("age"));
-                        user.setEmail(jsonObject.getString("email"));
+                        user.loadUser();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-                    else {
+                    } else {
+                        loginButton.setEnabled(true);
+                        progressBar.setVisibility(View.GONE);
                         warnTv.setVisibility(View.VISIBLE);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

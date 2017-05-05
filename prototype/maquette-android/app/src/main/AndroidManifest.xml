@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".identification.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -23,9 +23,9 @@
             </intent-filter>
         </activity>
 
-        <!--<activity-->
-            <!--android:name="com.example.sikanla.maquettehandi.MainActivity"-->
-            <!--android:label="@string/app_name" />-->
+        <activity
+            android:name="com.example.sikanla.maquettehandi.MainActivity"
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
