@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -19,6 +23,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -26,6 +31,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+        floatingActionButton = new FloatingActionButton(this);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"gnark",Toast.LENGTH_LONG).show();
+            }
+        });
+
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,6 +75,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            //todo manage onback pressed to prevent coming back to login screen
             super.onBackPressed();
         }
     }
