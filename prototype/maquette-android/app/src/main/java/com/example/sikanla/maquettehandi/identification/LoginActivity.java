@@ -36,6 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        User user = new User();
+        if (user.isUserLoggedIn(this)) {
+            user.loadUser(getApplicationContext());
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
         setContentView(R.layout.login_screen);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emailEditText = (EditText) findViewById(R.id.aa);
@@ -117,11 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get("error").toString() == "false") {
-                        user.saveUserOnPhone(jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                        user.saveUserOnPhone(getBaseContext(),jsonObject.getString("apiKey"), jsonObject.getString("id"),
                                 jsonObject.getString("firstname"), jsonObject.getString("surname"),
                                 jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                         warnTv.setVisibility(View.INVISIBLE);
-                        user.loadUser();
+                        user.loadUser(getBaseContext());
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
                         loginButton.setEnabled(true);

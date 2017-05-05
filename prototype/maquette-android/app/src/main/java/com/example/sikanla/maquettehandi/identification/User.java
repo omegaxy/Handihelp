@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.identification;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
@@ -22,9 +23,9 @@ public class User extends Application {
     public User() {
     }
 
-    public void saveUserOnPhone(String APIKEY, String userId, String firstName,
+    public void saveUserOnPhone(Context context,String APIKEY, String userId, String firstName,
                                 String surName, int birthYear, String email) {
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("APIKEY", APIKEY);
         editor.putString("userid", userId);
@@ -36,14 +37,14 @@ public class User extends Application {
         editor.commit();
     }
 
-    public boolean isUserLogedIn() {
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+    public boolean isUserLoggedIn(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String str = prefs.getString("APIKEY", "");
         return !str.isEmpty();
     }
 
-    public void loadUser() {
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+    public void loadUser(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
         APIKEY = prefs.getString("APIKEY", APIKEY);
         userId = prefs.getString("userid", userId);
