@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.sikanla.maquettehandi.identification.User;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,12 +33,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+        final User user= new User();
         floatingActionButton = new FloatingActionButton(this);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"gnark",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"User: "+user.getFirstName()+user.getUserId() ,Toast.LENGTH_LONG).show();
             }
         });
 

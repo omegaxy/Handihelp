@@ -10,12 +10,12 @@ import android.content.SharedPreferences;
 
 public class User extends Application {
 
-    private String APIKEY = "";
-    private String userId;
-    private String firstName;
-    private String surName;
-    private int birthYear;
-    private String email;
+    private static String APIKEY = "";
+    private static String userId;
+    private static String firstName;
+    private static String surName;
+    private static int birthYear;
+    private static String email;
     private SharedPreferences sharedPreferences;
     public static final String MY_PREFS_NAME = "handiPref";
 
