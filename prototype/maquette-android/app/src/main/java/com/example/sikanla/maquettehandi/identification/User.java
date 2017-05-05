@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Calendar;
+
 /**
  * Created by Sikanla on 02/05/2017.
  */
@@ -89,6 +91,9 @@ public class User extends Application {
 
     public int getBirthYear() {
         return birthYear;
+    }
+    public int getAge(){
+        return 2017-birthYear;
     }
 
     public void setBirthYear(int birthYear) {

@@ -10,10 +10,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 public class ProfileDialogFragment extends DialogFragment {
 
     private View rootView;
+    private TextView fistNameTv;
+    private TextView ageTv;
 
 
     public interface DialogListener {
@@ -42,7 +45,11 @@ public class ProfileDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         rootView = inflater.inflate(R.layout.fragment_profile, null);
+        fistNameTv = (TextView) rootView.findViewById(R.id.firstnamedialog);
+        ageTv = (TextView) rootView.findViewById(R.id.agedialog);
 
+        fistNameTv.setText(getArguments().getString("firstname"));
+        ageTv.setText((String.valueOf(getArguments().getInt("birth_year"))));
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
                 .setPositiveButton("Do something", new DialogInterface.OnClickListener() {

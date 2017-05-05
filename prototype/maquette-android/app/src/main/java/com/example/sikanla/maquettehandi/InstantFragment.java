@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.sikanla.maquettehandi.identification.User;
+
 
 /**
  * Created by Sikanla on 13/02/2017.
@@ -30,12 +32,17 @@ public class InstantFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-       testButton = (Button) getActivity().findViewById(R.id.button11);
+        testButton = (Button) getActivity().findViewById(R.id.button11);
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-       ProfileDialogFragment profileDialogFragment =new ProfileDialogFragment();
-               profileDialogFragment.show(getFragmentManager(),"ProfileDialogFragment");
+                Bundle args =new Bundle();
+                User user = new User();
+                args.putString("firstname", user.getFirstName());
+                args.putInt("birth_year", user.getAge());
+                ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+                profileDialogFragment.setArguments(args);
+                profileDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
 
             }
         });

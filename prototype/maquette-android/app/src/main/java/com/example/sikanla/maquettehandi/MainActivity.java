@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"User: "+user.getFirstName()+user.getUserId() ,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"User: "+user.getFirstName()+" "+user.getAge()+" "+ user.getBirthYear() ,Toast.LENGTH_LONG).show();
             }
         });
 
