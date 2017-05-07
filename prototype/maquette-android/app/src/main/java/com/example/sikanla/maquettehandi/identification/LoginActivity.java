@@ -110,11 +110,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToServer(String email, String password) {
+        Map<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("email", email);
         parameters.put("password", password);
 
-        new AllRequest(this, parameters, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
+        new AllRequest(this, parameters,headers, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
                 User user = new User();

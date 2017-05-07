@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import com.example.sikanla.maquettehandi.identification.User;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +21,11 @@ public class ImageRequester {
     }
 
     public void getImage(String userId, Context context, final BitmapInterface bitmapInterface) {
+        User user = new User();
         Map<String, String> parameters = new HashMap<>();
-        new AllRequest(context, parameters, "/user/picture/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        new AllRequest(context, parameters,headers, "/user/picture/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
                 final String pureBase64Encoded = response.substring(response.indexOf(",") + 1);
