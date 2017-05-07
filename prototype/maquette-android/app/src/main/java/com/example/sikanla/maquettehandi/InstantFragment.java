@@ -47,33 +47,33 @@ public class InstantFragment extends Fragment {
         testButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageRequester imageRequest= new ImageRequester();
+                ImageRequester imageRequest = new ImageRequester();
                 imageRequest.getImage("2", getActivity(), new ImageRequester.BitmapInterface() {
                     @Override
                     public void getBitmap(Bitmap bitmap) {
-                        bitmap1=bitmap;
+                        bitmap1 = bitmap;
                         imageView.setImageBitmap(bitmap1);
                     }
                 });
             }
-            });
-
+        });
 
 
         testButton.setOnClickListener(new View.OnClickListener()
 
-            {
-                @Override
-                public void onClick (View v){
+        {
+            @Override
+            public void onClick(View v) {
                 Bundle args = new Bundle();
                 User user = new User();
                 args.putString("firstname", user.getFirstName());
                 args.putInt("birth_year", user.getAge());
+                args.putString("userid", user.getUserId());
                 ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
                 profileDialogFragment.setArguments(args);
                 profileDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
 
             }
-            });
-        }
+        });
     }
+}
