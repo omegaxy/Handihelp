@@ -1,12 +1,10 @@
 package com.example.sikanla.maquettehandi.identification;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,10 +114,9 @@ public class LoginActivity extends AppCompatActivity {
         parameters.put("email", email);
         parameters.put("password", password);
 
-        new AllRequest(this, parameters, "/login", new AllRequest.CallBackConnector() {
+        new AllRequest(this, parameters, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
-                Log.e("in callback: ", response);
                 User user = new User();
                 try {
                     JSONObject jsonObject = new JSONObject(response);

@@ -1,7 +1,6 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -17,7 +16,7 @@ import java.util.Map;
  * Created by Sikanla on 02/05/2017.
  */
 
-public class AllRequest  {
+public class AllRequest {
     public static String SERVERURL = "http://178.62.33.9/handi_help_server/v1";
 
     private RequestQueue requestQueue;
@@ -29,29 +28,28 @@ public class AllRequest  {
         void CallBackOnConnect(String response);
     }
 
-
-    public AllRequest(Context context, Map<String, String> parameters, String route, CallBackConnector callBackConnector) {
+    public AllRequest(Context context, Map<String, String> parameters, String route, int method, CallBackConnector callBackConnector) {
         requestQueue = Volley.newRequestQueue(context);
         this.route = route;
         this.parameters = parameters;
         this.callBackConnector = callBackConnector;
-        sendRequest(parameters, route);
+        sendRequest(method, parameters, route);
     }
 
+    public static int GET = 0;
+    public static int POST = 1;
+    public static int PUT = 2;
+    public static int DELETE = 3;
 
-    private void sendRequest(final Map parameters, final String route) {
+    private void sendRequest(int method, final Map parameters, final String route) {
 
-        StringRequest jsonObjRequest = new StringRequest(com.android.volley.Request.Method.POST, SERVERURL + route,
+        StringRequest jsonObjRequest = new StringRequest(method, SERVERURL + route,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //depending on the route chose a different method to use the response with
-                        switch (route) {
-                            case "/login":
-                                callBackConnector.CallBackOnConnect(response);
-                                break;
-                            //case "/register": etc...
-                        }
+                        callBackConnector.CallBackOnConnect(response);
+
+
                     }
                 },
                 new Response.ErrorListener() {
