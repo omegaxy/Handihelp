@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "611016619094",
+    "firebase_url": "https://maquette-android.firebaseio.com",
+    "project_id": "maquette-android",
+    "storage_bucket": "maquette-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611016619094:android:8dc25f0bf5b4bfbf",
+        "android_client_info": {
+          "package_name": "com.example.sikanla.maquettehandi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611016619094-mvv2ld1pnsvds2m54q5lriik0k1b5ugj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sikanla.maquettehandi",
+            "certificate_hash": "13dcf7850ba3d8ad077025f10209a3bc4300927a"
+          }
+        },
+        {
+          "client_id": "611016619094-85ginp2tv69hipiqm49l1g88ubkkld8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZGH_UnaQ6hMMahrdH4dvvzc9gJSD0sDY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611016619094-85ginp2tv69hipiqm49l1g88ubkkld8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
