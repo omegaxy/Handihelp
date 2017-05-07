@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -10,15 +11,14 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
 import java.util.Map;
 
 /**
  * Created by Sikanla on 02/05/2017.
  */
 
-public class AllRequest extends Thread {
-    public  String SERVERURL = "http://178.62.33.9/handi_help_server/v1";
+public class AllRequest  {
+    public static String SERVERURL = "http://178.62.33.9/handi_help_server/v1";
 
     private RequestQueue requestQueue;
     private String route;
@@ -35,11 +35,9 @@ public class AllRequest extends Thread {
         this.route = route;
         this.parameters = parameters;
         this.callBackConnector = callBackConnector;
-    }
-
-    public void run() {
         sendRequest(parameters, route);
     }
+
 
     private void sendRequest(final Map parameters, final String route) {
 

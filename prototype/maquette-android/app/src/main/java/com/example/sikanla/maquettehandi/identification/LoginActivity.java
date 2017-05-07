@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.identification;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -115,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         parameters.put("email", email);
         parameters.put("password", password);
 
-        Thread thread = new AllRequest(this, parameters, "/login", new AllRequest.CallBackConnector() {
+        new AllRequest(this, parameters, "/login", new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
                 Log.e("in callback: ", response);
@@ -140,7 +141,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        thread.start();
     }
 }
 
