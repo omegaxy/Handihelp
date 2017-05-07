@@ -22,6 +22,8 @@ import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 
+import java.io.IOException;
+
 
 /**
  * Created by Sikanla on 13/02/2017.
@@ -48,6 +50,7 @@ public class InstantFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        final User user = new User();
         uploaB = (Button) getActivity().findViewById(R.id.uploadB);
         requestQueue = Volley.newRequestQueue(getActivity());
         imageView = (ImageView) getActivity().findViewById(R.id.testimageIV);
@@ -57,11 +60,10 @@ public class InstantFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ImageRequester imageRequest = new ImageRequester();
-                imageRequest.getImage("2", getActivity(), new ImageRequester.BitmapInterface() {
+                imageRequest.getImage(user.getUserId(), getActivity(), new ImageRequester.BitmapInterface() {
                     @Override
                     public void getBitmap(Bitmap bitmap) {
-                        bitmap1 = bitmap;
-                        imageView.setImageBitmap(bitmap1);
+                        imageView.setImageBitmap(bitmap);
                     }
                 });
             }
@@ -72,7 +74,7 @@ public class InstantFragment extends Fragment {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT <= 19) {
                     Intent i = new Intent();
-                    i.setType("image/*");
+                    i.setType("image/jpg");
                     i.setAction(Intent.ACTION_GET_CONTENT);
                     i.addCategory(Intent.CATEGORY_OPENABLE);
                     startActivityForResult(i, 10);
@@ -107,30 +109,20 @@ public class InstantFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             ImageRequester imageRequester = new ImageRequester();
-
             if (requestCode == 10) {
-                Uri selectedImageUri = data.getData();
-                String selectedImagePath = getRealPathFromURI(selectedImageUri);
-                imageRequester.sendImage(selectedImagePath, getActivity());
 
-            } else if (requestCode == 20) {
-                Uri selectedVideoUri = data.getData();
-                String selectedVideoPath = getRealPathFromURI(selectedVideoUri);
+                Uri imageUri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                    imageRequester.sendImage(bitmap, getActivity());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         }
     }
-    public String getRealPathFromURI(Uri uri) {
-        if (uri == null) {
-            return null;
-        }
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        return uri.getPath();
-    }
+
+
 }
