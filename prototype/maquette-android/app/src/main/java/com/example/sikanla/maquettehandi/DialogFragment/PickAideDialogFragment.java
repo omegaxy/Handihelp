@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.DialogFragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.sikanla.maquettehandi.R;
 
 /**
  * Created by Sikanla on 06/05/2017.

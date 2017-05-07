@@ -1,7 +1,13 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.UI;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +17,8 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
+import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 
@@ -21,7 +29,7 @@ import com.example.sikanla.maquettehandi.network.ImageRequester;
 
 public class InstantFragment extends Fragment {
     private Button testButton;
-    private Button testButtonImage;
+    private Button testButtonImage, uploaB;
     private ImageView imageView;
     RequestQueue requestQueue;
     private Bitmap bitmap1;
@@ -40,6 +48,7 @@ public class InstantFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        uploaB = (Button) getActivity().findViewById(R.id.uploadB);
         requestQueue = Volley.newRequestQueue(getActivity());
         imageView = (ImageView) getActivity().findViewById(R.id.testimageIV);
         testButton = (Button) getActivity().findViewById(R.id.button11);
@@ -55,6 +64,22 @@ public class InstantFragment extends Fragment {
                         imageView.setImageBitmap(bitmap1);
                     }
                 });
+            }
+        });
+
+        uploaB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT <= 19) {
+                    Intent i = new Intent();
+                    i.setType("image/*");
+                    i.setAction(Intent.ACTION_GET_CONTENT);
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(i, 10);
+                } else if (Build.VERSION.SDK_INT > 19) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 10);
+                }
             }
         });
 
@@ -75,5 +100,37 @@ public class InstantFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            ImageRequester imageRequester = new ImageRequester();
+
+            if (requestCode == 10) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getRealPathFromURI(selectedImageUri);
+                imageRequester.sendImage(selectedImagePath, getActivity());
+
+            } else if (requestCode == 20) {
+                Uri selectedVideoUri = data.getData();
+                String selectedVideoPath = getRealPathFromURI(selectedVideoUri);
+            }
+        }
+    }
+    public String getRealPathFromURI(Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        return uri.getPath();
     }
 }

@@ -1,10 +1,12 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.sikanla.maquettehandi.R;
 
 /**
  * Created by Sikanla on 13/02/2017.

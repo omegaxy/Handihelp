@@ -1,12 +1,17 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.identification.User;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,5 +40,47 @@ public class ImageRequester {
             }
         });
 
+    }
+
+    public void sendImage(String pathToImage, final Context context){
+        Bitmap bm = BitmapFactory.decodeFile(pathToImage);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        User user = new User();
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("image",encodedImage);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        new AllRequest(context, parameters,headers, "/user/picture/", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response) {
+                Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+
+
+
+
+    public String getRealPathFromURI(Uri uri, Context context) {
+        if (uri == null) {
+            return null;
+        }
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        return uri.getPath();
     }
 }

@@ -13,9 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.sikanla.maquettehandi.DialogFragment.PickAideDialogFragment;
+import com.example.sikanla.maquettehandi.UI.HistoricFragment;
+import com.example.sikanla.maquettehandi.UI.InstantFragment;
+import com.example.sikanla.maquettehandi.UI.ScheduledFragment;
 import com.example.sikanla.maquettehandi.identification.User;
 
 import io.fabric.sdk.android.Fabric;
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new InstantFragment(), "Instantané");
-        adapter.addFragment(new ScheduledFragment (), "Scheduled");
+        adapter.addFragment(new ScheduledFragment(), "Scheduled");
         adapter.addFragment(new HistoricFragment(), "History");
         viewPager.setAdapter(adapter);
     }

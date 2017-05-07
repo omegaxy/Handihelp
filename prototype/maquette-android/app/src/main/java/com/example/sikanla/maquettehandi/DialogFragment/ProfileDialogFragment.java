@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.DialogFragment;
 
 
 import android.app.Dialog;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 
 public class ProfileDialogFragment extends DialogFragment {
