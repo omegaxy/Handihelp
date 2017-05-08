@@ -19,7 +19,7 @@
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="20.03"
             android:text="INSCRIPTION"
             android:fontFamily="casual"
             android:textAlignment="center"
@@ -125,34 +125,7 @@
                 android:text="Adresse Mail" />
 
             <EditText
-                android:id="@+id/mail1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:fontFamily="casual"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Adresse Mail"/>
-
-            <EditText
-                android:id="@+id/mail2"
+                android:id="@+id/mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -252,9 +225,9 @@
             android:visibility="visible" />
 
         <Button
-            android:id="@+id/inscriptionButton"
+            android:id="@+id/registrationButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="15dp"
             android:layout_marginBottom="30dp"
             android:layout_weight="1"
