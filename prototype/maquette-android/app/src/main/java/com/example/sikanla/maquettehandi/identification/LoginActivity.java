@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
-    private Button loginButton;
+    private Button loginButton, registerButton;
     private String email, password;
     private TextView warnTv;
     private ProgressBar progressBar;
@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         User user = new User();
+        //test if user is already logged in
         if (user.isUserLoggedIn(this)) {
             user.loadUser(getApplicationContext());
             user.saveAndroidIdtoServer(getApplicationContext());
@@ -43,12 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.login_screen);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emailEditText = (EditText) findViewById(R.id.aa);
         passwordEditText = (EditText) findViewById(R.id.pass);
         warnTv = (TextView) findViewById(R.id.errortv);
+        //warning is invisible at first
         warnTv.setVisibility(View.INVISIBLE);
         loginButton = (Button) findViewById(R.id.loginbutton);
+        registerButton =(Button) findViewById(R.id.goregister);
         loginButton.setEnabled(false);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +64,14 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setEnabled(false);
 
                 loginToServer(email, password);
+
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
 
             }
         });

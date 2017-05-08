@@ -9,12 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.network.AllRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +21,7 @@ import java.util.regex.Pattern;
  * Created by Nicolas on 06/05/2017.
  */
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     private EditText surnameEditText, firstnameEditText, ageEditText, mailEditText, passwordEditText1, passwordEditText2, phoneNumberEditText;
     private Button registrationButton;
     private String surname, firstname, age, mail, password1, password2, phoneNumber;
@@ -53,6 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
         passwordEditText2 = (EditText) findViewById(R.id.password2);
 
         phoneNumberEditText = (EditText) findViewById(R.id.phoneNumber);
+        registrationButton = (Button) findViewById(R.id.registrationButton);
 
 
         registrationButton.setOnClickListener(new View.OnClickListener() {
@@ -75,47 +71,47 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                 if (surname.equals("") || firstname.equals("") || age.equals("") || mail.equals("") || password1.equals("") || password2.equals("") || phoneNumber.equals("")) {
-                    Toast.makeText(RegistrationActivity.this, "Un des champs à saisir est vide, veuillez complétez les informations manquantes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Un des champs à saisir est vide, veuillez complétez les informations manquantes", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(isInteger(age))){
-                    Toast.makeText(RegistrationActivity.this, "Veuillez rentrer dans le champ âge un nombre entier", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Veuillez rentrer dans le champ âge un nombre entier", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(isAgeValid(Integer.parseInt(age)))){
-                    Toast.makeText(RegistrationActivity.this, "Votre âge doit être compris entre 0 et 150", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Votre âge doit être compris entre 0 et 150", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(isEmailFormatValid(mail))){
-                    Toast.makeText(RegistrationActivity.this, "Le champ email ne correspond pas à une adresse mail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Le champ email ne correspond pas à une adresse mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
                 if(!(isPasswordValid(password1))){
-                    Toast.makeText(RegistrationActivity.this, "Le 1er champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Le 1er champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(isPasswordValid(password2))){
-                    Toast.makeText(RegistrationActivity.this, "Le 2eme champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Le 2eme champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(password1.equals(password2))){
-                    Toast.makeText(RegistrationActivity.this, "Les deux mot de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Les deux mot de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(!(isPhoneNumberCorrect(phoneNumber))){
-                    Toast.makeText(RegistrationActivity.this, "Le numéro doit être rentrer sous la forme 0612345678", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Le numéro doit être rentrer sous la forme 0612345678", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
 
                 startActivity(intent);
             }

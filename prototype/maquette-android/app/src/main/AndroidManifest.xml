@@ -26,6 +26,9 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".identification.RegisterActivity"
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
