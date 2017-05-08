@@ -3,8 +3,12 @@ package com.example.sikanla.maquettehandi.identification;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
-import java.util.Calendar;
+import com.example.sikanla.maquettehandi.network.AllRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sikanla on 02/05/2017.
@@ -25,7 +29,7 @@ public class User extends Application {
     public User() {
     }
 
-    public void saveUserOnPhone(Context context,String APIKEY, String userId, String firstName,
+    public void saveUserOnPhone(Context context, String APIKEY, String userId, String firstName,
                                 String surName, int birthYear, String email) {
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -92,8 +96,9 @@ public class User extends Application {
     public int getBirthYear() {
         return birthYear;
     }
-    public int getAge(){
-        return 2017-birthYear;
+
+    public int getAge() {
+        return 2017 - birthYear;
     }
 
     public void setBirthYear(int birthYear) {
@@ -106,5 +111,23 @@ public class User extends Application {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void saveAndroidIdtoServer(final Context context) {
+
+        SharedPreferences prefs = context.getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
+        String str = prefs.getString("androidid", "");
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("androidid", str);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", getAPIKEY());
+        new AllRequest(context, parameters, headers, "/user/androidid", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response) {
+                Toast.makeText(context, "android id saved", Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }

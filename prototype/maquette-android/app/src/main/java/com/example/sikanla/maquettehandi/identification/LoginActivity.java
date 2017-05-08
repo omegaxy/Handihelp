@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User();
         if (user.isUserLoggedIn(this)) {
             user.loadUser(getApplicationContext());
+            user.saveAndroidIdtoServer(getApplicationContext());
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                 jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                         warnTv.setVisibility(View.INVISIBLE);
                         user.loadUser(getBaseContext());
+                        user.saveAndroidIdtoServer(getBaseContext());
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
                         loginButton.setEnabled(true);

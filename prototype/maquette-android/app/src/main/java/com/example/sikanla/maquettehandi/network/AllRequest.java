@@ -29,7 +29,8 @@ public class AllRequest {
         void CallBackOnConnect(String response);
     }
 
-    public AllRequest(Context context, Map<String, String> parameters, Map<String, String> headers, String route, int method, CallBackConnector callBackConnector) {
+    public AllRequest(Context context, Map<String, String> parameters, Map<String, String> headers,
+                      String route, int method, CallBackConnector callBackConnector) {
         requestQueue = Volley.newRequestQueue(context);
         this.headers = headers;
         this.route = route;
@@ -80,6 +81,8 @@ public class AllRequest {
         requestQueue.add(jsonObjRequest);
 
     }
+
+
 
 
 }
