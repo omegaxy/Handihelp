@@ -9,7 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.AllRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,38 +80,38 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(!(isInteger(age))){
+                if (!(isInteger(age))) {
                     Toast.makeText(RegisterActivity.this, "Veuillez rentrer dans le champ âge un nombre entier", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(!(isAgeValid(Integer.parseInt(age)))){
+                if (!(isAgeValid(Integer.parseInt(age)))) {
                     Toast.makeText(RegisterActivity.this, "Votre âge doit être compris entre 0 et 150", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(!(isEmailFormatValid(mail))){
+                if (!(isEmailFormatValid(mail))) {
                     Toast.makeText(RegisterActivity.this, "Le champ email ne correspond pas à une adresse mail", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
-                if(!(isPasswordValid(password1))){
+                if (!(isPasswordValid(password1))) {
                     Toast.makeText(RegisterActivity.this, "Le 1er champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(!(isPasswordValid(password2))){
+                if (!(isPasswordValid(password2))) {
                     Toast.makeText(RegisterActivity.this, "Le 2eme champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(!(password1.equals(password2))){
+                if (!(password1.equals(password2))) {
                     Toast.makeText(RegisterActivity.this, "Les deux mot de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(!(isPhoneNumberCorrect(phoneNumber))){
+                if (!(isPhoneNumberCorrect(phoneNumber))) {
                     Toast.makeText(RegisterActivity.this, "Le numéro doit être rentrer sous la forme 0612345678", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -121,17 +126,18 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     //age filter
-    public boolean isAgeValid(int age){
-        if(age<0 || age > 150){
-            return false;
-        }
-        return true;
+    public boolean isAgeValid(int age) {
+        return age > 0 && age < 150;
     }
 
     //verif age type
+    //necessary?
     private static boolean isInteger(String s) {
-        try{ Integer.parseInt(s); }
-        catch(NumberFormatException nfe){ return false; }
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
         return true;
     }
 
@@ -140,12 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    boolean isPasswordValid(String password)
-    {
-        if(password1.length() < 6)
-            return false;
-
-        return true;
+    private boolean isPasswordValid(String password) {
+        return password.length() > 6;
     }
 
     //verify phonenumber type
@@ -167,14 +169,50 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     //verify mail not already taken
-    private void connectToServer(String email) {
+    private void connectToServer(String firstname, String surname, String email,
+                                 String password, String phoneNumber, String birth_year) {
 
         Map<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
+        parameters.put("firstname", firstname);
+        parameters.put("surname", surname);
         parameters.put("email", email);
+        parameters.put("password", password);
+        parameters.put("phone_number", phoneNumber);
+        parameters.put("birth_year", birth_year);
 
+        new AllRequest(this, parameters, headers, "/register", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response) {
+                User user = new User();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
 
+                    if (response.contains("Sorry, this email already exists")) {
+                        //todo manage error message because email already exists
+                    } else if (jsonObject.get("error").toString() == "false") {
+                        user.saveUserOnPhone(getBaseContext(),
+                                jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                                jsonObject.getString("firstname"), jsonObject.getString("surname"),
+                                jsonObject.getInt("birth_year"), jsonObject.getString("email"));
+                        user.loadUser(getBaseContext());
+                        user.saveAndroidIdtoServer(getBaseContext());
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        // todo display error because register failed
 
+                        // loginButton.setEnabled(true); //reactivate button
+                        // progressBar.setVisibility(View.GONE); //hide loading wheel
+                        // warnTv.setVisibility(View.VISIBLE); // show error message
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+
 }
+
