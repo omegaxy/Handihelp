@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.PlannedAdapter;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  */
 
 public class ScheduledFragment extends Fragment {
+    private ArrayList<PlannedRequest> plannedRequests;
 
 
     public ScheduledFragment() {
@@ -39,16 +41,25 @@ public class ScheduledFragment extends Fragment {
 // Construct the data source
         ArrayList<PlannedRequest> arrayOfUsers = new ArrayList<PlannedRequest>();
 // Create the adapter to convert the array to views
-        PlannedAdapter adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
+        final PlannedAdapter adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
 // Attach the adapter to a ListView
         ListView listView = (ListView) getActivity().findViewById(R.id.lvplanned);
         listView.setAdapter(adapter);
 
-        PlannedRequest plannedRequest = new PlannedRequest("blam", "boum", "pom", "splaf", "id");
-        for (int i = 0; i < 30; i++) {
-            adapter.add(plannedRequest);
-        }
+        final PlannedRequester plannedRequester = new PlannedRequester();
+        plannedRequester.getPlannedRequest(getActivity(), new PlannedRequester.PlannedRequestCB() {
+            @Override
+            public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
+                if(success) {
+                    plannedRequests = s;
+                    adapter.addAll(s);
+                }else {
+                    // todo display error message
+                }
+            }
+        });
 
     }
 
 }
+
