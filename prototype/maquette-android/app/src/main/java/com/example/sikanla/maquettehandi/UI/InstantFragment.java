@@ -2,7 +2,6 @@ package com.example.sikanla.maquettehandi.UI;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -34,7 +33,6 @@ public class InstantFragment extends Fragment {
     private Button testButtonImage, uploaB;
     private ImageView imageView;
     RequestQueue requestQueue;
-    private Bitmap bitmap1;
 
     public InstantFragment() {
     }

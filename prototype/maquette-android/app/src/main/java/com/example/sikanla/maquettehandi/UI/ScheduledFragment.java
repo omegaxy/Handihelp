@@ -19,8 +19,6 @@ import java.util.ArrayList;
  */
 
 public class ScheduledFragment extends Fragment {
-    private ArrayList<PlannedRequest> plannedRequests;
-
 
     public ScheduledFragment() {
     }
@@ -51,7 +49,6 @@ public class ScheduledFragment extends Fragment {
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
                 if(success) {
-                    plannedRequests = s;
                     adapter.addAll(s);
                 }else {
                     // todo display error message
