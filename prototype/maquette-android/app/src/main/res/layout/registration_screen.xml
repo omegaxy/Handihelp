@@ -82,7 +82,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -91,14 +91,14 @@
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
+                android:text="Année de naissance"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Age" />
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/age"
+                android:id="@+id/birthYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -145,11 +145,11 @@
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
+                android:text="Mot de passe"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Mot de passe" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/password1"
@@ -213,17 +213,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/errorMsg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:text="Vérifier vos erreurs"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
         <Button
             android:id="@+id/registrationButton"
             android:layout_width="match_parent"
@@ -237,5 +226,18 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/errorMsg"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/linL"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="casual"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="@color/color1"
+        android:textStyle="bold"
+        />
 
 </RelativeLayout>

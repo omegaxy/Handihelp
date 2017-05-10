@@ -3,11 +3,11 @@ package com.example.sikanla.maquettehandi.identification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
@@ -26,11 +26,13 @@ import java.util.regex.Pattern;
  * Created by Nicolas on 06/05/2017.
  */
 
+
 public class RegisterActivity extends AppCompatActivity {
-    private EditText surnameEditText, firstnameEditText, ageEditText, mailEditText, passwordEditText1, passwordEditText2, phoneNumberEditText;
+    private EditText surnameEditText, firstnameEditText, birthYearEditText, mailEditText, passwordEditText1, passwordEditText2, phoneNumberEditText;
     private Button registrationButton;
-    private String surname, firstname, age, mail, password1, password2, phoneNumber;
-    private TextView errorMsg;
+    private TextView text;
+    private String surname, firstname, birthYear, mail, password1, password2, phoneNumber;
+    private boolean registerOk = true;
 
 
     @Override
@@ -44,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firstnameEditText = (EditText) findViewById(R.id.firstname);
 
-        ageEditText = (EditText) findViewById(R.id.age);
+        birthYearEditText = (EditText) findViewById(R.id.birthYear);
 
         mailEditText = (EditText) findViewById(R.id.mail);
 
@@ -53,7 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
         passwordEditText2 = (EditText) findViewById(R.id.password2);
 
         phoneNumberEditText = (EditText) findViewById(R.id.phoneNumber);
+
         registrationButton = (Button) findViewById(R.id.registrationButton);
+
+        text = (TextView) findViewById(R.id.errorMsg);
 
 
         registrationButton.setOnClickListener(new View.OnClickListener() {
@@ -61,93 +66,88 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //registrationButton.setEnabled(false);
+
                 surname = surnameEditText.getText().toString();
                 firstname = firstnameEditText.getText().toString();
-                age = ageEditText.getText().toString();
+                birthYear = birthYearEditText.getText().toString();
                 mail = mailEditText.getText().toString();
                 password1 = passwordEditText1.getText().toString();
                 password2 = passwordEditText2.getText().toString();
                 phoneNumber = phoneNumberEditText.getText().toString();
-                errorMsg = (TextView) findViewById(R.id.errorMsg);
-
-                errorMsg.setVisibility(View.INVISIBLE);
-                registrationButton = (Button) findViewById(R.id.registrationButton);
-                registrationButton.setEnabled(false);
 
 
-                if (surname.equals("") || firstname.equals("") || age.equals("") || mail.equals("") || password1.equals("") || password2.equals("") || phoneNumber.equals("")) {
-                    Toast.makeText(RegisterActivity.this, "Un des champs à saisir est vide, veuillez complétez les informations manquantes", Toast.LENGTH_SHORT).show();
+                if (surname.equals("") || firstname.equals("") || birthYear.equals("") || mail.equals("") || password1.equals("") || password2.equals("") || phoneNumber.equals("")) {
+                    text.setText("Un des champs à saisir est vide");
                     return;
                 }
 
-                if (!(isInteger(age))) {
-                    Toast.makeText(RegisterActivity.this, "Veuillez rentrer dans le champ âge un nombre entier", Toast.LENGTH_SHORT).show();
+                if(!(isInteger(birthYear))){
+                    text.setText("Votre année de naissance doit être un nombre entier");
                     return;
                 }
 
-                if (!(isAgeValid(Integer.parseInt(age)))) {
-                    Toast.makeText(RegisterActivity.this, "Votre âge doit être compris entre 0 et 150", Toast.LENGTH_SHORT).show();
+                if(!(isbirthYearValid(Integer.parseInt(birthYear)))){
+                    text.setText("Votre année de naissance doit être compris entre 1850 et 2100");
                     return;
                 }
 
-                if (!(isEmailFormatValid(mail))) {
-                    Toast.makeText(RegisterActivity.this, "Le champ email ne correspond pas à une adresse mail", Toast.LENGTH_SHORT).show();
+                if(!(isEmailFormatValid(mail))){
+                    text.setText("Le champ email ne correspond pas à une adresse mail");
                     return;
                 }
 
-
-                if (!(isPasswordValid(password1))) {
-                    Toast.makeText(RegisterActivity.this, "Le 1er champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
+                if(!(isPasswordValid(password1))){
+                    text.setText("Le 1er champ mot de passe doit contenir au minimum 6 caractères");
                     return;
                 }
 
-                if (!(isPasswordValid(password2))) {
-                    Toast.makeText(RegisterActivity.this, "Le 2eme champ mot de passe doit contenir au minimum 6 caractères", Toast.LENGTH_SHORT).show();
+                if(!(password1.equals(password2))){
+                    text.setText("Les deux mot de passe ne sont pas identiques");
                     return;
                 }
 
-                if (!(password1.equals(password2))) {
-                    Toast.makeText(RegisterActivity.this, "Les deux mot de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
+                if(!(isPhoneNumberCorrect(phoneNumber))){
+                    text.setText("Le numéro doit être rentrer sous la forme 0612345678");
                     return;
                 }
 
-                if (!(isPhoneNumberCorrect(phoneNumber))) {
-                    Toast.makeText(RegisterActivity.this, "Le numéro doit être rentrer sous la forme 0612345678", Toast.LENGTH_SHORT).show();
-                    return;
+                connectToServer(firstname, surname, mail, password1, phoneNumber, birthYear);
+                if(registerOk){
+                    //text.setText("true");
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
 
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-
-                startActivity(intent);
             }
         });
 
     }
 
-
-    //age filter
-    public boolean isAgeValid(int age) {
-        return age > 0 && age < 150;
-    }
-
-    //verif age type
-    //necessary?
-    private static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch (NumberFormatException nfe) {
+    //year of birth filter
+    private boolean isbirthYearValid(int birthYear){
+        if(birthYear<1850 || birthYear > 2100){
             return false;
         }
         return true;
     }
+
+    //verify year of birth type
+    static boolean isInteger(String s) {
+        try{ Integer.parseInt(s); }
+        catch(NumberFormatException nfe){ return false; }
+        return true;
+    }
+
 
     //verify identic mails
     boolean isEmailFormatValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private boolean isPasswordValid(String password) {
-        return password.length() > 6;
+    private boolean isPasswordValid(String password)
+    {
+        return password.length() > 5;
     }
 
     //verify phonenumber type
@@ -184,13 +184,19 @@ public class RegisterActivity extends AppCompatActivity {
         new AllRequest(this, parameters, headers, "/register", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response) {
+                Log.e("serv", response);
                 User user = new User();
+                text = (TextView) findViewById(R.id.errorMsg);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
                     if (response.contains("Sorry, this email already exists")) {
                         //todo manage error message because email already exists
+                        text.setText("mail déjà enregistré");
+                        registerOk = false;
+
                     } else if (jsonObject.get("error").toString() == "false") {
+                        text.setText("Inscription acceptée");
                         user.saveUserOnPhone(getBaseContext(),
                                 jsonObject.getString("apiKey"), jsonObject.getString("id"),
                                 jsonObject.getString("firstname"), jsonObject.getString("surname"),
@@ -198,8 +204,11 @@ public class RegisterActivity extends AppCompatActivity {
                         user.loadUser(getBaseContext());
                         user.saveAndroidIdtoServer(getBaseContext());
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                     } else {
                         // todo display error because register failed
+                        registerOk = false;
+                        text.setText("Inscription refusée");
 
                         // loginButton.setEnabled(true); //reactivate button
                         // progressBar.setVisibility(View.GONE); //hide loading wheel
