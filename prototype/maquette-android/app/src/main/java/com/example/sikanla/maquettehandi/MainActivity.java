@@ -42,12 +42,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle args =new Bundle();
-                User user = new User();
-                args.putString("firstname", user.getFirstName());
-                args.putInt("birth_year", user.getAge());
                 PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
-                pickAideDialogFragment.setArguments(args);
                 pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
             }
         });
@@ -75,9 +70,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new InstantFragment(), "Instantané");
-        adapter.addFragment(new ScheduledFragment(), "Scheduled");
-        adapter.addFragment(new HistoricFragment(), "History");
+        adapter.addFragment(new ScheduledFragment(), "Demandes");
+        adapter.addFragment(new HistoricFragment(), "Messages");
         viewPager.setAdapter(adapter);
     }
 
@@ -122,20 +116,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         int id = item.getItemId();
 
         if (id == R.id.nav_friend) {
-
-        } else if (id == R.id.nav_historic) {
-
-        } else if (id == R.id.nav_myapplication) {
-
+//list of selected profile
+        } else if (id == R.id.nav_history) {
+//history of all previous assistance given and requested
         } else if (id == R.id.nav_notification) {
-
+//history of all previous notifications
+        } else if (id == R.id.nav_myapplication) {
+//history of all the assistance requested and without response
         } else if (id == R.id.nav_settings) {
-
+//where you can logout, change your data, etc.
         } else if (id == R.id.nav_help) {
-
+//explain how the application works
         }
         else if (id == R.id.nav_propos) {
-
+//Where we write the name of developpers
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
