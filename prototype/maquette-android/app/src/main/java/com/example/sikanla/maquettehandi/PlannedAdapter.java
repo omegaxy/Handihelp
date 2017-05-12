@@ -1,7 +1,6 @@
 package com.example.sikanla.maquettehandi;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
-import com.example.sikanla.maquettehandi.network.ImageRequester;
 
 import java.util.ArrayList;
 
@@ -21,8 +19,9 @@ import java.util.ArrayList;
 public class PlannedAdapter extends ArrayAdapter<PlannedRequest> {
     // View lookup cache
     private static class ViewHolder {
-        TextView description;
+        TextView localisation;
         TextView aideCategoryTv;
+        TextView date;
         ImageView imageView;
     }
 
@@ -41,9 +40,10 @@ public PlannedAdapter(Context context, ArrayList<PlannedRequest> plannedRequests
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_list_view_planned, parent, false);
-            viewHolder.description = (TextView) convertView.findViewById(R.id.name_item);
-            viewHolder.aideCategoryTv = (TextView) convertView.findViewById(R.id.aide_category_item);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view_item);
+            viewHolder.localisation = (TextView) convertView.findViewById(R.id.localisation_item);
+            viewHolder.aideCategoryTv = (TextView) convertView.findViewById(R.id.aide_type_item);
+            viewHolder.date = ( TextView) convertView.findViewById(R.id.date_item);
+           // viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view_item);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -52,7 +52,9 @@ public PlannedAdapter(Context context, ArrayList<PlannedRequest> plannedRequests
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.description.setText(plannedRequest.description);
+        viewHolder.localisation.setText(plannedRequest.localisation);
+        viewHolder.aideCategoryTv.setText(plannedRequest.helpCategory);
+        viewHolder.date.setText(plannedRequest.scheduledAt);
         //viewHolder.aideCategoryTv.setText(plannedRequest.helpCategory);
 
         // Return the completed view to render on screen
