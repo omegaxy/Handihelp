@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.R;
@@ -19,8 +20,6 @@ import com.example.sikanla.maquettehandi.R;
 
 public class PickAideDialogFragment extends DialogFragment {
     private View rootView;
-    private TextView fistNameTv;
-    private TextView ageTv;
 
     @Override
     public void onStart() {
@@ -28,30 +27,26 @@ public class PickAideDialogFragment extends DialogFragment {
         Dialog dialog = getDialog();
         if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
         }
+        Window window = getDialog().getWindow();
+        assert window != null;
+        window.setBackgroundDrawableResource(R.color.greyy);
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder( getActivity(), R.style.MyCustomThemeDialog );
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+       // AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         rootView = inflater.inflate(R.layout.pick_aide_dialog, null);
-       // fistNameTv = (TextView) rootView.findViewById(R.id.firstnamedialog);
-        //ageTv = (TextView) rootView.findViewById(R.id.agedialog);
-
-        //fistNameTv.setText(getArguments().getString("firstname"));
-        //ageTv.setText((String.valueOf(getArguments().getInt("birth_year"))));
 
         final AlertDialog.Builder builder1 = builder.setView(rootView);
-                //.setPositiveButton("Do something", new DialogInterface.OnClickListener() {
-                  //  public void onClick(DialogInterface dialog, int id) {
-                   // }
-                //});
 
         return builder1.create();
 
