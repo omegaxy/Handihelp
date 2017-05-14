@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="3dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/AppTheme">
+
 
     <LinearLayout
         android:id="@+id/item_color"
@@ -48,7 +50,8 @@
             android:layout_weight="0.15"
             android:text="Localisation: "
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/grey05"/>
 
         <TextView
             android:id="@+id/localisation_item"
@@ -57,7 +60,8 @@
             android:gravity="center"
             android:text="TextView"
             android:textSize="20sp"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:textColor="@color/grey05"/>
     </LinearLayout>
 
     <LinearLayout
@@ -74,7 +78,8 @@
             android:layout_weight="0.30"
             android:text="Date: "
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/grey05"/>
 
         <TextView
             android:id="@+id/date_item"
@@ -83,7 +88,8 @@
             android:gravity="center"
             android:text="TextView"
             android:textSize="20sp"
-            android:typeface="serif" />
+            android:typeface="serif"
+            android:textColor="@color/grey05"/>
     </LinearLayout>
 
 </LinearLayout>

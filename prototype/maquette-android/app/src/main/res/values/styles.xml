@@ -7,16 +7,18 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/backg</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/top</item>
+        <item name="colorPrimaryDark">#d04f4e56</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:colorBackground">@color/backg</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

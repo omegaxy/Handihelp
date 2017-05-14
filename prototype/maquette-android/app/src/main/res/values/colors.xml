@@ -10,4 +10,6 @@
     <color name="grey05">#efefef</color>
     <color name="dd">#FFB0E3C6</color>
     <color name="greyy">#d17a7b7a</color>
+    <color name="backg">#263246</color>
+    <color name="top">#61a0bd</color>
 </resources>

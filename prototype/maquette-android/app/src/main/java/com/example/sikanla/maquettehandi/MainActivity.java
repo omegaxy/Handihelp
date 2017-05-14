@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ScheduledFragment(), "Demandes");
-        adapter.addFragment(new HistoricFragment(), "Messages");
+        adapter.addFragment(new InstantFragment(), "Messages");
         viewPager.setAdapter(adapter);
     }
 
