@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeContainer"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeContainerPlanned"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/AppTheme">
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/lvplanned"
-        style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:dividerHeight="2px"
-        android:paddingBottom="50dp"
-        android:visibility="visible" />
-
-
-
+        android:paddingBottom="50dp" />
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -2,14 +2,11 @@ package com.example.sikanla.maquettehandi.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.PlannedAdapter;
@@ -23,10 +20,10 @@ import java.util.ArrayList;
  */
 
 public class ScheduledFragment extends Fragment {
-    private ProgressBar progressBar;
-    private SwipeRefreshLayout swipeContainer;
-    private ListView listView;
 
+    public SwipeRefreshLayout swipeContainer;
+    public ListView listView;
+    public PlannedAdapter adapter;
 
     public ScheduledFragment() {
     }
@@ -38,32 +35,40 @@ public class ScheduledFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_scheduled, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
 
-    private PlannedAdapter adapter;
-
-    @Override
-    public void onActivityCreated(Bundle savedInstance) {
-        super.onActivityCreated(savedInstance);
         ArrayList<PlannedRequest> arrayOfUsers = new ArrayList<PlannedRequest>();
+
         adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
-        // progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar_sch);
-        swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 fetchPlannedRequests();
             }
         });
-        fetchPlannedRequests();
+        listView = (ListView) view.findViewById(R.id.lvplanned);
 
+        return view;
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        fetchPlannedRequests();
+        swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_dark),
+                getResources().getColor(android.R.color.holo_red_dark),
+                getResources().getColor(android.R.color.holo_blue_dark),
+                getResources().getColor(android.R.color.holo_orange_dark));
+    }
+
+
     private void fetchPlannedRequests() {
-        listView = (ListView) getActivity().findViewById(R.id.lvplanned);
+
         final PlannedRequester plannedRequester = new PlannedRequester();
         plannedRequester.getPlannedRequest(getActivity(), new PlannedRequester.PlannedRequestCB() {
+
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
                 if (success) {
@@ -71,7 +76,7 @@ public class ScheduledFragment extends Fragment {
                     adapter.addAll(s);
                     listView.setAdapter(adapter);
                     swipeContainer.setRefreshing(false);
-                } else{
+                } else {
                     swipeContainer.setRefreshing(false);
                     // todo display error message check your connection
                 }
