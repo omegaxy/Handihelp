@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
-    android:background="@color/backg">
+    android:background="@color/backg"
+    >
 
     <include
         layout="@layout/app_bar_main"
@@ -21,8 +22,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"
         android:background="@color/backg"
-        app:itemTextColor="@color/grey05"
-        app:itemIconTint="@color/greyy"/>
+        app:itemTextColor="@color/grey05"/>
 
 
     <android.support.design.widget.CoordinatorLayout

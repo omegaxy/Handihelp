@@ -12,13 +12,14 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/top</item>
         <item name="colorPrimaryDark">#d04f4e56</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:colorBackground">@color/backg</item>
+        <item name="android:windowBackground">@color/backg</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -36,7 +37,7 @@
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">75px</item>
+        <item name="android:textSize">80px</item>
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="textAllCaps">false</item>
     </style>
