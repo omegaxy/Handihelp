@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -26,7 +27,7 @@ public class AllRequest {
     private CallBackConnector callBackConnector;
 
     public interface CallBackConnector {
-        void CallBackOnConnect(String response);
+        void CallBackOnConnect(String response, Boolean success);
     }
 
     public AllRequest(Context context, Map<String, String> parameters, Map<String, String> headers,
@@ -50,15 +51,14 @@ public class AllRequest {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        callBackConnector.CallBackOnConnect(response);
-
-
+                        callBackConnector.CallBackOnConnect(response, true);
                     }
                 },
                 new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        callBackConnector.CallBackOnConnect(error.toString(), false);
                         VolleyLog.d("volley", "Error: " + error.getMessage());
                         error.printStackTrace();
                     }

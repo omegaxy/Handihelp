@@ -2,10 +2,14 @@ package com.example.sikanla.maquettehandi.UI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.PlannedAdapter;
@@ -19,6 +23,10 @@ import java.util.ArrayList;
  */
 
 public class ScheduledFragment extends Fragment {
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeContainer;
+    private ListView listView;
+
 
     public ScheduledFragment() {
     }
@@ -33,29 +41,42 @@ public class ScheduledFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_scheduled, container, false);
     }
 
+    private PlannedAdapter adapter;
+
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-// Construct the data source
         ArrayList<PlannedRequest> arrayOfUsers = new ArrayList<PlannedRequest>();
-// Create the adapter to convert the array to views
-        final PlannedAdapter adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
-// Attach the adapter to a ListView
-        ListView listView = (ListView) getActivity().findViewById(R.id.lvplanned);
-        listView.setAdapter(adapter);
+        adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
+        // progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar_sch);
+        swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchPlannedRequests();
+            }
+        });
+        fetchPlannedRequests();
 
+    }
+
+    private void fetchPlannedRequests() {
+        listView = (ListView) getActivity().findViewById(R.id.lvplanned);
         final PlannedRequester plannedRequester = new PlannedRequester();
         plannedRequester.getPlannedRequest(getActivity(), new PlannedRequester.PlannedRequestCB() {
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
-                if(success) {
+                if (success) {
+                    adapter.clear();
                     adapter.addAll(s);
-                }else {
-                    // todo display error message
+                    listView.setAdapter(adapter);
+                    swipeContainer.setRefreshing(false);
+                } else{
+                    swipeContainer.setRefreshing(false);
+                    // todo display error message check your connection
                 }
             }
         });
-
     }
 
 }

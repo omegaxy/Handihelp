@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.identification.User;
@@ -30,20 +31,26 @@ public class PlannedRequester {
         Map<String, String> parameters = new HashMap<>();
         new AllRequest(context, parameters, headers, "/allplannedrequest", AllRequest.GET, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = new JSONArray(jsonObject.get("planned_requests").toString());
+            public void CallBackOnConnect(String response, Boolean success) {
+                Log.e("callback1", success.toString());
+                ArrayList<PlannedRequest> arrayList = new ArrayList<>();
 
-                    if (jsonObject.get("error").toString() == "false") {
-                        plannedRequestCB.getArrayPlannedRequest(fromJson(jsonArray), true);
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = new JSONArray(jsonObject.get("planned_requests").toString());
 
-                    } else {
-                        ArrayList<PlannedRequest> arrayList = new ArrayList<>();
-                        plannedRequestCB.getArrayPlannedRequest(arrayList, false);
+                        if (jsonObject.get("error").toString() == "false") {
+                            plannedRequestCB.getArrayPlannedRequest(fromJson(jsonArray), true);
+
+                        } else
+                            plannedRequestCB.getArrayPlannedRequest(arrayList, false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
+                    plannedRequestCB.getArrayPlannedRequest(arrayList, false);
+
                 }
             }
         });

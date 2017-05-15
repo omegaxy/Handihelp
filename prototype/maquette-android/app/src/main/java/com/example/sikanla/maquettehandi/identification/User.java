@@ -3,7 +3,6 @@ package com.example.sikanla.maquettehandi.identification;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.network.AllRequest;
 
@@ -124,8 +123,7 @@ public class User extends Application {
         headers.put("Authorization", getAPIKEY());
         new AllRequest(context, parameters, headers, "/user/androidid", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
-                Toast.makeText(context, "android id saved", Toast.LENGTH_LONG).show();
+            public void CallBackOnConnect(String response, Boolean success) {
 
             }
         });

@@ -162,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         new AllRequest(this, parameters, headers, "/register", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
+            public void CallBackOnConnect(String response, Boolean success) {
                 Log.e("serv", response);
                 User user = new User();
                 text = (TextView) findViewById(R.id.errorMsg);

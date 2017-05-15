@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
         new AllRequest(this, parameters,headers, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
+            public void CallBackOnConnect(String response, Boolean success) {
                 User user = new User();
                 try {
                     JSONObject jsonObject = new JSONObject(response);

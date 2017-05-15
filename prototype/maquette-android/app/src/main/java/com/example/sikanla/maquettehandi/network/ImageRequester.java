@@ -3,6 +3,7 @@ package com.example.sikanla.maquettehandi.network;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.BoringLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class ImageRequester {
         headers.put("Authorization", user.getAPIKEY());
         new AllRequest(context, parameters, headers, "/user/picture/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
+            public void CallBackOnConnect(String response, Boolean success) {
                 final String pureBase64Encoded = response.substring(response.indexOf(",") + 1);
                 final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
@@ -56,7 +57,7 @@ public class ImageRequester {
         headers.put("Authorization", user.getAPIKEY());
         new AllRequest(context, parameters, headers, "/user/picture", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
-            public void CallBackOnConnect(String response) {
+            public void CallBackOnConnect(String response, Boolean success) {
                 Toast.makeText(context, response, Toast.LENGTH_LONG).show();
             }
         });
