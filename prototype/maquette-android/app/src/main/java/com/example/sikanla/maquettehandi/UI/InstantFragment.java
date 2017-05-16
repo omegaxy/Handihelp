@@ -17,17 +17,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.example.sikanla.maquettehandi.ContactListAdapter;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.Contact;
-import com.example.sikanla.maquettehandi.Model.PlannedRequest;
-import com.example.sikanla.maquettehandi.PlannedAdapter;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.MessageRequester;
-import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 import java.io.IOException;
 import java.util.ArrayList;

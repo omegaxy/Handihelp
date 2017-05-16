@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.sikanla.maquettehandi.PlannedRequestCardAdapter;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
-import com.example.sikanla.maquettehandi.PlannedAdapter;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
@@ -23,7 +23,8 @@ public class ScheduledFragment extends Fragment {
 
     public SwipeRefreshLayout swipeContainer;
     public ListView listView;
-    public PlannedAdapter adapter;
+    private PlannedRequestCardAdapter adapter;
+
 
     public ScheduledFragment() {
     }
@@ -37,9 +38,7 @@ public class ScheduledFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
 
-        ArrayList<PlannedRequest> arrayOfUsers = new ArrayList<PlannedRequest>();
-
-        adapter = new PlannedAdapter(getActivity(), arrayOfUsers);
+        adapter = new PlannedRequestCardAdapter(getActivity(), R.layout.planned_item_card);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -48,6 +47,8 @@ public class ScheduledFragment extends Fragment {
             }
         });
         listView = (ListView) view.findViewById(R.id.lvplanned);
+        listView.addHeaderView(new View(getActivity()));
+        listView.addFooterView(new View(getActivity()));
 
         return view;
     }
@@ -61,6 +62,7 @@ public class ScheduledFragment extends Fragment {
                 getResources().getColor(android.R.color.holo_red_dark),
                 getResources().getColor(android.R.color.holo_blue_dark),
                 getResources().getColor(android.R.color.holo_orange_dark));
+
     }
 
 
