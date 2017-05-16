@@ -33,6 +33,7 @@
             android:backgroundTint="@color/top"
             android:ems="10"
             android:hint="email"
+            android:textColor="@color/grey05"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/grey05" />
 
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:backgroundTint="@color/top"
-
+            android:textColor="@color/grey05"
             android:hint="Mot De Passe"
             android:textColorHint="@color/grey05"
             android:inputType="textPassword" />
@@ -55,6 +56,7 @@
             android:fontFamily="casual"
             android:text="Se connecter"
             android:backgroundTint="@color/dd"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="18sp" />
 
