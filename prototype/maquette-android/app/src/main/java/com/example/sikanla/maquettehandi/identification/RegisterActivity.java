@@ -40,7 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_screen);
-
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(getResources().getColor(R.color.backg));
         surnameEditText = (EditText) findViewById(R.id.surname);
         firstnameEditText = (EditText) findViewById(R.id.firstname);
         birthYearEditText = (EditText) findViewById(R.id.birthYear);
