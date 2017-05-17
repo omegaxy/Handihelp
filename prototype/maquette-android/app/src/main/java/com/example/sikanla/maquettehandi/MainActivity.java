@@ -13,7 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.PickAideDialogFragment;
@@ -21,11 +22,14 @@ import com.example.sikanla.maquettehandi.UI.HistoricFragment;
 import com.example.sikanla.maquettehandi.UI.InstantFragment;
 import com.example.sikanla.maquettehandi.UI.ScheduledFragment;
 import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.squareup.picasso.Picasso;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private TextView firstnameHeader;
+    private ImageView imageViewHeader;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -37,18 +41,33 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        floatingActionButton = new FloatingActionButton(this);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        instantiateFAB();
+        instantiateTabToolbarDrawer();
+        instantiateNavigationView();
+
+
+    }
+
+    private void instantiateNavigationView() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+        User user = new User();
+        View headerView = navigationView.getHeaderView(0);
+        imageViewHeader = (ImageView) headerView.findViewById(R.id.user_pp);
+        firstnameHeader = (TextView) headerView.findViewById(R.id.firstname_header);
+        firstnameHeader.setText(user.getFirstName());
+        ImageRequester imageRequester = new ImageRequester();
+        imageRequester.getImage(user.getUserId(), this, new ImageRequester.ImageInterface() {
             @Override
-            public void onClick(View v) {
-                PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
-                pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
+            public void getUrl(String url) {
+                if (url != null)
+                    Picasso.with(getApplicationContext()).load(url).into(imageViewHeader);
             }
         });
+    }
 
-
-
+    private void instantiateTabToolbarDrawer() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,17 +82,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
-
+    private void instantiateFAB() {
+        floatingActionButton = new FloatingActionButton(this);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
+                pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
+            }
+        });
     }
 
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ScheduledFragment(), "Demandes");
         adapter.addFragment(new InstantFragment(), "Messages");
+        adapter.addFragment(new HistoricFragment(),"testTab");
         viewPager.setAdapter(adapter);
     }
 
@@ -129,8 +156,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 //where you can logout, change your data, etc.
         } else if (id == R.id.nav_help) {
 //explain how the application works
-        }
-        else if (id == R.id.nav_propos) {
+        } else if (id == R.id.nav_propos) {
 //Where we write the name of developpers
         }
 

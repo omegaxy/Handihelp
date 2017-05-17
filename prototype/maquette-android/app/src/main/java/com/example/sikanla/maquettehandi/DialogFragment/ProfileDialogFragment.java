@@ -59,10 +59,10 @@ public class ProfileDialogFragment extends DialogFragment {
         ageTv.setText((String.valueOf(getArguments().getInt("birth_year"))));
 
         ImageRequester imageRequest = new ImageRequester();
-        imageRequest.getImage(getArguments().getString("userid"), getActivity(), new ImageRequester.BitmapInterface() {
+        imageRequest.getImage(getArguments().getString("userid"), getActivity(), new ImageRequester.ImageInterface() {
             @Override
-            public void getBitmap(Bitmap bitmap) {
-                imageViewPP.setImageBitmap(bitmap);
+            public void getUrl(String s) {
+                //imageViewPP.setImageBitmap(bitmap);
             }
         });
 

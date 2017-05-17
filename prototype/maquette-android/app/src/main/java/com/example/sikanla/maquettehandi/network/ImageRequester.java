@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.identification.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +22,13 @@ import java.util.Map;
  */
 
 public class ImageRequester {
+    private String serverurl="http://178.62.33.9/";
 
-    public interface BitmapInterface {
-        void getBitmap(Bitmap bitmap);
+    public interface ImageInterface {
+        void getUrl(String url);
     }
 
-    public void getImage(String userId, Context context, final BitmapInterface bitmapInterface) {
+    public void getImage(String userId, Context context, final ImageInterface imageInterface) {
         User user = new User();
         Map<String, String> parameters = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
@@ -32,10 +36,13 @@ public class ImageRequester {
         new AllRequest(context, parameters, headers, "/user/picture/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
-                final String pureBase64Encoded = response.substring(response.indexOf(",") + 1);
-                final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                bitmapInterface.getBitmap(bitmap);
+                String url= null;
+                try {
+                    url = new JSONObject(response).getString("image_url");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                imageInterface.getUrl(serverurl+url);
             }
         });
 
