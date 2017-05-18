@@ -6,6 +6,9 @@ package com.example.sikanla.maquettehandi;
 
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -24,13 +29,17 @@ import java.util.ArrayList;
 
 public class ContactListAdapter extends ArrayAdapter<Contact> {
     // View lookup cache
+    private Context context;
+
     private static class ViewHolder {
         TextView firstname;
         TextView surname;
+        ImageView pictureContact;
     }
 
     public ContactListAdapter(Context context, ArrayList<Contact> contacts) {
         super(context, R.layout.item_contact_messages, contacts);
+        this.context = context;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         // Get the data item for this position
         Contact contact = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+        final ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             // If there's no view to re-use, inflate a brand new view for row
             viewHolder = new ViewHolder();
@@ -46,6 +55,7 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
             convertView = inflater.inflate(R.layout.item_contact_messages, parent, false);
             viewHolder.firstname = (TextView) convertView.findViewById(R.id.tvItemContactFirstName);
             viewHolder.surname = (TextView) convertView.findViewById(R.id.tvItemContactSurname);
+            viewHolder.pictureContact = (ImageView) convertView.findViewById(R.id.pictureContact);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
         } else {
@@ -56,6 +66,15 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         // into the template view.
         viewHolder.firstname.setText(contact.firstname);
         viewHolder.surname.setText(contact.surname);
+        ImageRequester imageRequester = new ImageRequester();
+        imageRequester.getImage(contact.id, context, new ImageRequester.ImageInterface() {
+            @Override
+            public void getUrl(String url) {
+                if (!url.isEmpty())
+                    Picasso.with(context).load(url).into(viewHolder.pictureContact);
+
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
