@@ -14,4 +14,18 @@
     <color name="top">#61a0bd</color>
     <color name="oraaange">#deb08a</color>
     <color name="black">#000000</color>
+
+    <color name="type1">#bdd5ed</color>
+    <color name="type2">#F7CAAB</color>
+    <color name="type3">#FFE39A</color>
+    <color name="type4">#BFBFBF</color>
+    <color name="type5">#D8B9DB</color>
+    <color name="type6">#C5E0B3</color>
+    <color name="type7">#988EEF</color>
+    <color name="type8">#F694BA</color>
+    <color name="type9">#B5C89B</color>
+    <color name="type10">#93EDF6</color>
+    <color name="type11">#7EE6AB</color>
+
+
 </resources>
