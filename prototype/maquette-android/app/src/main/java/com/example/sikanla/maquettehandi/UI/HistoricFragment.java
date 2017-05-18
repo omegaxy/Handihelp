@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.example.sikanla.maquettehandi.DialogFragment.HelpTypeDiaolgFragment;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.User;
@@ -32,9 +33,11 @@ public class HistoricFragment extends Fragment {
 
     ImageView imageView1;
 
-    private Button testButton;
+    private Button testButton, helpButton;
     private Button testButtonImage, uploaB;
     private ImageView imageView;
+    private int numberButton=0;
+    private TextView text;
     RequestQueue requestQueue;
 
     public HistoricFragment() {
@@ -43,13 +46,22 @@ public class HistoricFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         return inflater.inflate(R.layout.fragment_history, container, false);
 
+    }
+
+    public interface EditNameDialogListener {
+        void onFinishEditDialog(String str);
+    }
+
+    public void onFinishEditDialog(String str) {
+        numberButton = Integer.parseInt(str);
+        text.setText(str);
     }
 
     @Override
@@ -68,6 +80,22 @@ public class HistoricFragment extends Fragment {
             }
         });
 
+        text = (TextView) getActivity().findViewById(R.id.textView1);
+        helpButton = (Button) getActivity().findViewById(R.id.helpButton);
+
+        helpButton.setOnClickListener(new View.OnClickListener()  {
+
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                HelpTypeDiaolgFragment help = new HelpTypeDiaolgFragment();
+                help.setArguments(args);
+
+                help.show(getActivity().getFragmentManager(), "HelpTypeDiaolgFragment");
+
+            }
+
+        });
 
     }
 
@@ -80,6 +108,8 @@ public class HistoricFragment extends Fragment {
         testButton = (Button) getActivity().findViewById(R.id.button11);
         testButtonImage = (Button) getActivity().findViewById(R.id.testimage);
         */
+
+/*
         testButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +156,7 @@ public class HistoricFragment extends Fragment {
 
             }
         });
+        */
     }
 
     @Override
