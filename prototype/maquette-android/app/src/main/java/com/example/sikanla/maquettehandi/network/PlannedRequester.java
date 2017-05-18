@@ -24,6 +24,10 @@ public class PlannedRequester {
         void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success);
     }
 
+    public interface GetUserCB {
+        void getUser(String firstName, String surname, String age, Boolean success);
+    }
+
     public void getPlannedRequest(Context context, final PlannedRequestCB plannedRequestCB) {
         User user = new User();
         Map<String, String> headers = new HashMap<>();
@@ -32,7 +36,6 @@ public class PlannedRequester {
         new AllRequest(context, parameters, headers, "/allplannedrequest", AllRequest.GET, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
-                Log.e("callback1", success.toString());
                 ArrayList<PlannedRequest> arrayList = new ArrayList<>();
 
                 if (success) {
@@ -61,7 +64,6 @@ public class PlannedRequester {
         ArrayList<PlannedRequest> plannedRequests = new ArrayList<PlannedRequest>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
-                //todo
                 plannedRequests.add(new PlannedRequest(jsonObjects.getJSONObject(i).getString("help_category"),
                         jsonObjects.getJSONObject(i).getString("description"),
                         jsonObjects.getJSONObject(i).getString("scheduled_at"),
@@ -73,4 +75,34 @@ public class PlannedRequester {
         }
         return plannedRequests;
     }
+
+    public void getUser(Context context, String userId, final GetUserCB getUserCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        new AllRequest(context, parameters, headers, "/user/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            getUserCB.getUser(jsonObject.getString("firstname"),
+                                    jsonObject.getString("surname"), jsonObject.getString("birth_year"), true);
+                        } else
+                            getUserCB.getUser("", "", "", false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    getUserCB.getUser("", "", "", false);
+
+                }
+            }
+        });
+    }
+
+
 }
