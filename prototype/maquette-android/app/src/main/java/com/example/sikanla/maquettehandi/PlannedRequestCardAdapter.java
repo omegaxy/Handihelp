@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,13 @@ import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.DialogFragment.AnswerPlanR_DF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.identification.LoginActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Sikanla on 16/05/2017.
@@ -84,7 +89,10 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
 
         getAideType(viewHolder, plannedRequest);
 
-        viewHolder.date.setText(plannedRequest.scheduledAt);
+        String formattedDate = formatDate(plannedRequest.scheduledAt);
+        viewHolder.date.setText(formattedDate);
+
+
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +109,15 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
             }
         });
         return row;
+    }
+
+    private String formatDate(String epoch) {
+        long unixSeconds = Long.parseLong(epoch);
+        Log.e("11", String.valueOf(unixSeconds));
+        Date date = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMMMM-yyyy à HH:mm"); // the format of your date
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+2")); // give a timezone reference for formating (see comment at the bottom
+        return sdf.format(date);
     }
 
     private void getAideType(CardViewHolder viewHolder, PlannedRequest plannedRequest) {

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,10 @@ import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * Created by Sikanla on 18/05/2017.
  */
@@ -25,6 +30,7 @@ public class AnswerPlanR_DF extends DialogFragment {
     private View rootView;
     private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv;
     private ImageView imageViewPP;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,9 +51,11 @@ public class AnswerPlanR_DF extends DialogFragment {
         typeAideTv.setText(getArguments().getString("type"));
         localisationTv.setText(getArguments().getString("localisation"));
         descriptionTv.setText(getArguments().getString("description"));
-        scheduledTv.setText(getArguments().getString("scheduled"));
+        String formattedDate = formatDate(getArguments().getString("scheduled"));
 
-        String id= getArguments().getString("id");
+        scheduledTv.setText(formattedDate);
+
+        String id = getArguments().getString("id");
         ImageRequester imageRequest = new ImageRequester();
 
         imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
@@ -57,10 +65,10 @@ public class AnswerPlanR_DF extends DialogFragment {
             }
         });
         PlannedRequester plannedRequester = new PlannedRequester();
-        plannedRequester.getUser(getActivity(),id, new PlannedRequester.GetUserCB() {
+        plannedRequester.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
-                if (success){
+                if (success) {
                     fistNameTv.setText(firstName);
                     surnameTv.setText(surname);
                 }
@@ -77,5 +85,14 @@ public class AnswerPlanR_DF extends DialogFragment {
         return builder1.create();
 
 
+    }
+
+    private String formatDate(String epoch) {
+        long unixSeconds = Long.parseLong(epoch);
+        Log.e("11", String.valueOf(unixSeconds));
+        Date date = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMMMM-yyyy à HH:mm"); // the format of your date
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+2")); // give a timezone reference for formating (see comment at the bottom
+        return sdf.format(date);
     }
 }
