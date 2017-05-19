@@ -32,7 +32,9 @@ public class AnswerPlanR_DF extends DialogFragment {
     private View rootView;
     private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv;
     private ImageView imageViewPP;
-    LinearLayout linearLayout;
+    private LinearLayout linearLayout;
+    private String id;
+
 
     @NonNull
     @Override
@@ -59,7 +61,7 @@ public class AnswerPlanR_DF extends DialogFragment {
 
         scheduledTv.setText(formattedDate);
 
-        String id = getArguments().getString("id");
+        id = getArguments().getString("id");
         ImageRequester imageRequest = new ImageRequester();
 
         imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
@@ -73,6 +75,7 @@ public class AnswerPlanR_DF extends DialogFragment {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 if (success) {
+
                     fistNameTv.setText(firstName);
                     surnameTv.setText(surname);
                 }
@@ -84,6 +87,12 @@ public class AnswerPlanR_DF extends DialogFragment {
                 .setNeutralButton("Envoyer un message", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                        Bundle args = new Bundle();
+                        args.putString("firstname", fistNameTv.getText().toString());
+                        args.putString("id", id);
+                        sendMessageDialog.setArguments(args);
+                        sendMessageDialog.show(getActivity().getFragmentManager(), "answerPlanned");
 
                     }
                 })
