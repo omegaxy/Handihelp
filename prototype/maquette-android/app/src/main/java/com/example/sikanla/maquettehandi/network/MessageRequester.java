@@ -25,6 +25,11 @@ public class MessageRequester {
         void getArrayMessages(ArrayList<String> arrayList);
     }
 
+    public interface SendMessagesCB {
+        void onMessageReceived(Boolean success);
+
+    }
+
     public void getContacts(Context context, final MessagesCB messagesCB) {
         User user = new User();
         Map<String, String> headers = new HashMap<>();
@@ -40,7 +45,6 @@ public class MessageRequester {
                         JSONArray jsonArray = new JSONArray(jsonObject.get("contacts").toString());
 
                         if (jsonObject.get("error").toString() == "false") {
-                            Log.e("inOK",response);
                             messagesCB.getArrayContacts(fromJson(jsonArray), true);
 
                         } else
@@ -70,6 +74,35 @@ public class MessageRequester {
             }
         }
         return contacts;
+    }
+
+
+    public void sendMessage(Context context, String message, String idReceiver, final SendMessagesCB sendMessagesCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("message", message);
+        parameters.put("id_receiver", idReceiver);
+        new AllRequest(context, parameters, headers, "/message/user", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            sendMessagesCB.onMessageReceived(true);
+                        } else
+                            sendMessagesCB.onMessageReceived(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    sendMessagesCB.onMessageReceived(false);
+
+                }
+            }
+        });
     }
 }
 

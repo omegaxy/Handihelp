@@ -17,6 +17,17 @@
         android:layout_width="match_parent"
         android:layout_height="20dp" />
 
+    <TextView
+        android:id="@+id/df_erreur_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Erreur d'envoi, réessayer"
+        android:textColor="@color/color1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
     <EditText
         android:id="@+id/df_message_edit_text"
         android:layout_width="match_parent"

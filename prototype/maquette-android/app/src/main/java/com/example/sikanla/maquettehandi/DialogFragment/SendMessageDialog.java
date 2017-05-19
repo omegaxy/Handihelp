@@ -10,12 +10,15 @@ import android.support.annotation.StringDef;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.example.sikanla.maquettehandi.network.MessageRequester;
 
 /**
  * Created by Sikanla on 20/05/2017.
@@ -24,7 +27,9 @@ import com.example.sikanla.maquettehandi.network.ImageRequester;
 public class SendMessageDialog extends DialogFragment {
     private TextView title;
     private EditText messageText;
+    private TextView errorTv;
     private View rootView;
+    String id_receiver;
 
     @NonNull
     @Override
@@ -35,9 +40,10 @@ public class SendMessageDialog extends DialogFragment {
 
         rootView = inflater.inflate(R.layout.send_message_dialog, null);
         title = (TextView) rootView.findViewById(R.id.df_message_title);
+        errorTv = (TextView) rootView.findViewById(R.id.df_erreur_tv);
         messageText = (EditText) rootView.findViewById(R.id.df_message_edit_text);
         String s = "Envoyer à: " + getArguments().getString("firstname");
-        String id = getArguments().getString("id");
+        id_receiver = getArguments().getString("id");
 
 
         title.setText(s);
@@ -52,13 +58,48 @@ public class SendMessageDialog extends DialogFragment {
                 })
                 .setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String s = messageText.getText().toString();
-                        //Send request
+
                     }
                 });
 
         return builder1.create();
 
 
+    }
+
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        AlertDialog d = (AlertDialog)getDialog();
+        if(d != null)
+        {
+            Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    MessageRequester messageRequester = new MessageRequester();
+                    messageRequester.sendMessage(getActivity(), messageText.getText().toString(),
+                            id_receiver, new MessageRequester.SendMessagesCB() {
+                                @Override
+                                public void onMessageReceived(Boolean success) {
+                                    if (success) {
+                                        Toast.makeText(getActivity(), "Message Envoyé", Toast.LENGTH_LONG).show();
+                                        getDialog().dismiss();
+                                    } else {
+                                        errorTv.setVisibility(View.VISIBLE);
+
+                                    }
+
+
+                                }
+                            });
+
+                }
+            });
+        }
     }
 }
