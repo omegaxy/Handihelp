@@ -81,7 +81,13 @@ public class AnswerPlanR_DF extends DialogFragment {
 
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
-                .setPositiveButton("Do something", new DialogInterface.OnClickListener() {
+                .setNeutralButton("Envoyer un message", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
