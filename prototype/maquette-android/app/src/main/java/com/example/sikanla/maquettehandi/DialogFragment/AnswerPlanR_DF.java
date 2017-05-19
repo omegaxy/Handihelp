@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.PlannedRequestCardAdapter;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
@@ -30,6 +32,7 @@ public class AnswerPlanR_DF extends DialogFragment {
     private View rootView;
     private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv;
     private ImageView imageViewPP;
+    LinearLayout linearLayout;
 
     @NonNull
     @Override
@@ -39,7 +42,7 @@ public class AnswerPlanR_DF extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         rootView = inflater.inflate(R.layout.answer_planned_request, null);
-
+        linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);
         fistNameTv = (TextView) rootView.findViewById(R.id.answ_firstname);
         surnameTv = (TextView) rootView.findViewById(R.id.answ_surname);
         typeAideTv = (TextView) rootView.findViewById(R.id.answ_type);
@@ -48,7 +51,8 @@ public class AnswerPlanR_DF extends DialogFragment {
         scheduledTv = (TextView) rootView.findViewById(R.id.answ_scheduled);
         imageViewPP = (ImageView) rootView.findViewById(R.id.answ_pic);
 
-        typeAideTv.setText(getArguments().getString("type"));
+        getAideType(getArguments().getString("type"));
+
         localisationTv.setText(getArguments().getString("localisation"));
         descriptionTv.setText(getArguments().getString("description"));
         String formattedDate = formatDate(getArguments().getString("scheduled"));
@@ -94,5 +98,54 @@ public class AnswerPlanR_DF extends DialogFragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMMMM-yyyy à HH:mm"); // the format of your date
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+2")); // give a timezone reference for formating (see comment at the bottom
         return sdf.format(date);
+    }
+
+    private void getAideType(String aideType) {
+        switch (aideType) {
+            case "1":
+                typeAideTv.setText(PlannedRequest.n1);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type1));
+                break;
+            case "2":
+                typeAideTv.setText(PlannedRequest.n2);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type2));
+                break;
+            case "3":
+                typeAideTv.setText(PlannedRequest.n3);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type3));
+                break;
+            case "4":
+                typeAideTv.setText(PlannedRequest.n4);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type4));
+                break;
+            case "5":
+                typeAideTv.setText(PlannedRequest.n5);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type5));
+                break;
+            case "6":
+                typeAideTv.setText(PlannedRequest.n6);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type6));
+                break;
+            case "7":
+                typeAideTv.setText(PlannedRequest.n7);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type7));
+                break;
+            case "8":
+                typeAideTv.setText(PlannedRequest.n8);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type8));
+                break;
+            case "9":
+                typeAideTv.setText(PlannedRequest.n9);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type9));
+                break;
+            case "10":
+                typeAideTv.setText(PlannedRequest.n10);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type10));
+                break;
+            case "11":
+                typeAideTv.setText(PlannedRequest.n11);
+                linearLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.type11));
+                break;
+        }
     }
 }

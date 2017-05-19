@@ -87,7 +87,7 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
         final PlannedRequest plannedRequest = getItem(position);
         viewHolder.localisation.setText(plannedRequest.localisation);
 
-        getAideType(viewHolder, plannedRequest);
+        getAideType(viewHolder, plannedRequest.helpCategory);
 
         String formattedDate = formatDate(plannedRequest.scheduledAt);
         viewHolder.date.setText(formattedDate);
@@ -120,8 +120,8 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
         return sdf.format(date);
     }
 
-    private void getAideType(CardViewHolder viewHolder, PlannedRequest plannedRequest) {
-        switch (plannedRequest.helpCategory) {
+    private void getAideType(CardViewHolder viewHolder, String aideType) {
+        switch (aideType) {
             case "1":
                 viewHolder.aideCategoryTv.setText(PlannedRequest.n1);
                 viewHolder.linearLayout.setBackgroundColor(context.getResources().getColor(R.color.type1));
