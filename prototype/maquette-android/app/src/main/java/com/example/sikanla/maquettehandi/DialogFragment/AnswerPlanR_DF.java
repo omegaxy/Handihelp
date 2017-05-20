@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
-import com.example.sikanla.maquettehandi.PlannedRequestCardAdapter;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
@@ -52,35 +51,28 @@ public class AnswerPlanR_DF extends DialogFragment {
         descriptionTv = (TextView) rootView.findViewById(R.id.answ_description);
         scheduledTv = (TextView) rootView.findViewById(R.id.answ_scheduled);
         imageViewPP = (ImageView) rootView.findViewById(R.id.answ_pic);
+        id = getArguments().getString("id");
+
+        imageViewPP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("id", id);
+                profileDialogFragment.setArguments(args);
+                profileDialogFragment.show(getActivity().getFragmentManager(), "answerPlanned");
+
+            }
+        });
 
         getAideType(getArguments().getString("type"));
 
         localisationTv.setText(getArguments().getString("localisation"));
         descriptionTv.setText(getArguments().getString("description"));
         String formattedDate = formatDate(getArguments().getString("scheduled"));
-
         scheduledTv.setText(formattedDate);
 
-        id = getArguments().getString("id");
-        ImageRequester imageRequest = new ImageRequester();
-
-        imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
-            @Override
-            public void getUrl(String s) {
-                Picasso.with(getActivity()).load(s).into(imageViewPP);
-            }
-        });
-        PlannedRequester plannedRequester = new PlannedRequester();
-        plannedRequester.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
-            @Override
-            public void getUser(String firstName, String surname, String age, Boolean success) {
-                if (success) {
-
-                    fistNameTv.setText(firstName);
-                    surnameTv.setText(surname);
-                }
-            }
-        });
+        loadUserProfile();
 
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
@@ -104,6 +96,28 @@ public class AnswerPlanR_DF extends DialogFragment {
         return builder1.create();
 
 
+    }
+
+    private void loadUserProfile() {
+        ImageRequester imageRequest = new ImageRequester();
+
+        imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
+            @Override
+            public void getUrl(String s) {
+                Picasso.with(getActivity()).load(s).into(imageViewPP);
+            }
+        });
+        PlannedRequester plannedRequester = new PlannedRequester();
+        plannedRequester.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
+            @Override
+            public void getUser(String firstName, String surname, String age, Boolean success) {
+                if (success) {
+
+                    fistNameTv.setText(firstName);
+                    surnameTv.setText(surname);
+                }
+            }
+        });
     }
 
     private String formatDate(String epoch) {

@@ -2,12 +2,10 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.squareup.picasso.Picasso;
 
 public class ProfileDialogFragment extends DialogFragment {
 
@@ -23,25 +23,10 @@ public class ProfileDialogFragment extends DialogFragment {
     private TextView fistNameTv;
     private TextView ageTv;
     private ImageView imageViewPP;
+    private String id;
 
 
-    public interface DialogListener {
-        void onDialogClick(DialogFragment dialog, int id);
-    }
 
-    DialogListener mListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            //     mListener = (DialogListener) ((MainActivity) context).getSupportFragmentManager()
-            //            .findFragmentById(R.id.container);
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement DialogListener");
-        }
-    }
 
     @NonNull
     @Override
@@ -55,19 +40,27 @@ public class ProfileDialogFragment extends DialogFragment {
         ageTv = (TextView) rootView.findViewById(R.id.agedialog);
         imageViewPP = (ImageView) rootView.findViewById(R.id.profileImageV);
 
-        fistNameTv.setText(getArguments().getString("firstname"));
-        ageTv.setText((String.valueOf(getArguments().getInt("birth_year"))));
+        id= getArguments().getString("id");
+        PlannedRequester plannedRequest= new PlannedRequester();
+        plannedRequest.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
+            @Override
+            public void getUser(String firstName, String surname, String age, Boolean success) {
+                fistNameTv.setText(firstName);
+                ageTv.setText(String.valueOf(2017-Integer.parseInt(age)));
+            }
+        });
+
 
         ImageRequester imageRequest = new ImageRequester();
-        imageRequest.getImage(getArguments().getString("userid"), getActivity(), new ImageRequester.ImageInterface() {
+        imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
             @Override
             public void getUrl(String s) {
-                //imageViewPP.setImageBitmap(bitmap);
+                Picasso.with(getActivity()).load(s).into(imageViewPP);
             }
         });
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
-                .setPositiveButton("Do something", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Fermer", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
