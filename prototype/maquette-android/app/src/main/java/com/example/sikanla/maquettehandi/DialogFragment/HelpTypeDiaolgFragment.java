@@ -31,7 +31,7 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
 
     private View v;
-    private RadioButton button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11;
+    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11;
     private int numberButton = 0;
 
 
@@ -75,17 +75,17 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
         v = inflater.inflate(R.layout.fragment_help_type, null);
 
-        button1 = (RadioButton) v.findViewById(R.id.radioButton1);
-        button2 = (RadioButton) v.findViewById(R.id.radioButton2);
-        button3 = (RadioButton) v.findViewById(R.id.radioButton3);
-        button4 = (RadioButton) v.findViewById(R.id.radioButton4);
-        button5 = (RadioButton) v.findViewById(R.id.radioButton5);
-        button6 = (RadioButton) v.findViewById(R.id.radioButton6);
-        button7 = (RadioButton) v.findViewById(R.id.radioButton7);
-        button8 = (RadioButton) v.findViewById(R.id.radioButton8);
-        button9 = (RadioButton) v.findViewById(R.id.radioButton9);
-        button10 = (RadioButton) v.findViewById(R.id.radioButton10);
-        button11 = (RadioButton) v.findViewById(R.id.radioButton11);
+        button1 = (Button) v.findViewById(R.id.Button1);
+        button2 = (Button) v.findViewById(R.id.Button2);
+        button3 = (Button) v.findViewById(R.id.Button3);
+        button4 = (Button) v.findViewById(R.id.Button4);
+        button5 = (Button) v.findViewById(R.id.Button5);
+        button6 = (Button) v.findViewById(R.id.Button6);
+        button7 = (Button) v.findViewById(R.id.Button7);
+        button8 = (Button) v.findViewById(R.id.Button8);
+        button9 = (Button) v.findViewById(R.id.Button9);
+        button10 = (Button) v.findViewById(R.id.Button10);
+        button11 = (Button) v.findViewById(R.id.Button11);
 
 
         button1.setOnClickListener(new View.OnClickListener() {
