@@ -1,16 +1,15 @@
 package com.example.sikanla.maquettehandi;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +18,8 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.PickAideDialogFragment;
-import com.example.sikanla.maquettehandi.UI.HistoricFragment;
-import com.example.sikanla.maquettehandi.UI.InstantFragment;
-import com.example.sikanla.maquettehandi.UI.ScheduledFragment;
+import com.example.sikanla.maquettehandi.UI.ParametersFragment;
+import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
@@ -32,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView firstnameHeader;
     private ImageView imageViewHeader;
     private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private FloatingActionButton floatingActionButton;
     private NavigationView navigationView;
 
@@ -46,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
-
 
 
     }
@@ -74,25 +69,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.mytabs);
-        tabLayout.setupWithViewPager(viewPager);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer,toolbar,
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu();
 
             }
 
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
@@ -116,13 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    private void setViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ScheduledFragment(), "Demandes");
-        adapter.addFragment(new InstantFragment(), "Messages");
-        adapter.addFragment(new HistoricFragment(),"testTab");
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     public void onBackPressed() {
@@ -145,12 +124,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -162,23 +137,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        Fragment fragment = new Fragment();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
 
-        if (id == R.id.nav_friend) {
-//list of selected profile
-        } else if (id == R.id.nav_history) {
-//history of all previous assistance given and requested
-        } else if (id == R.id.nav_notification) {
-//history of all previous notifications
-        } else if (id == R.id.nav_myapplication) {
-//history of all the assistance requested and without response
-        } else if (id == R.id.nav_settings) {
-//where you can logout, change your data, etc.
-        } else if (id == R.id.nav_help) {
-//explain how the application works
-        } else if (id == R.id.nav_propos) {
-//Where we write the name of developpers
+        tabLayout.setVisibility(View.GONE);
+
+        switch (item.getItemId()) {
+            case R.id.nav_accueil:
+                fragment = new TabFragment();
+                break;
+            case R.id.nav_friend:
+                break;
+            case R.id.nav_settings:
+                fragment = new ParametersFragment();
         }
+
+        if (fragment != null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+        }
+
+
+        // Highlight the selected item, update the title, and close the drawer
+        //mDrawerList.setItemChecked(position, true);
+        //setTitle(mPlanetTitles[position]);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
