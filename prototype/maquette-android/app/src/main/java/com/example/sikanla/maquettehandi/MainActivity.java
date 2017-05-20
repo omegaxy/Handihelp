@@ -1,7 +1,11 @@
 package com.example.sikanla.maquettehandi;
 
+
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,8 +22,13 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.PickAideDialogFragment;
+
 import com.example.sikanla.maquettehandi.UI.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
+
+import com.example.sikanla.maquettehandi.UI.FormPlannedRequest;
+
+
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
@@ -96,8 +105,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
-                pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
+                //PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
+                //pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
+                startActivity(new Intent(MainActivity.this, FormPlannedRequest.class));
+
+
             }
         });
     }

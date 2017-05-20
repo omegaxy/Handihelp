@@ -14,6 +14,7 @@
     <color name="top">#61a0bd</color>
     <color name="oraaange">#deb08a</color>
     <color name="black">#000000</color>
+    <color name="trans">#00000000</color>
 
     <color name="type1">#bdd5ed</color>
     <color name="type2">#F7CAAB</color>
