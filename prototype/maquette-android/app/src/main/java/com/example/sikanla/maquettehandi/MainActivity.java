@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FloatingActionButton floatingActionButton;
+    private NavigationView navigationView;
 
 
     @Override
@@ -41,15 +43,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+        instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
-        instantiateNavigationView();
+
 
 
     }
 
     private void instantiateNavigationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
         User user = new User();
@@ -78,10 +81,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.setupWithViewPager(viewPager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer,toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+                navigationView.bringToFront();
+
+            }
+        };
+        drawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
     }
 
     private void instantiateFAB() {
