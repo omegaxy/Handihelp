@@ -16,6 +16,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TYPE OF HELP"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.19"
+                android:textStyle="bold"
+                android:text=" ? " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:orientation="horizontal">
 
             <Button
@@ -69,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/type4"
-                android:text="ménagères" />
+                android:text="Tâches ménagères" />
 
         </LinearLayout>
 

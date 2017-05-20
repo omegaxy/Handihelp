@@ -31,7 +31,7 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
 
     private View v;
-    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11;
+    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12;
     private int numberButton = 0;
 
 
@@ -86,6 +86,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
         button9 = (Button) v.findViewById(R.id.Button9);
         button10 = (Button) v.findViewById(R.id.Button10);
         button11 = (Button) v.findViewById(R.id.Button11);
+        button12 = (Button) v.findViewById(R.id.button12);
+
 
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +186,18 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
             public void onClick(View v) {
                 numberButton = 11;
                 dismiss();
+            }
+        });
+
+        button12.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                HelpTypeExplainDialogFragment help = new HelpTypeExplainDialogFragment();
+                help.setArguments(args);
+
+                help.show(getActivity().getFragmentManager(), "HelpTypeExplainDialogFragment");
             }
         });
 

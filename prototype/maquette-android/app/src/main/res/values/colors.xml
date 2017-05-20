@@ -27,7 +27,7 @@
     <color name="type10">#93EDF6</color>
     <color name="type11">#7EE6AB</color>
 
-    <color name="layoutbackground">##f6f6f6</color>
+    <color name="layoutbackground">#f6f6f6</color>
 
 
 </resources>
