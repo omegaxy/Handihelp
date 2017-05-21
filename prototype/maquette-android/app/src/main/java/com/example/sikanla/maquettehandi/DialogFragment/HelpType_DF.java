@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.UI.InstantFragment;
 
@@ -27,22 +28,17 @@ import com.example.sikanla.maquettehandi.UI.InstantFragment;
  * Created by Nicolas on 15/05/2017.
  */
 
-public class HelpTypeDiaolgFragment extends DialogFragment {
+public class HelpType_DF extends DialogFragment {
 
 
     private View v;
     private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12;
-    private int numberButton = 0;
+    private String numberButton = "";
 
 
     public interface DialogListener {
-        void onDialogClick(DialogFragment dialog, int id);
+        void onDialogClick(String id);
     }
-
-    public interface EditNameDialogListener {
-        void onFinishEditDialog(String inputText);
-    }
-
 
     DialogListener mListener;
 
@@ -51,19 +47,16 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
     }
 
-/*
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            //     mListener = (DialogListener) ((MainActivity) context).getSupportFragmentManager()
-            //            .findFragmentById(R.id.container);
+            mListener = (DialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement DialogListener");
         }
     }
-    */
 
 
     @NonNull
@@ -89,13 +82,12 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
         button12 = (Button) v.findViewById(R.id.button12);
 
 
-
         button1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                EditNameDialogListener listener = (EditNameDialogListener) getActivity();
-                listener.onFinishEditDialog("123");
+                numberButton = "1";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -104,7 +96,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 2;
+                numberButton = "2";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -113,7 +106,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 3;
+                numberButton = "3";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -122,7 +116,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 4;
+                numberButton = "4";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -131,7 +126,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 5;
+                numberButton = "5";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -140,7 +136,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 6;
+                mListener.onDialogClick(numberButton);
+                numberButton = "6";
                 dismiss();
             }
         });
@@ -149,7 +146,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 7;
+                numberButton = "7";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -158,7 +156,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 8;
+                numberButton = "8";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -167,7 +166,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 9;
+                numberButton = "9";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -176,7 +176,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 10;
+                numberButton = "10";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -184,7 +185,8 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                numberButton = 11;
+                numberButton = "11";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });
@@ -196,29 +198,14 @@ public class HelpTypeDiaolgFragment extends DialogFragment {
                 Bundle args = new Bundle();
                 HelpTypeExplainDialogFragment help = new HelpTypeExplainDialogFragment();
                 help.setArguments(args);
-
                 help.show(getActivity().getFragmentManager(), "HelpTypeExplainDialogFragment");
             }
         });
 
 
         final AlertDialog.Builder builder1 = builder.setView(v);
-               /* .setPositiveButton("Veuillez sélectionner un type d'aide", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-*/
         return builder1.create();
 
     }
-/*
-    private void sendResult(int REQUEST_CODE) {
-        Intent intent = new Intent();
-        intent.putExtra(EDIT_TEXT_BUNDLE_KEY, str);
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(), REQUEST_CODE, intent);
-    }
-*/
-
 
 }

@@ -21,13 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-import com.example.sikanla.maquettehandi.DialogFragment.PickAideDialogFragment;
 
+import com.example.sikanla.maquettehandi.UI.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
-
-import com.example.sikanla.maquettehandi.UI.FormPlannedRequest;
-
 
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
@@ -35,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private TextView firstnameHeader;
     private ImageView imageViewHeader;
     private Toolbar toolbar;
@@ -109,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 //PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
                 //pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
-                startActivity(new Intent(MainActivity.this, FormPlannedRequest.class));
+                startActivity(new Intent(MainActivity.this, FormPlannedRequestActi.class));
 
 
             }

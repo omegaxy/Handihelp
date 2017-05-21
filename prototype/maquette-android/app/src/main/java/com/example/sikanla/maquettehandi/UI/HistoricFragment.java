@@ -1,11 +1,5 @@
 package com.example.sikanla.maquettehandi.UI;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,14 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
-import com.example.sikanla.maquettehandi.DialogFragment.HelpTypeDiaolgFragment;
-import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
+import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
 
 /**
  * Created by Sikanla on 13/02/2017.
@@ -88,10 +79,10 @@ public class HistoricFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                HelpTypeDiaolgFragment help = new HelpTypeDiaolgFragment();
+                HelpType_DF help = new HelpType_DF();
                 help.setArguments(args);
 
-                help.show(getActivity().getFragmentManager(), "HelpTypeDiaolgFragment");
+                help.show(getActivity().getFragmentManager(), "HelpType_DF");
 
             }
 

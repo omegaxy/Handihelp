@@ -1,7 +1,5 @@
 package com.example.sikanla.maquettehandi.UI;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,24 +7,21 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.example.sikanla.maquettehandi.DialogFragment.HelpTypeDiaolgFragment;
+import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
+import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
 
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import static android.R.drawable.edit_text;
-
-public class FormPlannedRequest extends Activity {
+public class FormPlannedRequestActi extends Activity implements HelpType_DF.DialogListener {
 
 
     private TextView dateDisplay;
@@ -43,6 +38,7 @@ public class FormPlannedRequest extends Activity {
     //private TextView mEpochTimeDisplay;
     //private long epochTime;
     Date date;
+    private String helpType;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
@@ -69,8 +65,6 @@ public class FormPlannedRequest extends Activity {
     };
 
     TimePicker timePicker;
-
-
 
 
     @Override
@@ -107,7 +101,7 @@ public class FormPlannedRequest extends Activity {
             }
         });
 
-        bClose.setOnClickListener( new View.OnClickListener() {
+        bClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -117,10 +111,8 @@ public class FormPlannedRequest extends Activity {
         bHelpType.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle args = new Bundle();
-                HelpTypeDiaolgFragment help = new HelpTypeDiaolgFragment();
-                help.setArguments(args);
-                help.show(getFragmentManager(), "HelpTypeDiaolgFragment");
+                HelpType_DF help = new HelpType_DF();
+                help.show(getFragmentManager(), "HelpType_DF");
             }
         });
 
@@ -219,4 +211,55 @@ public class FormPlannedRequest extends Activity {
         return null;
     }
 
+
+    @Override
+    public void onDialogClick(String id) {
+        switch (id) {
+            case "1":
+                bHelpType.setText(PlannedRequest.n1);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type1));
+                break;
+            case "2":
+                bHelpType.setText(PlannedRequest.n2);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type2));
+                break;
+            case "3":
+                bHelpType.setText(PlannedRequest.n3);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type3));
+                break;
+            case "4":
+                bHelpType.setText(PlannedRequest.n4);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type4));
+                break;
+            case "5":
+                bHelpType.setText(PlannedRequest.n5);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type5));
+                break;
+            case "6":
+                bHelpType.setText(PlannedRequest.n6);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type6));
+                break;
+            case "7":
+                bHelpType.setText(PlannedRequest.n7);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type7));
+                break;
+            case "8":
+                bHelpType.setText(PlannedRequest.n8);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type8));
+                break;
+            case "9":
+                bHelpType.setText(PlannedRequest.n9);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type9));
+                break;
+            case "10":
+                bHelpType.setText(PlannedRequest.n10);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type10));
+                break;
+            case "11":
+                bHelpType.setText(PlannedRequest.n11);
+                bHelpType.setBackgroundColor(getResources().getColor(R.color.type11));
+                break;
+        }
+        this.helpType = id;
+    }
 }
