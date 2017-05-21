@@ -22,15 +22,6 @@ import com.squareup.picasso.Picasso;
 
 public class HistoricFragment extends Fragment {
 
-    ImageView imageView1;
-
-    private Button testButton, helpButton;
-    private Button testButtonImage, uploaB;
-    private ImageView imageView;
-    private int numberButton = 0;
-    private TextView text;
-    RequestQueue requestQueue;
-
     public HistoricFragment() {
     }
 
@@ -46,47 +37,13 @@ public class HistoricFragment extends Fragment {
 
     }
 
-    public interface EditNameDialogListener {
-        void onFinishEditDialog(String str);
-    }
 
-    public void onFinishEditDialog(String str) {
-        numberButton = Integer.parseInt(str);
-        text.setText(str);
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-        imageView = (ImageView) getActivity().findViewById(R.id.imagehist);
-        User user = new User();
-        Picasso.with(getContext()).setLoggingEnabled(true);
 
-        final ImageRequester imageRequester = new ImageRequester();
-        imageRequester.getImage(user.getUserId(), getContext(), new ImageRequester.ImageInterface() {
-            @Override
-            public void getUrl(String url) {
-                if (url != null && imageView != null)
-                    Picasso.with(getContext()).load(url).fit().into(imageView);
-            }
-        });
 
-        text = (TextView) getActivity().findViewById(R.id.textView1);
-        helpButton = (Button) getActivity().findViewById(R.id.helpButton);
-
-        helpButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Bundle args = new Bundle();
-                HelpType_DF help = new HelpType_DF();
-                help.setArguments(args);
-
-                help.show(getActivity().getFragmentManager(), "HelpType_DF");
-
-            }
-
-        });
 
     }
 

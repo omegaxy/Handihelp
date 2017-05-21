@@ -1,28 +1,16 @@
 package com.example.sikanla.maquettehandi.DialogFragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.UI.InstantFragment;
 
 /**
  * Created by Nicolas on 15/05/2017.
@@ -136,8 +124,8 @@ public class HelpType_DF extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                mListener.onDialogClick(numberButton);
                 numberButton = "6";
+                mListener.onDialogClick(numberButton);
                 dismiss();
             }
         });

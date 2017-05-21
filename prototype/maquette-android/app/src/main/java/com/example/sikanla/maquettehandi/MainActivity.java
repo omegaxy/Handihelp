@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PickAideDialogFragment pickAideDialogFragment = new PickAideDialogFragment();
-                //pickAideDialogFragment.show(getFragmentManager(), "ProfileDialogFragment");
                 startActivity(new Intent(MainActivity.this, FormPlannedRequestActi.class));
 
 

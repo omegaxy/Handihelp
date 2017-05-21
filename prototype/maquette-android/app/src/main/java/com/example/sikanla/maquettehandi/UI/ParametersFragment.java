@@ -2,32 +2,22 @@ package com.example.sikanla.maquettehandi.UI;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-
-import com.example.sikanla.maquettehandi.PlannedRequestCardAdapter;
-import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.identification.User;
-import com.example.sikanla.maquettehandi.network.ImageRequester;
-import com.squareup.picasso.Picasso;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.io.IOException;
+import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.squareup.picasso.Picasso;
 
 
 /**
