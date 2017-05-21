@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
+        launchFragment(new TabFragment(), "Accueil");
 
 
     }
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        navigationView.setCheckedItem(R.id.nav_accueil);
         User user = new User();
         View headerView = navigationView.getHeaderView(0);
         imageViewHeader = (ImageView) headerView.findViewById(R.id.user_pp);
@@ -149,36 +151,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Fragment fragment = new Fragment();
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+        if (!item.isChecked()) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Fragment fragment = new Fragment();
 
-        tabLayout.setVisibility(View.GONE);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+            tabLayout.setVisibility(View.GONE);
 
-        switch (item.getItemId()) {
-            case R.id.nav_accueil:
-                fragment = new TabFragment();
-                break;
-            case R.id.nav_friend:
-                break;
-            case R.id.nav_settings:
-                fragment = new ParametersFragment();
+            switch (item.getItemId()) {
+                case R.id.nav_accueil:
+                    fragment = new TabFragment();
+                    navigationView.setCheckedItem(R.id.nav_accueil);
+                    break;
+                case R.id.nav_friend:
+                    break;
+                case R.id.nav_settings:
+                    navigationView.setCheckedItem(R.id.nav_settings);
+
+                    fragment = new ParametersFragment();
+            }
+
+            launchFragment(fragment, item.getTitle().toString());
+            item.setChecked(true);
         }
-
-        if (fragment != null) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commit();
-        }
-
-
-        // Highlight the selected item, update the title, and close the drawer
-        //mDrawerList.setItemChecked(position, true);
-        //setTitle(mPlanetTitles[position]);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void launchFragment(Fragment fragment, String title) {
+        if (fragment != null) {
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+            setTitle(title);
+        }
     }
 }
 
