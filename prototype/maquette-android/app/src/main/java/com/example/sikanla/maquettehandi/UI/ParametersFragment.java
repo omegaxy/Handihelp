@@ -2,6 +2,7 @@ package com.example.sikanla.maquettehandi.UI;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -95,36 +96,29 @@ public class ParametersFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             ImageRequester imageRequester = new ImageRequester();
             if (requestCode == 10) {
-
                 Uri imageUri = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
-                    imageRequester.sendImage(bitmap, getActivity(), new ImageRequester.ImageInterface2() {
-                        @Override
-                        public void onImageSent(Boolean success) {
-                            if (success) {
-                                NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                                User user = new User();
-                                View headerView = navigationView.getHeaderView(0);
-                                final ImageView imageViewHeader = (ImageView) headerView.findViewById(R.id.user_pp);
-                                ImageRequester imageRequester = new ImageRequester();
-                                imageRequester.getImage(user.getUserId(), getContext(), new ImageRequester.ImageInterface() {
-                                    @Override
-                                    public void getUrl(String url) {
-                                        if (url != null) {
-                                            Picasso.with(getActivity()).load(url).into(imageViewHeader);
-                                            Picasso.with(getContext()).load(url).into(imageView);
-                                        }
+
+                imageRequester.sendImage(imageUri, getActivity(), new ImageRequester.ImageInterface2() {
+                    @Override
+                    public void onImageSent(Boolean success) {
+                        if (success) {
+                            NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                            User user = new User();
+                            View headerView = navigationView.getHeaderView(0);
+                            final ImageView imageViewHeader = (ImageView) headerView.findViewById(R.id.user_pp);
+                            ImageRequester imageRequester = new ImageRequester();
+                            imageRequester.getImage(user.getUserId(), getContext(), new ImageRequester.ImageInterface() {
+                                @Override
+                                public void getUrl(String url) {
+                                    if (url != null) {
+                                        Picasso.with(getActivity()).load(url).into(imageViewHeader);
+                                        Picasso.with(getContext()).load(url).into(imageView);
                                     }
-                                });
-                            }
+                                }
+                            });
                         }
-                    });
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    }
+                });
 
 
             }
