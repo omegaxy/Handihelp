@@ -20,8 +20,11 @@ import com.example.sikanla.maquettehandi.R;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import static android.R.drawable.edit_text;
 
 public class FormPlannedRequest extends Activity {
 
@@ -94,6 +97,8 @@ public class FormPlannedRequest extends Activity {
                 showDialog(DATE_DIALOG_ID);
             }
         });
+
+
         // Set an OnClickListener on the Change The Time Button
         mPickTime.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("deprecation")
