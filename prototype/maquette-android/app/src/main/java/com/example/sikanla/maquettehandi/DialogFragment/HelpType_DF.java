@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.UI.FormPlannedRequestActi;
 
 /**
  * Created by Nicolas on 15/05/2017.
@@ -38,12 +39,7 @@ public class HelpType_DF extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try {
-            mListener = (DialogListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement DialogListener");
-        }
+
     }
 
 
@@ -55,6 +51,13 @@ public class HelpType_DF extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         v = inflater.inflate(R.layout.fragment_help_type, null);
+        try {
+
+            mListener = (DialogListener) (FormPlannedRequestActi) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement DialogListener");
+        }
 
         button1 = (Button) v.findViewById(R.id.Button1);
         button2 = (Button) v.findViewById(R.id.Button2);

@@ -48,7 +48,7 @@ public class TabFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ScheduledFragment(), "Demandes");
         adapter.addFragment(new InstantFragment(), "Messages");
-        adapter.addFragment(new HistoricFragment(), "testTab");
+        //adapter.addFragment(new HistoricFragment(), "testTab");
 
         viewPager.setAdapter(adapter);
     }
