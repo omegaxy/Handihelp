@@ -54,8 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         //warning is invisible at first
         warnTv.setVisibility(View.INVISIBLE);
         loginButton = (Button) findViewById(R.id.loginbutton);
-        registerButton =(Button) findViewById(R.id.goregister);
+        registerButton = (Button) findViewById(R.id.goregister);
         loginButton.setEnabled(false);
+        loginButton.setAlpha(.5f);
+        loginButton.setBackgroundColor(getResources().getColor(R.color.greyy));
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +89,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!isEmailValid(s) || passwordEditText.getText().toString().isEmpty()) {
                     loginButton.setEnabled(false);
+                    loginButton.setAlpha(.5f);
+
+
                 } else {
                     loginButton.setEnabled(true);
+                    loginButton.setAlpha(1f);
+
                 }
             }
 
@@ -107,8 +114,14 @@ public class LoginActivity extends AppCompatActivity {
                 //On user changes the text
                 if (!isEmailValid(emailEditText.getText()) || s.toString().isEmpty()) {
                     loginButton.setEnabled(false);
+                    loginButton.setAlpha(.5f);
+
+
                 } else {
                     loginButton.setEnabled(true);
+                    loginButton.setAlpha(1f);
+
+
                 }
             }
 
@@ -130,14 +143,14 @@ public class LoginActivity extends AppCompatActivity {
         parameters.put("email", email);
         parameters.put("password", password);
 
-        new AllRequest(this, parameters,headers, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
+        new AllRequest(this, parameters, headers, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 User user = new User();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get("error").toString() == "false") {
-                        user.saveUserOnPhone(getBaseContext(),jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                        user.saveUserOnPhone(getBaseContext(), jsonObject.getString("apiKey"), jsonObject.getString("id"),
                                 jsonObject.getString("firstname"), jsonObject.getString("surname"),
                                 jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                         warnTv.setVisibility(View.INVISIBLE);
