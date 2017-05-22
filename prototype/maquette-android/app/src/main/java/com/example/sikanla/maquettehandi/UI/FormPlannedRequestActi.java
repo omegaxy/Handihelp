@@ -16,6 +16,7 @@ import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
 
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -43,26 +44,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
     // The callback received when the user "sets" the date in the Dialog
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
-            updateDisplay(0);
-            updateDisplay(2);
-        }
-    };
-    // The callback received when the user "sets" the time in the dialog
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            mHour = hourOfDay;
-            mMinute = minute;
-            updateDisplay(1);
-            updateDisplay(2);
-        }
-    };
 
     TimePicker timePicker;
 
@@ -71,6 +53,8 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.form_planned_request);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.backg));
 
@@ -136,6 +120,26 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
 
 
     }
+    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            updateDisplay(0);
+            updateDisplay(2);
+        }
+    };
+    // The callback received when the user "sets" the time in the dialog
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            mHour = hourOfDay;
+            mMinute = minute;
+            updateDisplay(1);
+            updateDisplay(2);
+        }
+    };
 
 
     // Update the date in the TextView
