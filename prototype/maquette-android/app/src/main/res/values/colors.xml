@@ -15,6 +15,23 @@
     <color name="oraaange">#deb08a</color>
     <color name="black">#000000</color>
     <color name="trans">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whitedarker">#F0F3F4</color>
+
+    <color name="type1">#E50000</color>
+    <color name="type2">#884EA0</color>
+    <color name="type3">#1F618D</color>
+    <color name="type4">#2E86C1</color>
+    <color name="type5">#138D75</color>
+    <color name="type6">#D4AC0D</color>
+    <color name="type7">#D68910</color>
+    <color name="type8">#AE3F3F</color>
+    <color name="type9">#28B463</color>
+    <color name="type10">#CE9AA3</color>
+    <color name="type11">#707B7C</color>
+
+    <!--
+    previous colors
 
     <color name="type1">#bdd5ed</color>
     <color name="type2">#F7CAAB</color>
@@ -22,13 +39,12 @@
     <color name="type4">#BFBFBF</color>
     <color name="type5">#D8B9DB</color>
     <color name="type6">#C5E0B3</color>
-    <color name="type7">#988EEF</color>
+    <color name="type7">#AF7AC5</color>
     <color name="type8">#F694BA</color>
     <color name="type9">#B5C89B</color>
     <color name="type10">#93EDF6</color>
     <color name="type11">#7EE6AB</color>
 
-    <color name="layoutbackground">#f6f6f6</color>
-
+    -->
 
 </resources>

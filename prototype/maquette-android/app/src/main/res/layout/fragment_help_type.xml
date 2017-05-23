@@ -3,13 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layoutbackground"
+    android:background="@color/backg"
+
     android:layout_margin="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -24,9 +26,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TYPE OF HELP"
+                android:text="TYPE D'AIDE"
                 android:textAlignment="center"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -36,6 +39,7 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0.19"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text=" ? " />
 
@@ -51,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type1"
                 android:text="Mobilité" />
 
@@ -66,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type2"
                 android:text="Vision" />
 
@@ -81,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type3"
                 android:text="Travaux manuels" />
 
@@ -96,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type4"
                 android:text="Tâches ménagères" />
 
@@ -111,6 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type5"
                 android:text="Force physique" />
 
@@ -126,6 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type6"
                 android:text="Tâches techniques" />
 
@@ -141,6 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type7"
                 android:text="Communication" />
 
@@ -156,6 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type8"
                 android:text="administratives" />
 
@@ -171,6 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type9"
                 android:text="Jardins" />
 
@@ -186,6 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type10"
                 android:text="Social" />
 
@@ -201,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:background="@color/type11"
                 android:text="Autres" />
 
