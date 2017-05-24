@@ -38,26 +38,60 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
 
+
+        <Button
+            android:id="@+id/fp_add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Ajouter en ami"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/fp_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/fp_add_friend"
+            android:layout_alignLeft="@+id/fp_add_friend"
+            android:layout_alignRight="@+id/fp_add_friend"
+            android:layout_alignStart="@+id/fp_add_friend"
+            android:layout_below="@+id/fp_add_friend"
+            android:text="Message" />
+
         <ImageView
             android:id="@+id/profileImageV"
             android:layout_width="130dp"
-            android:scaleType="centerCrop"
             android:layout_height="130dp"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>
+
 
     <RatingBar
         android:id="@+id/ratingBar"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
         android:isIndicator="true"
         android:numStars="5" />
+
 
     <TextView
         android:id="@+id/textView4"

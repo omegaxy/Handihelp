@@ -9,6 +9,7 @@ import android.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +25,7 @@ public class ProfileDialogFragment extends DialogFragment {
     private TextView ageTv;
     private ImageView imageViewPP;
     private String id;
-
-
+    private Button message, addFriend;
 
 
     @NonNull
@@ -39,14 +39,35 @@ public class ProfileDialogFragment extends DialogFragment {
         fistNameTv = (TextView) rootView.findViewById(R.id.firstnamedialog);
         ageTv = (TextView) rootView.findViewById(R.id.agedialog);
         imageViewPP = (ImageView) rootView.findViewById(R.id.profileImageV);
+        message = ( Button) rootView.findViewById(R.id.fp_message);
+        addFriend = (Button) rootView.findViewById(R.id.fp_add_friend);
 
-        id= getArguments().getString("id");
-        PlannedRequester plannedRequest= new PlannedRequester();
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                Bundle args = new Bundle();
+                args.putString("firstname", fistNameTv.getText().toString());
+                args.putString("id", id);
+                sendMessageDialog.setArguments(args);
+                sendMessageDialog.show(getActivity().getFragmentManager(), "sendMessage");
+            }
+        });
+
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        id = getArguments().getString("id");
+        PlannedRequester plannedRequest = new PlannedRequester();
         plannedRequest.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 fistNameTv.setText(firstName);
-                ageTv.setText(String.valueOf(2017-Integer.parseInt(age)));
+                ageTv.setText(String.valueOf(2017 - Integer.parseInt(age)));
             }
         });
 
