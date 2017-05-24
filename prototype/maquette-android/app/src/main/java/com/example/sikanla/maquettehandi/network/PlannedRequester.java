@@ -28,6 +28,10 @@ public class PlannedRequester {
         void getUser(String firstName, String surname, String age, Boolean success);
     }
 
+    public interface PostPlannedCB {
+        void onPlannedPosted(Boolean success);
+    }
+
     public void getPlannedRequest(Context context, final PlannedRequestCB plannedRequestCB) {
         User user = new User();
         Map<String, String> headers = new HashMap<>();
@@ -98,6 +102,38 @@ public class PlannedRequester {
                     }
                 } else {
                     getUserCB.getUser("", "", "", false);
+
+                }
+            }
+        });
+    }
+
+    public void sendPlannedRequest(Context context, String help_category, String description,
+                                   String scheduled_at,String localisation, final PostPlannedCB postPlannedCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("help_category", help_category);
+        parameters.put("description", description);
+        parameters.put("scheduled_at", scheduled_at);
+        parameters.put("localisation", localisation);
+
+        new AllRequest(context, parameters, headers, "/plannedrequest", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            postPlannedCB.onPlannedPosted(true);
+                        } else
+                            postPlannedCB.onPlannedPosted(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    postPlannedCB.onPlannedPosted(false);
 
                 }
             }
