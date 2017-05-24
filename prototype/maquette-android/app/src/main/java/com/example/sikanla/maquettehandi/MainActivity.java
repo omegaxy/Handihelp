@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 
+import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.UI.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
@@ -63,6 +64,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imageViewHeader = (ImageView) headerView.findViewById(R.id.user_pp);
         firstnameHeader = (TextView) headerView.findViewById(R.id.firstname_header);
         firstnameHeader.setText(user.getFirstName());
+        imageViewHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user= new User();
+                ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("id", user.getUserId());
+                profileDialogFragment.setArguments(args);
+                profileDialogFragment.show(getFragmentManager(), "answerPlanned");
+            }
+        });
         ImageRequester imageRequester = new ImageRequester();
         imageRequester.getImage(user.getUserId(), this, new ImageRequester.ImageInterface() {
             @Override
