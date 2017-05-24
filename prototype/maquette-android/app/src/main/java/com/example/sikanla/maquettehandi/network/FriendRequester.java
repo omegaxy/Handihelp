@@ -2,7 +2,7 @@ package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
 
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

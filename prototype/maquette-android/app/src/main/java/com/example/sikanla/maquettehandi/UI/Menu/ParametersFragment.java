@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi.UI;
+package com.example.sikanla.maquettehandi.UI.Menu;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 

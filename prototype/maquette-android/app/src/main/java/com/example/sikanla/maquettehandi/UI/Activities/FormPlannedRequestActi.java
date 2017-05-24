@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi.UI;
+package com.example.sikanla.maquettehandi.UI.Activities;
 
 import java.util.Calendar;
 import java.util.Date;

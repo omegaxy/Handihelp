@@ -23,11 +23,11 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
-import com.example.sikanla.maquettehandi.UI.FormPlannedRequestActi;
-import com.example.sikanla.maquettehandi.UI.ParametersFragment;
+import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
+import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 

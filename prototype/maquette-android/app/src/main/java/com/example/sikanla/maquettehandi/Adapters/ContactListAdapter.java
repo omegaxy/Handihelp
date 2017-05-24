@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.Adapters;
 
 /**
  * Created by Sikanla on 15/05/2017.
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 

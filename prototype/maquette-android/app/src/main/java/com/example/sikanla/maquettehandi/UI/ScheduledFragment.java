@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.sikanla.maquettehandi.PlannedRequestCardAdapter;
+import com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;

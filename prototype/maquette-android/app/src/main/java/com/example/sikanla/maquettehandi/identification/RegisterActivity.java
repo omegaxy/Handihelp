@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.MainActivity;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.AllRequest;
 

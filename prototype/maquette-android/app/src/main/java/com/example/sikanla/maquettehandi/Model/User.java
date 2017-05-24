@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi.identification;
+package com.example.sikanla.maquettehandi.Model;
 
 import android.app.Application;
 import android.content.Context;

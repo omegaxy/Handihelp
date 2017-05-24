@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.Adapters;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.DialogFragment.AnswerPlanR_DF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.identification.LoginActivity;
 
 import java.text.SimpleDateFormat;

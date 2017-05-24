@@ -4,17 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.design.widget.NavigationView;
-import android.text.BoringLayout;
 import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.identification.User;
-import com.squareup.picasso.Picasso;
+import com.example.sikanla.maquettehandi.Model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

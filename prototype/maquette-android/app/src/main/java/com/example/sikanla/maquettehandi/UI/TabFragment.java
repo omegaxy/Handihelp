@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.ViewPagerAdapter;
+import com.example.sikanla.maquettehandi.Adapters.ViewPagerAdapter;
 
 /**
  * Created by Sikanla on 20/05/2017.
@@ -47,7 +47,7 @@ public class TabFragment extends Fragment {
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ScheduledFragment(), "Demandes");
-        adapter.addFragment(new InstantFragment(), "Messages");
+        adapter.addFragment(new MessageFragment(), "Messages");
         //adapter.addFragment(new HistoricFragment(), "testTab");
 
         viewPager.setAdapter(adapter);

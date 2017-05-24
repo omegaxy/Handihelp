@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.sikanla.maquettehandi.ContactListAdapter;
+import com.example.sikanla.maquettehandi.Adapters.ContactListAdapter;
 import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.MessageRequester;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
  * Created by Sikanla on 13/02/2017.
  */
 
-public class InstantFragment extends Fragment {
+public class MessageFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private ListView listView;
     private ContactListAdapter adapter;
 
 
-    public InstantFragment() {
+    public MessageFragment() {
     }
 
     @Override

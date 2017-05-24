@@ -1,4 +1,4 @@
-package com.example.sikanla.maquettehandi;
+package com.example.sikanla.maquettehandi.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -2,7 +2,7 @@ package com.example.sikanla.maquettehandi.network;
 
 import android.content.SharedPreferences;
 
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -10,7 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  * Created by Sikanla on 08/05/2017.
  */
 
-public class FirebaseNotification extends FirebaseInstanceIdService {
+public class FirebaseToken extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {

@@ -1,10 +1,9 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.sikanla.maquettehandi.Model.Contact;
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

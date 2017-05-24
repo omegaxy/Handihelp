@@ -15,14 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.UI.ParametersFragment;
-import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.squareup.picasso.Picasso;
 
-import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 public class ProfileDialogFragment extends DialogFragment {
