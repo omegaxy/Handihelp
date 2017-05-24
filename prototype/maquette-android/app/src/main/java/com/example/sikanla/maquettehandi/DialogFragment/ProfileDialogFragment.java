@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.UI.ParametersFragment;
 import com.example.sikanla.maquettehandi.identification.User;
+import com.example.sikanla.maquettehandi.network.FriendRequester;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.squareup.picasso.Picasso;
 
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 public class ProfileDialogFragment extends DialogFragment {
 
@@ -37,7 +39,7 @@ public class ProfileDialogFragment extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -76,6 +78,18 @@ public class ProfileDialogFragment extends DialogFragment {
             addFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    FriendRequester friendRequester = new FriendRequester();
+                    friendRequester.addFriend(getActivity(), id, new FriendRequester.AddFriendCB() {
+                        @Override
+                        public void onFriendAdded(Boolean success) {
+                            if (success) {
+                                addFriend.setEnabled(false);
+                                addFriend.setAlpha(0.5f);
+                            } else {
+                                Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
                 }
             });
