@@ -24,6 +24,7 @@ import com.crashlytics.android.Crashlytics;
 
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
+import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 
@@ -171,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationView.setCheckedItem(R.id.nav_accueil);
                     break;
                 case R.id.nav_friend:
+                    fragment= new FriendsFragment();
+                    navigationView.setCheckedItem(R.id.nav_friend);
                     break;
                 case R.id.nav_settings:
                     navigationView.setCheckedItem(R.id.nav_settings);
