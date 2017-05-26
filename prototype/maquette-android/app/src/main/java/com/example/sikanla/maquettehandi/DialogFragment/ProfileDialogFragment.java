@@ -76,20 +76,40 @@ public class ProfileDialogFragment extends DialogFragment {
             message = (Button) rootView.findViewById(R.id.fp_message);
             addFriend = (Button) rootView.findViewById(R.id.fp_add_friend);
 
+            addFriend.setBackgroundColor(getResources().getColor(R.color.dd));
+
             if (isFriend(user.getFriendList(), id)) {
-                addFriend.setEnabled(false);
-                addFriend.setAlpha(0.5f);
-            } else {
-                addFriend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        FriendRequester friendRequester = new FriendRequester();
+                addFriend.setText("Supprimer des amis");
+                addFriend.setBackgroundColor(getResources().getColor(R.color.type8));
+            }
+
+            addFriend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FriendRequester friendRequester = new FriendRequester();
+
+                    if (isFriend(user.getFriendList(), id)) {
+                        friendRequester.deleteFriend(getActivity(), id, new FriendRequester.DeleteFriendCB() {
+                            @Override
+                            public void onFriendDeleted(Boolean success) {
+                                if (success) {
+                                    addFriend.setText("Ajouter en ami");
+                                    addFriend.setBackgroundColor(getResources().getColor(R.color.dd));
+                                    user.deleteFriend(id);
+
+                                } else {
+                                    Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                    } else {
                         friendRequester.addFriend(getActivity(), id, new FriendRequester.AddFriendCB() {
                             @Override
                             public void onFriendAdded(Boolean success) {
                                 if (success) {
-                                    addFriend.setEnabled(false);
-                                    addFriend.setAlpha(0.5f);
+                                    addFriend.setText("Supprimer des amis");
+                                    addFriend.setBackgroundColor(getResources().getColor(R.color.type8));
                                     user.addFriend(id);
                                 } else {
                                     Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
@@ -98,9 +118,8 @@ public class ProfileDialogFragment extends DialogFragment {
                         });
 
                     }
-                });
-
-            }
+                }
+            });
 
 
             message.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +150,8 @@ public class ProfileDialogFragment extends DialogFragment {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 fistNameTv.setText(firstName);
-                ageTv.setText(String.valueOf(2017 - Integer.parseInt(age)));
+                if (!age.equals(""))
+                    ageTv.setText(String.valueOf(2017 - Integer.parseInt(age)));
             }
         });
 
@@ -148,9 +168,11 @@ public class ProfileDialogFragment extends DialogFragment {
     }
 
     private boolean isFriend(ArrayList<String> arrayList, String id) {
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (arrayList.get(i) == id)
-                return true;
+        if (arrayList != null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i) == id)
+                    return true;
+            }
         }
         return false;
     }

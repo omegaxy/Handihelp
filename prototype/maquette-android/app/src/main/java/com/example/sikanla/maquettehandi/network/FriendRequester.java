@@ -23,6 +23,10 @@ public class FriendRequester {
         void onFriendAdded(Boolean success);
 
     }
+    public interface DeleteFriendCB {
+        void onFriendDeleted(Boolean success);
+
+    }
 
     public interface GetFriendCB {
         void getArrayFriends(ArrayList<String> arrayList, Boolean success);
@@ -99,4 +103,31 @@ public class FriendRequester {
         }
         return strings;
     }
+    public void deleteFriend(Context context, String id_friend, final DeleteFriendCB deleteFriendCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("id_friend", id_friend);
+        new AllRequest(context, parameters, headers, "/user/unfriend", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            deleteFriendCB.onFriendDeleted(true);
+                        } else
+                            deleteFriendCB.onFriendDeleted(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    deleteFriendCB.onFriendDeleted(false);
+
+                }
+            }
+        });
+    }
+
 }

@@ -79,6 +79,10 @@ public class User extends Application {
         this.listFriendsIds.add(id_friend);
     }
 
+    public void deleteFriend(String id_friend) {
+        listFriendsIds.remove(id_friend);
+    }
+
     public ArrayList<String> getFriendList() {
         return listFriendsIds;
     }
