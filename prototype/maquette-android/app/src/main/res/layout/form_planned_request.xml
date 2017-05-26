@@ -68,7 +68,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/localisation"
+                android:id="@+id/localisation_fpA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_help_prog_date"
                         android:text="Date"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_help_prog_time"
                         android:text="Heure"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -147,7 +147,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/commentaire_fpA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

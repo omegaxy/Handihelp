@@ -1,8 +1,5 @@
 package com.example.sikanla.maquettehandi.UI.Activities;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,45 +10,42 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-
-import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
-import com.example.sikanla.maquettehandi.Model.PlannedRequest;
-import com.example.sikanla.maquettehandi.R;
-
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
+import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.PlannedRequester;
+
+import java.text.ParseException;
+import java.util.Calendar;
 
 public class FormPlannedRequestActi extends Activity implements HelpType_DF.DialogListener {
 
 
-    private TextView dateDisplay;
     private Button mPickDate;
     private int mYear;
     private int mMonth;
     private int mDay;
     private Button mPickTime;
-    private TextView mTimeDisplay;
     private int mHour;
     private int mMinute;
     private Button bClose;
     private Button bHelpType;
-    //private TextView mEpochTimeDisplay;
-    //private long epochTime;
-    Date date;
-    private String helpType;
+    private EditText localisationEt;
+    private EditText commentaireEt;
+
+    private String helpType = "";
     private Button bsend;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
     // The callback received when the user "sets" the date in the Dialog
-
-
-    TimePicker timePicker;
 
 
     @Override
@@ -63,16 +57,14 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.backg));
 
-        //timePicker.setIs24HourView(true);
-        // Capture our View elements
-        /*dateDisplay = (TextView) findViewById(R.id.dateDisplay);
-        mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);*/
-        //mEpochTimeDisplay = (TextView) findViewById(R.id.epochTimeDisplay);
+
         mPickDate = (Button) findViewById(R.id.pickDate);
         mPickTime = (Button) findViewById(R.id.pickTime);
         bClose = (Button) findViewById(R.id.close_btn);
         bHelpType = (Button) findViewById(R.id.aidetype_btn);
         bsend = (Button) findViewById(R.id.send_planned_request_btn);
+        localisationEt = (EditText) findViewById(R.id.localisation_fpA);
+        commentaireEt = ( EditText) findViewById(R.id.commentaire_fpA);
 
         bsend.setEnabled(false);
         bsend.setAlpha(.5f);
@@ -85,7 +77,6 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             public void onClick(View v) {
                 showDialog(DATE_DIALOG_ID);
             }
-
 
 
         });
@@ -115,15 +106,24 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         });
 
 
-
-
         bsend.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v){
-            
-        }
+            public void onClick(View v) {
+                PlannedRequester plannedRequester= new PlannedRequester();
+                plannedRequester.sendPlannedRequest(getApplicationContext(),helpType,commentaireEt.getText().toString(),
+                        getEpoch(),localisationEt.getText().toString(), new PlannedRequester.PostPlannedCB() {
+                            @Override
+                            public void onPlannedPosted(Boolean success) {
+                                if (success) {
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(),"ERREUR",Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+            }
         });
-
 
 
         // Get the current date
@@ -133,22 +133,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         mDay = c.get(Calendar.DAY_OF_MONTH);
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
-        //date = c.getTime();	//get the current date time
-        //epochTime = date.getTime();	//get the epoch time
-        // = setEpochTime(mYear, mMonth,  mDay,  mHour,mMinute);
-
-        /*// Display the current date
-        updateDisplay(0);
-        //display the current time
-        updateDisplay(1);*/
-        //display Epoch time
-        //updateDisplay(2);
-
-
-
-
     }
-
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -173,55 +158,21 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
 
 
     // Update the date in the TextView
-    //replace this update display function with the access to DB
     private void updateDisplay(int type) {
         switch (type) {
             case 0:
-                /*dateDisplay.setText(new StringBuilder()
-                        // Month is 0 based so add 1
-                        .append(mDay).append("-").append(mMonth + 1).append("-")
-                        .append(mYear).append("   "));*/
+
                 mPickDate.setText(new StringBuilder()
                         // Month is 0 based so add 1
                         .append(mDay).append("-").append(mMonth + 1).append("-")
                         .append(mYear).append("   "));
-                //mEpochTimeDisplay.setText(new StringBuilder().append(epochTime));
                 break;
             case 1:
-                /*mTimeDisplay.setText(new StringBuilder().append(pad(mHour)).append(":").append((mMinute)));*/
                 mPickTime.setText(new StringBuilder().append(pad(mHour)).append(":").append((mMinute)));
-                //mEpochTimeDisplay.setText(new StringBuilder().append(epochTime));
                 break;
-            /*case 2:
-                mEpochTimeDisplay.setText(Long.toString(setEpochTime(mYear, mMonth, mDay, mHour,
-                        mMinute)));
-                break;*/
+
         }
     }
-
-    /*private long setEpochTime(int mYear2, int mMonth2, int mDay2, int mHour2,
-                              int mMinute2) {
-
-
-        StringBuilder str = new StringBuilder().append(mYear2).append('-')
-                .append(mMonth2).append('-').append(mDay2).append("T")
-                .append(mHour2).append(':')
-                .append(mMinute2).append(':')
-                .append("00.000-0700");    //truncating
-
-        //String str = "Jun 13 2003 23:11:52.454 UTC";
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        Date date = null;
-        try {
-            date = df.parse(str.toString());
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        long epoch = date.getTime();
-        return epoch;
-    }*/
-
 
     // Prepends a "0" to 1-digit minutes
     private static String pad(int c) {
@@ -295,15 +246,13 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
                 break;
         }
         this.helpType = id;
-    }
 
-    private boolean areInputsValids() {
-        if (mPickDate.getText().toString().matches("Date") || mPickTime.getText().toString().matches("Heure") || bHelpType.getText().toString().matches("Type d'aide")) {
-            return false;
+        if (areDateAndTimeValid() && isLocalisationSet()) {
+            bsend.setEnabled(true);
+            bsend.setAlpha(1f);
         }
-        return true;
-    }
 
+    }
 
     private void startTextWatchers() {
 
@@ -315,8 +264,9 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //On user changes the text
-                if (!areInputsValids()) {
+                if (!areDateAndTimeValid() || helpType == "" || !isLocalisationSet()) {
                     bsend.setEnabled(false);
+                    bsend.setAlpha(0.5f);
                 } else {
                     bsend.setEnabled(true);
                     bsend.setAlpha(1f);
@@ -337,8 +287,9 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //On user changes the text
-                if (!areInputsValids()) {
-                    bsend.setEnabled(false);
+                if (!areDateAndTimeValid() || helpType.isEmpty() || !isLocalisationSet()) {
+                        bsend.setEnabled(false);
+                    bsend.setAlpha(0.5f);
                 } else {
                     bsend.setEnabled(true);
                     bsend.setAlpha(1f);
@@ -351,16 +302,17 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
 
         });
 
-        bHelpType.addTextChangedListener(new TextWatcher() {
+        localisationEt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //On user changes the text
-                if (!areInputsValids()) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!areDateAndTimeValid() || helpType.isEmpty() || !isLocalisationSet()) {
                     bsend.setEnabled(false);
+                    bsend.setAlpha(0.5f);
                 } else {
                     bsend.setEnabled(true);
                     bsend.setAlpha(1f);
@@ -368,9 +320,32 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable editable) {
 
+            }
         });
+
+
+    }
+
+    private boolean areDateAndTimeValid() {
+        return (!mPickDate.getText().toString().matches("Date") && !mPickTime.getText().toString().matches("Heure"));
+    }
+
+    private boolean isLocalisationSet() {
+        return !localisationEt.getText().toString().matches("");
+    }
+    private String getEpoch(){
+        long epoch = 0;
+
+        try {
+             epoch = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
+                    .parse(mPickDate.getText().toString()+" "+mPickTime.getText().toString())
+                    .getTime() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return String.valueOf(epoch);
     }
 }
