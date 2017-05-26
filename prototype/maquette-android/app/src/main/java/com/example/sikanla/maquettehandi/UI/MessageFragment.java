@@ -82,10 +82,6 @@ public class MessageFragment extends Fragment {
             }
 
 
-            @Override
-            public void getArrayMessages(ArrayList<String> arrayList) {
-
-            }
         });
     }
 }

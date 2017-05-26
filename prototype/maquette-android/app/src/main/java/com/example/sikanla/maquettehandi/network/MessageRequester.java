@@ -1,8 +1,10 @@
 package com.example.sikanla.maquettehandi.network;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.sikanla.maquettehandi.Model.Contact;
+import com.example.sikanla.maquettehandi.Model.Message;
 import com.example.sikanla.maquettehandi.Model.User;
 
 import org.json.JSONArray;
@@ -20,13 +22,15 @@ import java.util.Map;
 public class MessageRequester {
     public interface MessagesCB {
         void getArrayContacts(ArrayList<Contact> s, Boolean success);
-
-        void getArrayMessages(ArrayList<String> arrayList);
     }
 
     public interface SendMessagesCB {
         void onMessageReceived(Boolean success);
 
+    }
+
+    public interface GetMessagesCB {
+        void onMessagesReceived(ArrayList<Message> arrayList, Boolean success);
     }
 
     public void getContacts(Context context, final MessagesCB messagesCB) {
@@ -44,7 +48,7 @@ public class MessageRequester {
                         JSONArray jsonArray = new JSONArray(jsonObject.get("contacts").toString());
 
                         if (jsonObject.get("error").toString() == "false") {
-                            messagesCB.getArrayContacts(fromJson(jsonArray), true);
+                            messagesCB.getArrayContacts(contactsFromJson(jsonArray), true);
 
                         } else
                             messagesCB.getArrayContacts(arrayList, false);
@@ -60,7 +64,7 @@ public class MessageRequester {
     }
 
     // Factory method to convert an array of JSON objects into a list of objects
-    public static ArrayList<Contact> fromJson(JSONArray jsonObjects) {
+    public static ArrayList<Contact> contactsFromJson(JSONArray jsonObjects) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
@@ -103,5 +107,52 @@ public class MessageRequester {
             }
         });
     }
+
+    public void getMessage(Context context, final String idContact, final GetMessagesCB getMessagesCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        new AllRequest(context, parameters, headers, "/messages/"+idContact, AllRequest.GET, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                ArrayList<Message> arrayList = new ArrayList<>();
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = new JSONArray(jsonObject.get("messages").toString());
+
+                        if (jsonObject.get("error").toString() == "false") {
+                            getMessagesCB.onMessagesReceived(messagesFromJson(jsonArray, idContact), true);
+
+                        } else
+                            getMessagesCB.onMessagesReceived(arrayList, false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    getMessagesCB.onMessagesReceived(arrayList, false);
+
+                }
+            }
+        });
+    }
+
+    // Factory method to convert an array of JSON objects into a list of objects
+    public static ArrayList<Message> messagesFromJson(JSONArray jsonObjects, String id) {
+        ArrayList<Message> messages = new ArrayList<Message>();
+        for (int i = 0; i < jsonObjects.length(); i++) {
+            try {
+                Log.e("message",jsonObjects.getJSONObject(i).getString("message"));
+                messages.add(new Message(jsonObjects.getJSONObject(i).getString("message"),
+                        jsonObjects.getJSONObject(i).getString("id_sender") == id));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return messages;
+    }
+
+
 }
 
