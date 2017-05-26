@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.Adapters;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,12 @@ public class DisplayMessageAdapter extends ArrayAdapter<Message> {
 
     public DisplayMessageAdapter(Activity context, ArrayList<Message> arrayList) {
         super(context, R.layout.item_message, arrayList);
+        this.context = context;
 
     }
 
     private static class ViewHolder {
-        TextView firstname;
-        ImageView pictureContact;
+        TextView messageTextView;
     }
 
     @Override
@@ -41,25 +42,23 @@ public class DisplayMessageAdapter extends ArrayAdapter<Message> {
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_message, parent, false);
-            viewHolder.firstname = (TextView) convertView.findViewById(R.id.item_message_tv2);
+            viewHolder.messageTextView = (TextView) convertView.findViewById(R.id.item_message_tv2);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Populate the data from the data object via the viewHolder object
-        if (mess != null)
-            viewHolder.firstname.setText(mess.message);
+        viewHolder.messageTextView.setText(mess.message);
 
-        ImageRequester imageRequester = new ImageRequester();
-        /*imageRequester.getImage(contact.id, context, new ImageRequester.ImageInterface() {
-            @Override
-            public void getUrl(String url) {
-                if (!url.isEmpty())
-                    Picasso.with(context).load(url).into(viewHolder.pictureContact);
+        if (mess.isMine) {
+            viewHolder.messageTextView.setGravity(Gravity.END);
+            viewHolder.messageTextView.setBackgroundColor(context.getResources().getColor(R.color.dd));
+        }
+        if (!mess.isMine) {
+            viewHolder.messageTextView.setGravity(Gravity.LEFT);
+            viewHolder.messageTextView.setBackgroundColor(context.getResources().getColor(R.color.oraaange));
+        }
 
-            }
-        });
-        */
 
         // Return the completed view to render on screen
         return convertView;

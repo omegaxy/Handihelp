@@ -145,7 +145,7 @@ public class MessageRequester {
             try {
                 Log.e("message",jsonObjects.getJSONObject(i).getString("message"));
                 messages.add(new Message(jsonObjects.getJSONObject(i).getString("message"),
-                        jsonObjects.getJSONObject(i).getString("id_sender") == id));
+                        jsonObjects.getJSONObject(i).getString("id_sender") != id));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
