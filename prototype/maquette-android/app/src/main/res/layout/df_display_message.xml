@@ -29,15 +29,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="103dp"
+        android:orientation="horizontal"
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/enq"
+            android:id="@+id/df_display_message_edittext_send"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:hint="Entrez votre message" />
+
+        <Button
+            android:id="@+id/df_display_message_button_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:backgroundTint="@color/dd"
+            android:text="Envoyer" />
 
     </LinearLayout>
 
