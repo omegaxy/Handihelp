@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.sikanla.maquettehandi.network.AllRequest;
+import com.example.sikanla.maquettehandi.network.FriendRequester;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class User extends Application {
     private static String email;
     private SharedPreferences sharedPreferences;
     public static final String MY_PREFS_NAME = "handiPref";
+    private static ArrayList<String> listFriendsIds;
 
 
     public User() {
@@ -38,7 +41,7 @@ public class User extends Application {
         editor.putString("surname", surName);
         editor.putString("email", email);
         editor.putInt("birthyear", birthYear);
-
+        fetchFriendsList(context);
         editor.commit();
     }
 
@@ -57,8 +60,29 @@ public class User extends Application {
         surName = prefs.getString("surname", surName);
         email = prefs.getString("email", email);
         birthYear = prefs.getInt("birthyear", birthYear);
+        fetchFriendsList(context);
 
     }
+
+    public void fetchFriendsList(Context context) {
+        FriendRequester friendRequester = new FriendRequester();
+        friendRequester.getFriends(context, new FriendRequester.GetFriendCB() {
+            @Override
+            public void getArrayFriends(ArrayList<String> arrayList, Boolean success) {
+                if (success)
+                    listFriendsIds = arrayList;
+            }
+        });
+    }
+
+    public void addFriend(String id_friend) {
+        this.listFriendsIds.add(id_friend);
+    }
+
+    public ArrayList<String> getFriendList() {
+        return listFriendsIds;
+    }
+
 
     public void setApikey(String apikey) {
         this.APIKEY = apikey;

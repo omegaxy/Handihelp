@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ProfileDialogFragment extends DialogFragment {
 
 
@@ -49,9 +51,9 @@ public class ProfileDialogFragment extends DialogFragment {
 
         id = getArguments().getString("id");
 
-        User user = new User();
+        final User user = new User();
 //display another layout if you load your own profile
-        if (id == user.getUserId()) {
+        if (id.equals(user.getUserId())) {
             relativeLayout1 = (RelativeLayout) rootView.findViewById(R.id.fp_relative1);
             relativeLayout2 = (RelativeLayout) rootView.findViewById(R.id.fp_relative2);
             imageViewPP2 = (ImageView) rootView.findViewById(R.id.profileImageV2);
@@ -69,28 +71,37 @@ public class ProfileDialogFragment extends DialogFragment {
             });
 
         } else {
+
             imageViewPP = (ImageView) rootView.findViewById(R.id.profileImageV);
             message = (Button) rootView.findViewById(R.id.fp_message);
             addFriend = (Button) rootView.findViewById(R.id.fp_add_friend);
 
-            addFriend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FriendRequester friendRequester = new FriendRequester();
-                    friendRequester.addFriend(getActivity(), id, new FriendRequester.AddFriendCB() {
-                        @Override
-                        public void onFriendAdded(Boolean success) {
-                            if (success) {
-                                addFriend.setEnabled(false);
-                                addFriend.setAlpha(0.5f);
-                            } else {
-                                Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
+            if (isFriend(user.getFriendList(), id)) {
+                addFriend.setEnabled(false);
+                addFriend.setAlpha(0.5f);
+            } else {
+                addFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FriendRequester friendRequester = new FriendRequester();
+                        friendRequester.addFriend(getActivity(), id, new FriendRequester.AddFriendCB() {
+                            @Override
+                            public void onFriendAdded(Boolean success) {
+                                if (success) {
+                                    addFriend.setEnabled(false);
+                                    addFriend.setAlpha(0.5f);
+                                    user.addFriend(id);
+                                } else {
+                                    Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                }
-            });
+                    }
+                });
+
+            }
+
 
             message.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,5 +145,13 @@ public class ProfileDialogFragment extends DialogFragment {
         return builder1.create();
 
 
+    }
+
+    private boolean isFriend(ArrayList<String> arrayList, String id) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i) == id)
+                return true;
+        }
+        return false;
     }
 }

@@ -35,7 +35,7 @@ public class MessageFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_instant, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
         ArrayList<Contact> arrayOfContacts = new ArrayList<Contact>();
         adapter = new ContactListAdapter(getActivity(), arrayOfContacts);
         listView = (ListView) view.findViewById(R.id.lvMessages);
