@@ -8,6 +8,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,8 +21,10 @@ import com.example.sikanla.maquettehandi.R;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class FormPlannedRequestActi extends Activity implements HelpType_DF.DialogListener {
 
@@ -40,6 +44,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
     //private long epochTime;
     Date date;
     private String helpType;
+    private Button bsend;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
@@ -60,13 +65,19 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
 
         //timePicker.setIs24HourView(true);
         // Capture our View elements
-        dateDisplay = (TextView) findViewById(R.id.dateDisplay);
-        mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);
+        /*dateDisplay = (TextView) findViewById(R.id.dateDisplay);
+        mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);*/
         //mEpochTimeDisplay = (TextView) findViewById(R.id.epochTimeDisplay);
         mPickDate = (Button) findViewById(R.id.pickDate);
         mPickTime = (Button) findViewById(R.id.pickTime);
         bClose = (Button) findViewById(R.id.close_btn);
         bHelpType = (Button) findViewById(R.id.aidetype_btn);
+        bsend = (Button) findViewById(R.id.send_planned_request_btn);
+
+        bsend.setEnabled(false);
+        bsend.setAlpha(.5f);
+
+        startTextWatchers();
 
         // Set an OnClickListener on the Change The Date Button
         mPickDate.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +85,9 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             public void onClick(View v) {
                 showDialog(DATE_DIALOG_ID);
             }
+
+
+
         });
 
 
@@ -100,6 +114,18 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             }
         });
 
+
+
+
+        bsend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v){
+            
+        }
+        });
+
+
+
         // Get the current date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -119,7 +145,11 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         //updateDisplay(2);
 
 
+
+
     }
+
+
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -265,5 +295,82 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
                 break;
         }
         this.helpType = id;
+    }
+
+    private boolean areInputsValids() {
+        if (mPickDate.getText().toString().matches("Date") || mPickTime.getText().toString().matches("Heure") || bHelpType.getText().toString().matches("Type d'aide")) {
+            return false;
+        }
+        return true;
+    }
+
+
+    private void startTextWatchers() {
+
+        mPickTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //On user changes the text
+                if (!areInputsValids()) {
+                    bsend.setEnabled(false);
+                } else {
+                    bsend.setEnabled(true);
+                    bsend.setAlpha(1f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        mPickDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //On user changes the text
+                if (!areInputsValids()) {
+                    bsend.setEnabled(false);
+                } else {
+                    bsend.setEnabled(true);
+                    bsend.setAlpha(1f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        bHelpType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //On user changes the text
+                if (!areInputsValids()) {
+                    bsend.setEnabled(false);
+                } else {
+                    bsend.setEnabled(true);
+                    bsend.setAlpha(1f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
     }
 }
