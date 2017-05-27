@@ -143,7 +143,6 @@ public class MessageRequester {
         ArrayList<Message> messages = new ArrayList<Message>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
-                Log.e("message",jsonObjects.getJSONObject(i).getString("message"));
                 messages.add(new Message(jsonObjects.getJSONObject(i).getString("message"),
                         jsonObjects.getJSONObject(i).getString("id_sender") != id));
             } catch (JSONException e) {

@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class DisplayMessageFragment extends DialogFragment {
     private Button sendText;
     private MessageRequester messageRequester;
     String idContact;
+    private ArrayList<Message> messages;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.df_display_message, container, false);
@@ -59,9 +61,60 @@ public class DisplayMessageFragment extends DialogFragment {
         textViewName.setBackgroundColor(getResources().getColor(R.color.oraaange));
         fetchMessages(idContact);
         sendButtonBehaviour();
+
+        refreshForMessages();
         return view;
     }
 
+    private void refreshForMessages() {
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        if (getActivity() != null){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageRequester.getMessage(getActivity(), idContact, new MessageRequester.GetMessagesCB() {
+                                        @Override
+                                        public void onMessagesReceived(ArrayList<Message> arrayList, Boolean success) {
+                                            if (success) {
+                                                addNewMessages(arrayList);
+
+                                            }
+                                        }
+                                    });
+
+                                }
+                            });
+                    }
+                }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+    }
+
+    private void addNewMessages(ArrayList<Message> arrayList) {
+        //check if there are responses
+        Log.e("arr", String.valueOf(arrayList.size() > messages.size()));
+        if (arrayList.size() > messages.size()) {
+            for (int i = messages.size(); i < arrayList.size(); i++) {
+                //only display messages from other partie
+                if (!arrayList.get(i).isMine) {
+                    displayMessageAdapter.add(arrayList.get(i));
+                }
+            }
+            messages=arrayList;
+        }
+
+
+    }
 
     private void sendText() {
 
@@ -83,6 +136,7 @@ public class DisplayMessageFragment extends DialogFragment {
             @Override
             public void onMessagesReceived(ArrayList<Message> arrayList, Boolean success) {
                 if (success) {
+                    messages = arrayList;
                     displayMessageAdapter.clear();
                     displayMessageAdapter.addAll(arrayList);
                     listView.setAdapter(displayMessageAdapter);

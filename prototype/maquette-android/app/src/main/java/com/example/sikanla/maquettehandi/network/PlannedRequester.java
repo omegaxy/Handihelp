@@ -63,7 +63,7 @@ public class PlannedRequester {
     }
 
     // Factory method to convert an array of JSON objects into a list of objects
-    public static ArrayList<PlannedRequest> fromJson(JSONArray jsonObjects) {
+    private ArrayList<PlannedRequest> fromJson(JSONArray jsonObjects) {
         ArrayList<PlannedRequest> plannedRequests = new ArrayList<PlannedRequest>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
