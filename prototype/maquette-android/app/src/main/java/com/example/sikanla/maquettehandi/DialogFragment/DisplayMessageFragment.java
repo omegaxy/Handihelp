@@ -108,6 +108,8 @@ public class DisplayMessageFragment extends DialogFragment {
                 //only display messages from other partie
                 if (!arrayList.get(i).isMine) {
                     displayMessageAdapter.add(arrayList.get(i));
+                    listView.setSelection(listView.getAdapter().getCount()-1);
+
                 }
             }
             messages=arrayList;
@@ -123,6 +125,7 @@ public class DisplayMessageFragment extends DialogFragment {
             public void onMessageReceived(Boolean success) {
                 if (success) {
                     displayMessageAdapter.add(new Message(textTosend.getText().toString(), true));
+                    listView.setSelection(listView.getAdapter().getCount()-1);
                     textTosend.setText("");
 
                 }
@@ -140,6 +143,8 @@ public class DisplayMessageFragment extends DialogFragment {
                     displayMessageAdapter.clear();
                     displayMessageAdapter.addAll(arrayList);
                     listView.setAdapter(displayMessageAdapter);
+                    listView.setSelection(listView.getAdapter().getCount()-1);
+
                 }
             }
         });
