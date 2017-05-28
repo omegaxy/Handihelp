@@ -88,10 +88,11 @@ public class DisplayPlannedDF extends DialogFragment {
                     }
                 })
                 .setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(DialogInterface dialog, int i) {
                         AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                        Bundle args= new Bundle();
-                        args.putString("idPlanned",getArguments().getString("idPlanned"));
+                        Bundle args = new Bundle();
+                        args.putString("idPlanned", getArguments().getString("idPlanned"));
+                        args.putString("id", id);
                         answerPLannedDF.setArguments(args);
                         answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
                     }

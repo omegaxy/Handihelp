@@ -4,13 +4,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/df_answerTVerror"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="TextView" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/df_answerET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

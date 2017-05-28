@@ -8,8 +8,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.MessageRequester;
+import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 /**
  * Created by Sikanla on 28/05/2017.
@@ -17,6 +24,8 @@ import com.example.sikanla.maquettehandi.R;
 
 public class AnswerPLannedDF extends DialogFragment {
     private View rootView;
+    private TextView textView;
+    private EditText editText;
 
     @NonNull
     @Override
@@ -25,7 +34,8 @@ public class AnswerPLannedDF extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         rootView = inflater.inflate(R.layout.answer_planned, null);
-
+        editText = (EditText) rootView.findViewById(R.id.df_answerET);
+        textView = (TextView) rootView.findViewById(R.id.df_answerTVerror);
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
                 .setMessage("Proposer votre aide?")
@@ -39,11 +49,45 @@ public class AnswerPLannedDF extends DialogFragment {
                 .setPositiveButton("Proposer", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
+
                     }
                 });
 
         return builder1.create();
 
 
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        AlertDialog d = (AlertDialog)getDialog();
+        if(d != null)
+        {
+            Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    PlannedRequester plannedRequester = new PlannedRequester();
+                    plannedRequester.answerPlanned(getActivity(), editText.getText().toString(),
+                            getArguments().getString("id"), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
+                                @Override
+                                public void onPlannedPosted(Boolean success) {
+                                    if (success) {
+                                        dismiss();
+                                    } else {
+                                        textView.setText("Erreur, veuillez réessayer");
+                                        textView.setVisibility(View.VISIBLE);
+
+                                    }
+                                }
+                            });
+
+                }
+            });
+        }
     }
 }

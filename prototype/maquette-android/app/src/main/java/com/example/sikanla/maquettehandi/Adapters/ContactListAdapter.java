@@ -6,9 +6,7 @@ package com.example.sikanla.maquettehandi.Adapters;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sikanla.maquettehandi.DialogFragment.AnswerPlanR_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.DisplayMessageFragment;
-import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
