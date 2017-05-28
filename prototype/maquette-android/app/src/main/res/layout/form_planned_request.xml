@@ -21,25 +21,29 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:weightSum="1"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/close_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:drawableLeft="@drawable/ic_help_prog_cross" />
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="Demande d'aide pour plus tard"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey05"
+                    android:textSize="28sp" />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Demande d'aide pour plus tard"
-                android:textAlignment="center"
-                android:textColor="@color/grey05"
-                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -135,12 +139,27 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/checkBox_fpA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notifier mes Amis" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="Commentaires"
                 android:textAlignment="center"
                 android:textColor="@color/grey05"
