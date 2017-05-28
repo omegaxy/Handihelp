@@ -22,7 +22,6 @@ public class NotificationService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notif_icon)
                         .setContentTitle(remoteMessage.getData().get("title"))
-                        .setSubText(remoteMessage.getData().get("subtitle"))
                         .setContentText(remoteMessage.getData().get("message"));
 
         Intent resultIntent = new Intent(this, MainActivity.class);
