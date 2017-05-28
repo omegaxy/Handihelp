@@ -1,13 +1,17 @@
 package com.example.sikanla.maquettehandi.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
@@ -22,21 +26,22 @@ import java.util.ArrayList;
 
 public class FriendsAdapter extends ArrayAdapter<String> {
     // View lookup cache
-    private Context context;
+    private Activity context;
 
     private static class ViewHolder {
         TextView firstname;
         TextView surname;
         ImageView pictureContact;
+        LinearLayout linearLayout;
     }
 
-    public FriendsAdapter(Context context, ArrayList<String> strings) {
+    public FriendsAdapter(Activity context, ArrayList<String> strings) {
         super(context, R.layout.item_contact_messages, strings);
         this.context = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         String id = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -46,6 +51,7 @@ public class FriendsAdapter extends ArrayAdapter<String> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_contact_messages, parent, false);
+            viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linear_contact_messages);
             viewHolder.firstname = (TextView) convertView.findViewById(R.id.tvItemContactFirstName);
             viewHolder.surname = (TextView) convertView.findViewById(R.id.tvItemContactSurname);
             viewHolder.pictureContact = (ImageView) convertView.findViewById(R.id.pictureContact);
@@ -57,11 +63,21 @@ public class FriendsAdapter extends ArrayAdapter<String> {
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        PlannedRequester plannedRequester= new PlannedRequester();
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("id", getItem(position));
+                profileDialogFragment.setArguments(args);
+                profileDialogFragment.show(context.getFragmentManager(), "answerPlanned");
+            }
+        });
+        PlannedRequester plannedRequester = new PlannedRequester();
         plannedRequester.getUser(context, id, new PlannedRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
-                if (success){
+                if (success) {
                     viewHolder.firstname.setText(firstName);
                     viewHolder.surname.setText(surname);
 

@@ -122,7 +122,6 @@ public class AnswerPlanR_DF extends DialogFragment {
 
     private String formatDate(String epoch) {
         long unixSeconds = Long.parseLong(epoch);
-        Log.e("11", String.valueOf(unixSeconds));
         Date date = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy à HH:mm"); // the format of your date
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+2")); // give a timezone reference for formating (see comment at the bottom
