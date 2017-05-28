@@ -131,8 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //todo manage onback pressed to prevent coming back to login screen
-            super.onBackPressed();
         }
     }
 
