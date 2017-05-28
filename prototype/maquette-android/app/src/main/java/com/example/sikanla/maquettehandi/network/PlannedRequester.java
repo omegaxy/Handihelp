@@ -71,7 +71,8 @@ public class PlannedRequester {
                         jsonObjects.getJSONObject(i).getString("description"),
                         jsonObjects.getJSONObject(i).getString("scheduled_at"),
                         jsonObjects.getJSONObject(i).getString("localisation"),
-                        jsonObjects.getJSONObject(i).getString("id")));
+                        jsonObjects.getJSONObject(i).getString("id"),
+                        jsonObjects.getJSONObject(i).getString("id_planned")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -108,7 +109,7 @@ public class PlannedRequester {
     }
 
     public void sendPlannedRequest(Context context, String help_category, String description,
-                                   String scheduled_at,String localisation,String notifyFriends, final PostPlannedCB postPlannedCB) {
+                                   String scheduled_at, String localisation, String notifyFriends, final PostPlannedCB postPlannedCB) {
         User user = new User();
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
@@ -117,9 +118,40 @@ public class PlannedRequester {
         parameters.put("description", description);
         parameters.put("scheduled_at", scheduled_at);
         parameters.put("localisation", localisation);
-        parameters.put("notify_friends",notifyFriends);
+        parameters.put("notify_friends", notifyFriends);
 
         new AllRequest(context, parameters, headers, "/plannedrequest", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            postPlannedCB.onPlannedPosted(true);
+                        } else
+                            postPlannedCB.onPlannedPosted(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    postPlannedCB.onPlannedPosted(false);
+
+                }
+            }
+        });
+    }
+
+
+    public void answerPlanned(Context context, String description,
+                              String idHelped, String idRequest, final PostPlannedCB postPlannedCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("description", description);
+        parameters.put("id_helped", idHelped);
+
+        new AllRequest(context, parameters, headers, "/respondplanned/" + idRequest, AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 if (success) {

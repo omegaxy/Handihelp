@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +26,7 @@ import java.util.TimeZone;
  * Created by Sikanla on 18/05/2017.
  */
 
-public class AnswerPlanR_DF extends DialogFragment {
+public class DisplayPlannedDF extends DialogFragment {
     private View rootView;
     private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv;
     private ImageView imageViewPP;
@@ -42,7 +41,7 @@ public class AnswerPlanR_DF extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        rootView = inflater.inflate(R.layout.answer_planned_request, null);
+        rootView = inflater.inflate(R.layout.display_planned_request, null);
         linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);
         fistNameTv = (TextView) rootView.findViewById(R.id.answ_firstname);
         surnameTv = (TextView) rootView.findViewById(R.id.answ_surname);
@@ -84,12 +83,17 @@ public class AnswerPlanR_DF extends DialogFragment {
                         args.putString("firstname", fistNameTv.getText().toString());
                         args.putString("id", id);
                         sendMessageDialog.setArguments(args);
-                        sendMessageDialog.show(getActivity().getFragmentManager(), "answerPlanned");
+                        sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
                     }
                 })
                 .setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
+                        Bundle args= new Bundle();
+                        args.putString("idPlanned",getArguments().getString("idPlanned"));
+                        answerPLannedDF.setArguments(args);
+                        answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
                     }
                 });
 

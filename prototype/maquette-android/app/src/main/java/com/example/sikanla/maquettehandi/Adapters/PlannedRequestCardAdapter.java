@@ -1,11 +1,8 @@
 package com.example.sikanla.maquettehandi.Adapters;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.sikanla.maquettehandi.DialogFragment.AnswerPlanR_DF;
+import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.identification.LoginActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,12 +93,13 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AnswerPlanR_DF answerPlan = new AnswerPlanR_DF();
+                DisplayPlannedDF answerPlan = new DisplayPlannedDF();
                 Bundle args = new Bundle();
                 args.putString("type", plannedRequest.helpCategory);
                 args.putString("localisation", plannedRequest.localisation);
                 args.putString("scheduled", plannedRequest.scheduledAt);
                 args.putString("id", plannedRequest.id);
+                args.putString("idPlanned",plannedRequest.idPlanned);
                 args.putString("description", plannedRequest.description);
                 answerPlan.setArguments(args);
 

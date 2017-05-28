@@ -23,13 +23,16 @@ public class PlannedRequest {
     public String scheduledAt;
     public String localisation;
     public String id;
+    public String idPlanned;
 
-    public PlannedRequest(String helpCategory, String description, String scheduledAt, String localisation, String id) {
+    public PlannedRequest(String helpCategory, String description, String scheduledAt,
+                          String localisation, String id, String idPlanned) {
         this.helpCategory = helpCategory;
         this.description = description;
         this.scheduledAt = scheduledAt;
         this.localisation = localisation;
         this.id = id;
+        this.idPlanned = idPlanned;
     }
 
 
