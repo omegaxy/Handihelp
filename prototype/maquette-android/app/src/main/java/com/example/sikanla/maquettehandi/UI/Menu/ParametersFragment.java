@@ -1,6 +1,8 @@
 package com.example.sikanla.maquettehandi.UI.Menu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -14,8 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
+import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 
@@ -25,15 +29,45 @@ import com.squareup.picasso.Picasso;
  */
 
 public class ParametersFragment extends Fragment {
-    private Button uploadB;
+    private Button uploadB, decoB;
     private ImageView imageView;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.parameters_fragment, container, false);
+        decoB = (Button) view.findViewById(R.id.parameters_deco);
+
+        setUpDecoButton();
         loadImage(view);
         setUpUploadButton(view);
 
         return view;
+    }
+
+    private void setUpDecoButton() {
+        decoB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setMessage("Déconnecter de l'application?");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Annuler",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Déconnection", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        User user = new  User();
+                        user.deleteLocalUser(getActivity());
+                        startActivity(new Intent(getContext(), LoginActivity.class));
+                    }
+                });
+                alertDialog.show();
+
+            }
+        });
     }
 
     private void setUpUploadButton(View view) {

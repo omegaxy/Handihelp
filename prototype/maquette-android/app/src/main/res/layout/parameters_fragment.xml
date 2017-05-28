@@ -10,17 +10,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         android:weightSum="1">
 
         <ImageView
             android:id="@+id/parameters_image"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:layout_weight="0.4"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="0.4"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/ic_launcher" />
 
@@ -28,12 +28,28 @@
             android:id="@+id/parameters_upload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
             android:layout_gravity="center"
+            android:layout_weight="0.3"
             android:text="Changer l'image" />
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/parameters_deco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="62dp"
+            android:backgroundTint="@color/type10"
+            android:text="Déconnection"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

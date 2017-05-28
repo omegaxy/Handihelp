@@ -51,6 +51,16 @@ public class User extends Application {
         return !str.isEmpty();
     }
 
+    public void deleteLocalUser(Context context) {
+        context.getSharedPreferences(MY_PREFS_NAME, 0)
+                .edit()
+                .clear()
+                .commit();
+
+        listFriendsIds=null;
+    }
+
+
     public void loadUser(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
