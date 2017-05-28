@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -42,6 +43,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
 
     private String helpType = "";
     private Button bsend;
+    private CheckBox checkBox;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID = 1;
@@ -64,7 +66,8 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         bHelpType = (Button) findViewById(R.id.aidetype_btn);
         bsend = (Button) findViewById(R.id.send_planned_request_btn);
         localisationEt = (EditText) findViewById(R.id.localisation_fpA);
-        commentaireEt = ( EditText) findViewById(R.id.commentaire_fpA);
+        commentaireEt = (EditText) findViewById(R.id.commentaire_fpA);
+        checkBox = (CheckBox) findViewById(R.id.checkBox_fpA);
 
         bsend.setEnabled(false);
         bsend.setAlpha(.5f);
@@ -109,16 +112,15 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         bsend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlannedRequester plannedRequester= new PlannedRequester();
-                plannedRequester.sendPlannedRequest(getApplicationContext(),helpType,commentaireEt.getText().toString(),
-                        getEpoch(),localisationEt.getText().toString(), new PlannedRequester.PostPlannedCB() {
+                PlannedRequester plannedRequester = new PlannedRequester();
+                plannedRequester.sendPlannedRequest(getApplicationContext(), helpType, commentaireEt.getText().toString(),
+                        getEpoch(), localisationEt.getText().toString(), checkBox.isChecked() ? "yes" : "", new PlannedRequester.PostPlannedCB() {
                             @Override
                             public void onPlannedPosted(Boolean success) {
                                 if (success) {
                                     finish();
-                                }
-                                else {
-                                    Toast.makeText(getApplicationContext(),"ERREUR",Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -288,7 +290,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //On user changes the text
                 if (!areDateAndTimeValid() || helpType.isEmpty() || !isLocalisationSet()) {
-                        bsend.setEnabled(false);
+                    bsend.setEnabled(false);
                     bsend.setAlpha(0.5f);
                 } else {
                     bsend.setEnabled(true);
@@ -335,12 +337,13 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
     private boolean isLocalisationSet() {
         return !localisationEt.getText().toString().matches("");
     }
-    private String getEpoch(){
+
+    private String getEpoch() {
         long epoch = 0;
 
         try {
-             epoch = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
-                    .parse(mPickDate.getText().toString()+" "+mPickTime.getText().toString())
+            epoch = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
+                    .parse(mPickDate.getText().toString() + " " + mPickTime.getText().toString())
                     .getTime() / 1000;
         } catch (ParseException e) {
             e.printStackTrace();

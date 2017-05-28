@@ -108,7 +108,7 @@ public class PlannedRequester {
     }
 
     public void sendPlannedRequest(Context context, String help_category, String description,
-                                   String scheduled_at,String localisation, final PostPlannedCB postPlannedCB) {
+                                   String scheduled_at,String localisation,String notifyFriends, final PostPlannedCB postPlannedCB) {
         User user = new User();
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
@@ -117,6 +117,7 @@ public class PlannedRequester {
         parameters.put("description", description);
         parameters.put("scheduled_at", scheduled_at);
         parameters.put("localisation", localisation);
+        parameters.put("notify_friends",notifyFriends);
 
         new AllRequest(context, parameters, headers, "/plannedrequest", AllRequest.POST, new AllRequest.CallBackConnector() {
             @Override
