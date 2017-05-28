@@ -52,12 +52,18 @@ public class User extends Application {
     }
 
     public void deleteLocalUser(Context context) {
-        context.getSharedPreferences(MY_PREFS_NAME, 0)
-                .edit()
-                .clear()
-                .commit();
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("APIKEY", "");
+        editor.putString("userid", "");
+        editor.putString("firstname", "");
+        editor.putString("surname", "");
+        editor.putString("email", "");
+        editor.putInt("birthyear", 0);
+        editor.commit();
 
-        listFriendsIds=null;
+
+        listFriendsIds = null;
     }
 
 

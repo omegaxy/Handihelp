@@ -45,6 +45,7 @@ public class ParametersFragment extends Fragment {
     }
 
     private void setUpDecoButton() {
+        //todo send request to server when  server ready
         decoB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
