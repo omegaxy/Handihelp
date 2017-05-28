@@ -45,7 +45,6 @@ public class ParametersFragment extends Fragment {
     }
 
     private void setUpDecoButton() {
-        //todo send request to server when  server ready
         decoB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +60,8 @@ public class ParametersFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         User user = new  User();
+                        //delete notification token from server, delete local settings
+                        user.deleteAndroidIFromServer(getActivity());
                         user.deleteLocalUser(getActivity());
                         startActivity(new Intent(getContext(), LoginActivity.class));
                     }

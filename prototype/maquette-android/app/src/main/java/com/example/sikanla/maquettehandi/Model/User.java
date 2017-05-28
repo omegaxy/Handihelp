@@ -172,4 +172,17 @@ public class User extends Application {
             }
         });
     }
+
+    public void deleteAndroidIFromServer(final Context context) {
+
+        Map<String, String> parameters = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", getAPIKEY());
+        new AllRequest(context, parameters, headers, "/user/androidid", AllRequest.PUT, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+
+            }
+        });
+    }
 }
