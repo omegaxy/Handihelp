@@ -80,7 +80,7 @@ public class PlannedFragment extends Fragment {
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
                 if (success) {
-                    plannedRequests=s;
+                    plannedRequests = s;
                     adapter.clear();
                     adapter.addAll(s);
                     listView.setAdapter(adapter);
@@ -96,17 +96,18 @@ public class PlannedFragment extends Fragment {
 
     private void addNewPlanned(ArrayList<PlannedRequest> arrayList) {
         //check if there are responses
-        if (arrayList.size() > plannedRequests.size()) {
-            for (int i = plannedRequests.size(); i < arrayList.size(); i++) {
-                //only display messages from other partie
-                adapter.add(arrayList.get(i));
-                // listView.setSelection(listView.getAdapter().getCount() - 1);
+        if (arrayList != null && plannedRequests != null) {
+            if (arrayList.size() > plannedRequests.size()) {
+                for (int i = plannedRequests.size(); i < arrayList.size(); i++) {
+                    //only display messages from other partie
+                    adapter.add(arrayList.get(i));
+                    // listView.setSelection(listView.getAdapter().getCount() - 1);
 
 
+                }
+                plannedRequests = arrayList;
             }
-            plannedRequests = arrayList;
         }
-
 
     }
 

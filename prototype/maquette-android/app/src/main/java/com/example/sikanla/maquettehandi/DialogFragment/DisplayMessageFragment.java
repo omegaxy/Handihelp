@@ -74,7 +74,7 @@ public class DisplayMessageFragment extends DialogFragment {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(5000);
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -90,8 +90,8 @@ public class DisplayMessageFragment extends DialogFragment {
 
                                 }
                             });
+                        }
                     }
-                }
                 } catch (InterruptedException e) {
                 }
             }
@@ -102,19 +102,19 @@ public class DisplayMessageFragment extends DialogFragment {
 
     private void addNewMessages(ArrayList<Message> arrayList) {
         //check if there are responses
-        Log.e("arr", String.valueOf(arrayList.size() > messages.size()));
-        if (arrayList.size() > messages.size()) {
-            for (int i = messages.size(); i < arrayList.size(); i++) {
-                //only display messages from other partie
-                if (!arrayList.get(i).isMine) {
-                    displayMessageAdapter.add(arrayList.get(i));
-                    listView.setSelection(listView.getAdapter().getCount()-1);
+        if (arrayList != null && messages != null) {
+            if (arrayList.size() > messages.size()) {
+                for (int i = messages.size(); i < arrayList.size(); i++) {
+                    //only display messages from other partie
+                    if (!arrayList.get(i).isMine) {
+                        displayMessageAdapter.add(arrayList.get(i));
+                        listView.setSelection(listView.getAdapter().getCount() - 1);
 
+                    }
                 }
+                messages = arrayList;
             }
-            messages=arrayList;
         }
-
 
     }
 
@@ -125,7 +125,7 @@ public class DisplayMessageFragment extends DialogFragment {
             public void onMessageReceived(Boolean success) {
                 if (success) {
                     displayMessageAdapter.add(new Message(textTosend.getText().toString(), true));
-                    listView.setSelection(listView.getAdapter().getCount()-1);
+                    listView.setSelection(listView.getAdapter().getCount() - 1);
                     textTosend.setText("");
 
                 }
@@ -143,7 +143,7 @@ public class DisplayMessageFragment extends DialogFragment {
                     displayMessageAdapter.clear();
                     displayMessageAdapter.addAll(arrayList);
                     listView.setAdapter(displayMessageAdapter);
-                    listView.setSelection(listView.getAdapter().getCount()-1);
+                    listView.setSelection(listView.getAdapter().getCount() - 1);
 
                 }
             }
