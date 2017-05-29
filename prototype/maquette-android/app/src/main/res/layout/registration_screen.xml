@@ -5,7 +5,7 @@
     android:layout_margin="10dp"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
-    android:background="@color/backg"
+    android:background="@color/back1"
     >
 
 

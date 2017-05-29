@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/back2"
+    >
 
     <TextView
         android:id="@+id/df_answerTVerror"
@@ -15,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textColor="@color/grey05"
         android:hint="Entrez un commentaire"
+        android:textColorHint="@color/grey05"
         android:inputType="textPersonName" />
 </LinearLayout>

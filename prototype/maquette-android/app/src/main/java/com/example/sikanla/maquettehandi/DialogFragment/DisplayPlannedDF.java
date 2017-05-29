@@ -39,7 +39,7 @@ public class DisplayPlannedDF extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
 
         rootView = inflater.inflate(R.layout.display_planned_request, null);
         linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);

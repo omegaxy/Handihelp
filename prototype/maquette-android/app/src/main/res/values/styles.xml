@@ -7,7 +7,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/backg</item>
+        <item name="colorPrimaryDark">@color/back1</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -16,10 +16,19 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/top</item>
         <item name="colorPrimaryDark">#d04f4e56</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/back2</item>
         <item name="android:textSize">17sp</item>
-        <item name="android:colorBackground">@color/backg</item>
-        <item name="android:windowBackground">@color/backg</item>
+        <item name="android:colorBackground">@color/back1</item>
+        <item name="android:windowBackground">@color/back1</item>
+    </style>
+
+    <style name="AnswerTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/back2</item>
+    </style>
+
+    <style name="AnswerTheme2" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/back2</item>
+        <item name="android:textColor">@color/grey05</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+
     android:descendantFocusability="beforeDescendants">
 
     <LinearLayout
@@ -33,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.19"
-                android:text="Type d'Aide"
+                android:text="Type d'Aide:"
+                android:textColor="@color/grey05"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -42,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:textColor="@color/grey05"
                 android:textSize="20sp"
                 android:typeface="serif" />
         </LinearLayout>
@@ -59,6 +62,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.15"
                 android:text="Localisation: "
+                android:textColor="@color/grey05"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -68,6 +72,7 @@
                 android:layout_height="52dp"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/grey05"
                 android:textSize="20sp"
                 android:typeface="serif" />
         </LinearLayout>
@@ -85,6 +90,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.30"
                 android:text="Date: "
+                android:textColor="@color/grey05"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -94,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/grey05"
                 android:textSize="20sp"
                 android:typeface="serif" />
         </LinearLayout>

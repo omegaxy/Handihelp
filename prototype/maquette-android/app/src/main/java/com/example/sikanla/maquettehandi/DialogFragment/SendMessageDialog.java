@@ -36,7 +36,7 @@ public class SendMessageDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
 
         rootView = inflater.inflate(R.layout.send_message_dialog, null);
         title = (TextView) rootView.findViewById(R.id.df_message_title);

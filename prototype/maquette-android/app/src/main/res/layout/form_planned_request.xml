@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:background="@color/backg"
+    android:background="@color/back1"
     android:theme="@style/AppTheme">
 
     <ScrollView
@@ -15,7 +15,7 @@
             style="@style/AppTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backg"
+            android:background="@color/back1"
             android:orientation="vertical">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -7,7 +7,6 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -57,7 +56,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(getResources().getColor(R.color.backg));
+        view.setBackgroundColor(getResources().getColor(R.color.back1));
 
 
         mPickDate = (Button) findViewById(R.id.pickDate);

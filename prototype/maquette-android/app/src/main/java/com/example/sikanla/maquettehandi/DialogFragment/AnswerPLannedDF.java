@@ -32,7 +32,7 @@ public class AnswerPLannedDF extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
         rootView = inflater.inflate(R.layout.answer_planned, null);
         editText = (EditText) rootView.findViewById(R.id.df_answerET);
         textView = (TextView) rootView.findViewById(R.id.df_answerTVerror);
@@ -43,7 +43,6 @@ public class AnswerPLannedDF extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getDialog().dismiss();
-
                     }
                 })
                 .setPositiveButton("Proposer", new DialogInterface.OnClickListener() {

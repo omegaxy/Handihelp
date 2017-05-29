@@ -11,6 +11,7 @@
         android:gravity="center"
         android:text="TextView"
         android:textSize="24sp"
+        android:textColor="@color/grey05"
         android:textStyle="bold" />
 
     <Space
@@ -34,5 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.38"
         android:ems="10"
+        android:textColor="@color/grey05"
+        android:hint="Votre message"
+        android:textColorHint="@color/grey05"
         android:inputType="textCapSentences" />
 </LinearLayout>

@@ -51,7 +51,7 @@ public class DisplayMessageAdapter extends ArrayAdapter<Message> {
         viewHolder.messageTextView.setText(mess.message);
 
         if (mess.isMine) {
-            viewHolder.messageTextView.setGravity(Gravity.END);
+            viewHolder.messageTextView.setGravity(Gravity.RIGHT);
             viewHolder.messageTextView.setBackgroundColor(context.getResources().getColor(R.color.dd));
         }
         if (!mess.isMine) {

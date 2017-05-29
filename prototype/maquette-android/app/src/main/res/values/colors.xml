@@ -10,8 +10,10 @@
     <color name="grey05">#efefef</color>
     <color name="dd">#FFB0E3C6</color>
     <color name="greyy">#d17a7b7a</color>
-    <color name="backg">#263246</color>
-    <color name="top">#61a0bd</color>
+    <color name="back1">#263246</color>
+    <color name="back2">#506991</color>
+    <color name="back3">#7e92b1</color>
+    <color name="top">#e9878a</color>
     <color name="oraaange">#deb08a</color>
     <color name="black">#000000</color>
     <color name="trans">#00000000</color>

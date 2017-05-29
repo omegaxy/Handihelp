@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(getResources().getColor(R.color.backg));
+        view.setBackgroundColor(getResources().getColor(R.color.back1));
         surnameEditText = (EditText) findViewById(R.id.surname);
         firstnameEditText = (EditText) findViewById(R.id.firstname);
         birthYearEditText = (EditText) findViewById(R.id.birthYear);

@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backg"
+    android:background="@color/back1"
     android:theme="@style/AppTheme">
 
 
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/backg"
+        android:background="@color/back1"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextColor="@color/grey05"
@@ -58,8 +58,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabBtn"
-            android:layout_width="101dp"
-            android:layout_height="106dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/fab_margin_bottom"
             android:layout_marginRight="10dp"
