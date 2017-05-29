@@ -109,7 +109,7 @@ public class DisplayPlannedDF extends DialogFragment {
         imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
             @Override
             public void getUrl(String s) {
-                Picasso.with(getActivity()).load(s).into(imageViewPP);
+                Picasso.with(getActivity()).load(s).fit().into(imageViewPP);
             }
         });
         PlannedRequester plannedRequester = new PlannedRequester();

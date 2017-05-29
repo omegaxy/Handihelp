@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void getUrl(String url) {
                 if (url != null)
-                    Picasso.with(getApplicationContext()).load(url).into(imageViewHeader);
+                    Picasso.with(getApplicationContext()).load(url).fit().into(imageViewHeader);
             }
         });
     }

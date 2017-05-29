@@ -73,7 +73,7 @@ public class DisplayMessageFragment extends DialogFragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                         if (getActivity() != null){
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
