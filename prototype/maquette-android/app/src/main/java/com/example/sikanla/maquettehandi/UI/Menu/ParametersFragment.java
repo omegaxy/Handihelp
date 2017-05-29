@@ -99,7 +99,7 @@ public class ParametersFragment extends Fragment {
             @Override
             public void getUrl(String url) {
                 if (url != null)
-                    Picasso.with(getActivity()).load(url).fit().into(imageView);
+                    Picasso.with(getActivity()).load(url).centerCrop().fit().into(imageView);
             }
         });
     }
@@ -137,8 +137,8 @@ public class ParametersFragment extends Fragment {
                                 @Override
                                 public void getUrl(String url) {
                                     if (url != null) {
-                                        Picasso.with(getActivity()).load(url).fit().into(imageViewHeader);
-                                        Picasso.with(getContext()).load(url).fit().into(imageView);
+                                        Picasso.with(getActivity()).load(url).centerCrop().fit().into(imageViewHeader);
+                                        Picasso.with(getContext()).load(url).centerCrop().fit().into(imageView);
                                     }
                                 }
                             });

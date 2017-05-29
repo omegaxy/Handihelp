@@ -21,12 +21,12 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by Sikanla on 29/05/2017.
  */
-
+//huawey phones kill apps in background unless "protected"
 public class ProtectedHuaweyApps {
     private Activity activity;
 
     public void ifHuaweiAlert(Activity activity) {
-        this.activity=activity;
+        this.activity = activity;
 
         final SharedPreferences settings = activity.getSharedPreferences("ProtectedApps", MODE_PRIVATE);
         final String saveIfSkip = "skipProtectedAppsMessage";
@@ -50,7 +50,7 @@ public class ProtectedHuaweyApps {
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Huawei Protected Apps")
                         .setMessage(String.format("%s Placer l'application dans les apps protégées pour un fonctionnement optimal.%n"
-                                ,activity.getString(R.string.app_name)))
+                                , activity.getString(R.string.app_name)))
                         .setView(dontShowAgain)
                         .setPositiveButton("Protected Apps", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

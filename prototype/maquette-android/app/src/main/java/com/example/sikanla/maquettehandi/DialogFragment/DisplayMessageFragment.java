@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.DialogFragment;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,6 +35,7 @@ public class DisplayMessageFragment extends DialogFragment {
     private MessageRequester messageRequester;
     String idContact;
     private ArrayList<Message> messages;
+    private Thread t;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.df_display_message, container, false);
@@ -67,7 +69,7 @@ public class DisplayMessageFragment extends DialogFragment {
     }
 
     private void refreshForMessages() {
-        Thread t = new Thread() {
+        t = new Thread() {
 
             @Override
             public void run() {
@@ -98,6 +100,7 @@ public class DisplayMessageFragment extends DialogFragment {
         };
 
         t.start();
+
     }
 
     private void addNewMessages(ArrayList<Message> arrayList) {
@@ -115,6 +118,15 @@ public class DisplayMessageFragment extends DialogFragment {
                 messages = arrayList;
             }
         }
+
+    }
+
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        t.isInterrupted();
+        t=null;
+        super.onDismiss(dialog);
 
     }
 

@@ -65,7 +65,7 @@ public class ProfileDialogFragment extends DialogFragment {
             imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
                 @Override
                 public void getUrl(String s) {
-                    Picasso.with(getActivity()).load(s).fit().into(imageViewPP2);
+                    Picasso.with(getActivity()).load(s).centerCrop().fit().into(imageViewPP2);
 
                 }
             });
@@ -138,7 +138,7 @@ public class ProfileDialogFragment extends DialogFragment {
             imageRequest.getImage(id, getActivity(), new ImageRequester.ImageInterface() {
                 @Override
                 public void getUrl(String s) {
-                    Picasso.with(getActivity()).load(s).fit().into(imageViewPP);
+                    Picasso.with(getActivity()).load(s).into(imageViewPP);
 
                 }
             });

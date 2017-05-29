@@ -90,7 +90,7 @@ public class FriendsAdapter extends ArrayAdapter<String> {
             @Override
             public void getUrl(String url) {
                 if (!url.isEmpty())
-                    Picasso.with(context).load(url).fit().into(viewHolder.pictureContact);
+                    Picasso.with(context).load(url).centerCrop().fit().into(viewHolder.pictureContact);
 
             }
         });

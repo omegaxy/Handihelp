@@ -1,49 +1,32 @@
 package com.example.sikanla.maquettehandi;
 
 
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Build;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
-
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
-
-import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -98,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void getUrl(String url) {
                 if (url != null)
-                    Picasso.with(getApplicationContext()).load(url).fit().into(imageViewHeader);
+                    Picasso.with(getApplicationContext()).load(url).centerCrop().fit().into(imageViewHeader);
             }
         });
     }
