@@ -1,6 +1,11 @@
 package com.example.sikanla.maquettehandi;
 
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
@@ -12,11 +17,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +39,11 @@ import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -51,9 +64,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateFAB();
         instantiateTabToolbarDrawer();
         launchFragment(new TabFragment(), "Accueil");
+        ProtectedHuaweyApps protectedHuaweyApps=new ProtectedHuaweyApps();
+        protectedHuaweyApps.ifHuaweiAlert(this);
 
 
     }
+
+
 
     private void instantiateNavigationView() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
