@@ -23,6 +23,7 @@ import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
+import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
@@ -30,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView firstnameHeader;
     private ImageView imageViewHeader;
     private Toolbar toolbar;
@@ -47,12 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateFAB();
         instantiateTabToolbarDrawer();
         launchFragment(new TabFragment(), "Accueil");
-        ProtectedHuaweyApps protectedHuaweyApps=new ProtectedHuaweyApps();
+        ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
 
 
     }
-
 
 
     private void instantiateNavigationView() {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imageViewHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user= new User();
+                User user = new User();
                 ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("id", user.getUserId());
@@ -170,13 +170,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationView.setCheckedItem(R.id.nav_accueil);
                     break;
                 case R.id.nav_friend:
-                    fragment= new FriendsFragment();
+                    fragment = new FriendsFragment();
                     navigationView.setCheckedItem(R.id.nav_friend);
                     break;
                 case R.id.nav_settings:
                     navigationView.setCheckedItem(R.id.nav_settings);
 
                     fragment = new ParametersFragment();
+                    break;
+
+                case R.id.nav_myapplication:
+                    navigationView.setCheckedItem(R.id.nav_settings);
+
+                    fragment = new MyPlannedFragment();
+                    break;
             }
 
             launchFragment(fragment, item.getTitle().toString());

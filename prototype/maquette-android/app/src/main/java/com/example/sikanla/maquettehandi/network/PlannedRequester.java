@@ -61,6 +61,36 @@ public class PlannedRequester {
             }
         });
     }
+    public void getMyPlannedRequest(Context context, final PlannedRequestCB plannedRequestCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        new AllRequest(context, parameters, headers, "/plannedrequest/me", AllRequest.GET, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                ArrayList<PlannedRequest> arrayList = new ArrayList<>();
+
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = new JSONArray(jsonObject.get("planned_requests").toString());
+
+                        if (jsonObject.get("error").toString() == "false") {
+                            plannedRequestCB.getArrayPlannedRequest(fromJson(jsonArray), true);
+
+                        } else
+                            plannedRequestCB.getArrayPlannedRequest(arrayList, false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    plannedRequestCB.getArrayPlannedRequest(arrayList, false);
+
+                }
+            }
+        });
+    }
 
     // Factory method to convert an array of JSON objects into a list of objects
     private ArrayList<PlannedRequest> fromJson(JSONArray jsonObjects) {
