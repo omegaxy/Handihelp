@@ -3,10 +3,12 @@ package com.example.sikanla.maquettehandi.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,6 +55,8 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         super.add(object);
     }
 
+
+    //add only cards with responses
     public void addAll(ArrayList<PlannedRequest> plannedRequests, ArrayList<ResponsePlanned> responsePlanneds) {
         for (int i = 0; i < plannedRequests.size(); i++) {
             for (int j = 0; j < responsePlanneds.size(); j++) {
@@ -79,19 +83,33 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter.CardViewHolder viewHolder;
+        CardViewHolder viewHolder;
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.planned_item_card, parent, false);
-            viewHolder = new com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter.CardViewHolder();
-            viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card);
-            viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item);
-            viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item);
-            viewHolder.date = (TextView) row.findViewById(R.id.date_item);
-            viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color);
+            row = inflater.inflate(R.layout.notification_item_card, parent, false);
+            viewHolder = new CardViewHolder();
+            viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card_notification);
+            viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item_notification);
+            viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item_notification);
+            viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
+            viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
             row.setTag(viewHolder);
+
+            LinearLayout list = (LinearLayout) row.findViewById(R.id.list_helpers);
+            list.removeAllViews();
+            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View line = li.inflate(R.layout.notification_helper_row, null);
+            Button b= (Button) line.findViewById(R.id.notification_row_accept);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.e("ta","cli");
+                }
+            });
+            list.addView(line);
+
         } else {
-            viewHolder = (com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter.CardViewHolder) row.getTag();
+            viewHolder = (CardViewHolder) row.getTag();
         }
         final PlannedRequest plannedRequest = getItem(position);
         viewHolder.localisation.setText(plannedRequest.localisation);
@@ -112,7 +130,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         return sdf.format(date);
     }
 
-    private void getAideType(com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter.CardViewHolder viewHolder, String aideType) {
+    private void getAideType(CardViewHolder viewHolder, String aideType) {
         switch (aideType) {
             case "1":
                 viewHolder.aideCategoryTv.setText(PlannedRequest.n1);
