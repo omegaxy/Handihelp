@@ -24,6 +24,7 @@ import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
+import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
@@ -180,9 +181,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
 
                 case R.id.nav_myapplication:
-                    navigationView.setCheckedItem(R.id.nav_settings);
+                    navigationView.setCheckedItem(R.id.nav_myapplication);
 
                     fragment = new MyPlannedFragment();
+                    break;
+                case R.id.nav_notification:
+                    navigationView.setCheckedItem(R.id.nav_notification);
+
+                    fragment = new NotificationFragment();
                     break;
             }
 
