@@ -80,7 +80,7 @@ public class DisplayMessageFragment extends DialogFragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    messageRequester.getMessage(getActivity(), idContact, new MessageRequester.GetMessagesCB() {
+                                    messageRequester.getMessage(getActivity().getApplicationContext(), idContact, new MessageRequester.GetMessagesCB() {
                                         @Override
                                         public void onMessagesReceived(ArrayList<Message> arrayList, Boolean success) {
                                             if (success) {

@@ -75,7 +75,7 @@ public class PlannedFragment extends Fragment {
 
 
     private void fetchPlannedRequests() {
-        plannedRequester.getPlannedRequest(getActivity(), new PlannedRequester.PlannedRequestCB() {
+        plannedRequester.getPlannedRequest(getActivity().getApplicationContext(), new PlannedRequester.PlannedRequestCB() {
 
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
