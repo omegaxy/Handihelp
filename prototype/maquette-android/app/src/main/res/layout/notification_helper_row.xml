@@ -59,25 +59,13 @@
 
     <LinearLayout
         android:layout_weight="0.5"
+        android:id="@+id/notification_linear_row"
         android:layout_width="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
 
-        <Button
-            style="@android:style/Widget.Holo.Button"
-            android:layout_width="wrap_content"
-            android:id="@+id/notification_row_accept"
-            android:layout_height="wrap_content"
-            android:text="Accepter" />
-
-        <Button
-            style="@android:style/Widget.Holo.Button"
-            android:layout_width="wrap_content"
-            android:id="@+id/notification_row_refuse"
-            android:layout_height="wrap_content"
-            android:text="Refuser" />
     </LinearLayout>
 
 

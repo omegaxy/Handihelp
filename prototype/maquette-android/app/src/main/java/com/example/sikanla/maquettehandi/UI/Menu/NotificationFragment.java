@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.sikanla.maquettehandi.Adapters.NotificationAdapter;
-import com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
@@ -37,7 +36,7 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
 
-        adapter = new NotificationAdapter(getActivity(), R.layout.planned_item_card);
+        adapter = new NotificationAdapter(getActivity(), R.layout.notification_item_card);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

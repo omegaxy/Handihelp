@@ -40,7 +40,10 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         TextView aideCategoryTv;
         TextView date;
         LinearLayout linearLayout;
+        LinearLayout linearLayoutHelpers;
         FrameLayout frameLayout;
+        View.OnClickListener onclickListener;
+
     }
 
 
@@ -68,6 +71,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             }
 
         }
+        this.responsePlanneds = responsePlanneds;
     }
 
     @Override
@@ -79,6 +83,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     public PlannedRequest getItem(int index) {
         return this.plannedRequests.get(index);
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -93,20 +98,37 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item_notification);
             viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
             viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
-            row.setTag(viewHolder);
-
-            LinearLayout list = (LinearLayout) row.findViewById(R.id.list_helpers);
-            list.removeAllViews();
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View line = li.inflate(R.layout.notification_helper_row, null);
-            Button b= (Button) line.findViewById(R.id.notification_row_accept);
-            b.setOnClickListener(new View.OnClickListener() {
+            viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
+            viewHolder.onclickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("ta","cli");
+                    Log.e("eee", String.valueOf(view.getId()));
                 }
-            });
-            list.addView(line);
+            };
+            row.setTag(viewHolder);
+
+            if (responsePlanneds != null) {
+                for (int i = 0; i < responsePlanneds.size(); i++) {
+                    if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
+                        View line = inflater.inflate(R.layout.notification_helper_row, null);
+                        LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
+
+                        Button refuse = new Button(context);
+                        refuse.setText("Refuser");
+                        Button accpt = new Button(context);
+                        accpt.setText("Accepter");
+                        accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
+                        accpt.setOnClickListener(viewHolder.onclickListener);
+
+                        linear.addView(accpt);
+                        linear.addView(refuse);
+                        viewHolder.linearLayoutHelpers.addView(line);
+
+                    }
+
+                }
+            }
+
 
         } else {
             viewHolder = (CardViewHolder) row.getTag();
