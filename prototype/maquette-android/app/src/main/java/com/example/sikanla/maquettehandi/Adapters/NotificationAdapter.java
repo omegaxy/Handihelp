@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,9 @@ import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +43,11 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         TextView localisation;
         TextView aideCategoryTv;
         TextView date;
+
+        ImageView pictureContact;
+        TextView firstname;
+        TextView surname;
+
         LinearLayout linearLayout;
         LinearLayout linearLayoutHelpers;
         FrameLayout frameLayout;
@@ -88,7 +97,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        CardViewHolder viewHolder;
+        final CardViewHolder viewHolder;
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.notification_item_card, parent, false);
@@ -99,6 +108,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
             viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
             viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
+
             viewHolder.onclickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -113,12 +123,40 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                         View line = inflater.inflate(R.layout.notification_helper_row, null);
                         LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
 
+                        viewHolder.pictureContact = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
+                        viewHolder.firstname = (TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName);
+                        viewHolder.surname = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
+                        
                         Button refuse = new Button(context);
                         refuse.setText("Refuser");
                         Button accpt = new Button(context);
                         accpt.setText("Accepter");
                         accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
                         accpt.setOnClickListener(viewHolder.onclickListener);
+
+                        PlannedRequester plannedRequester= new PlannedRequester();
+                        plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
+                            @Override
+                            public void getUser(String firstName, String surname, String age, Boolean success) {
+                                if (success) {
+                                    viewHolder.firstname.setText(firstName);
+                                    viewHolder.surname.setText(surname);
+
+                                }
+                            }
+                        });
+
+                        ImageRequester imageRequester = new ImageRequester();
+                        imageRequester.getImage(responsePlanneds.get(i).id_helper, context, new ImageRequester.ImageInterface() {
+                            @Override
+                            public void getUrl(String url) {
+                                Log.e("url", url);
+                                if (!url.isEmpty())
+                                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact);
+
+                            }
+                        });
+
 
                         linear.addView(accpt);
                         linear.addView(refuse);
