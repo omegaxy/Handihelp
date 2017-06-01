@@ -12,13 +12,5 @@
         android:visibility="gone"
         android:text="TextView" />
 
-    <EditText
-        android:id="@+id/df_answerET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textColor="@color/grey05"
-        android:hint="Entrez un commentaire"
-        android:textColorHint="@color/grey05"
-        android:inputType="textPersonName" />
+
 </LinearLayout>

@@ -25,7 +25,6 @@ import com.example.sikanla.maquettehandi.network.PlannedRequester;
 public class AnswerPLannedDF extends DialogFragment {
     private View rootView;
     private TextView textView;
-    private EditText editText;
 
     @NonNull
     @Override
@@ -34,7 +33,6 @@ public class AnswerPLannedDF extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
         rootView = inflater.inflate(R.layout.answer_planned, null);
-        editText = (EditText) rootView.findViewById(R.id.df_answerET);
         textView = (TextView) rootView.findViewById(R.id.df_answerTVerror);
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
@@ -71,7 +69,7 @@ public class AnswerPLannedDF extends DialogFragment {
                 public void onClick(View v)
                 {
                     PlannedRequester plannedRequester = new PlannedRequester();
-                    plannedRequester.answerPlanned(getActivity(), editText.getText().toString(),
+                    plannedRequester.answerPlanned(getActivity(), " ",
                             getArguments().getString("id"), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
                                 @Override
                                 public void onPlannedPosted(Boolean success) {
