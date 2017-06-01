@@ -44,9 +44,9 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         TextView aideCategoryTv;
         TextView date;
 
-        ImageView pictureContact;
-        TextView firstname;
-        TextView surname;
+        ImageView[] pictureContact;
+        TextView[] firstname;
+        TextView[] surname;
 
         LinearLayout linearLayout;
         LinearLayout linearLayoutHelpers;
@@ -118,15 +118,18 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             row.setTag(viewHolder);
 
             if (responsePlanneds != null) {
+                viewHolder.firstname=new TextView[responsePlanneds.size()];
+                viewHolder.surname=new TextView[responsePlanneds.size()];
+                viewHolder.pictureContact=new ImageView[responsePlanneds.size()];
                 for (int i = 0; i < responsePlanneds.size(); i++) {
                     if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
                         View line = inflater.inflate(R.layout.notification_helper_row, null);
                         LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
 
-                        viewHolder.pictureContact = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
-                        viewHolder.firstname = (TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName);
-                        viewHolder.surname = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
-                        
+                        viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
+                        viewHolder.firstname[i]=((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
+                        viewHolder.surname[i] = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
+
                         Button refuse = new Button(context);
                         refuse.setText("Refuser");
                         Button accpt = new Button(context);
@@ -135,12 +138,13 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                         accpt.setOnClickListener(viewHolder.onclickListener);
 
                         PlannedRequester plannedRequester= new PlannedRequester();
+                        final int finalI = i;
                         plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
                             @Override
                             public void getUser(String firstName, String surname, String age, Boolean success) {
                                 if (success) {
-                                    viewHolder.firstname.setText(firstName);
-                                    viewHolder.surname.setText(surname);
+                                    viewHolder.firstname[finalI].setText(firstName);
+                                    viewHolder.surname[finalI].setText(surname);
 
                                 }
                             }
@@ -152,7 +156,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                             public void getUrl(String url) {
                                 Log.e("url", url);
                                 if (!url.isEmpty())
-                                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact);
+                                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact[finalI]);
 
                             }
                         });
