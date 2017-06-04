@@ -27,6 +27,7 @@ public class NotificationFragment extends Fragment {
     private NotificationAdapter adapter;
 
     private ArrayList<PlannedRequest> plannedRequests;
+    private ArrayList<ResponsePlanned> localResponsePlanneds;
     private PlannedRequester plannedRequester;
 
 
@@ -34,17 +35,17 @@ public class NotificationFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         adapter = new NotificationAdapter(getActivity(), R.layout.notification_item_card);
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerNotification);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                  fetchPlannedRequests();
+                fetchPlannedRequests();
             }
         });
-        listView = (ListView) view.findViewById(R.id.lvplanned);
+        listView = (ListView) view.findViewById(R.id.lvnotification);
         listView.addHeaderView(new View(getActivity()));
         listView.addFooterView(new View(getActivity()));
 
@@ -59,7 +60,7 @@ public class NotificationFragment extends Fragment {
         plannedRequester = new PlannedRequester();
         listView.setAdapter(adapter);
         fetchPlannedRequests();
-        //refreshForNewRequests();
+        refreshForNewRequests();
         swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_dark),
                 getResources().getColor(android.R.color.holo_red_dark),
                 getResources().getColor(android.R.color.holo_blue_dark),
@@ -73,17 +74,18 @@ public class NotificationFragment extends Fragment {
             @Override
             public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
                 if (success) {
-                    plannedRequests=s;
+                    plannedRequests = s;
                     plannedRequester.getResponsesPlanned(getActivity().getApplicationContext(), new PlannedRequester.ResponsePlannedCB() {
                         @Override
                         public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
-                            if (success){
+                            if (success) {
                                 adapter.clear();
-                                adapter.addAll(plannedRequests,t);
+                                localResponsePlanneds = t;
+                                adapter.addAll(plannedRequests, t);
+                                adapter.notifyDataSetChanged();
                                 swipeContainer.setRefreshing(false);
 
-                            }
-                            else {
+                            } else {
                                 swipeContainer.setRefreshing(false);
                             }
                         }
@@ -95,6 +97,57 @@ public class NotificationFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void refreshForNewRequests() {
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(4000);
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    plannedRequester.getPlannedRequest(getActivity(), new PlannedRequester.PlannedRequestCB() {
+
+                                        @Override
+                                        public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
+                                            if (success) {
+                                                plannedRequests = s;
+                                                plannedRequester.getResponsesPlanned(getActivity().getApplicationContext(), new PlannedRequester.ResponsePlannedCB() {
+                                                    @Override
+                                                    public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
+                                                        if (success) {
+                                                            if (localResponsePlanneds != null) {
+                                                                if (localResponsePlanneds.size() != t.size()) {
+                                                                    adapter.clear();
+                                                                    adapter.addAll(plannedRequests, t);
+                                                                    adapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+                                                });
+
+
+                                            }
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
     }
 
 

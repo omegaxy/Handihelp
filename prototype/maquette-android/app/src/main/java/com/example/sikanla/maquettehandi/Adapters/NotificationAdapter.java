@@ -73,7 +73,11 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         if (localPlannedRequests != null) {
             for (int i = 0; i < localPlannedRequests.size(); i++) {
                 localPlannedRequests.remove(i);
-
+            }
+        }
+        if (responsePlanneds != null) {
+            for (int i = 0; i < responsePlanneds.size(); i++) {
+                responsePlanneds.remove(i);
             }
         }
         super.clear();
@@ -111,137 +115,112 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
         final CardViewHolder viewHolder;
-        if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.notification_item_card, parent, false);
-            viewHolder = new CardViewHolder();
-            viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card_notification);
-            viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item_notification);
-            viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item_notification);
-            viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
-            viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
-            viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
 
-            viewHolder.acceptOnclickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    //send request and hide other views
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        row = inflater.inflate(R.layout.notification_item_card, parent, false);
+        viewHolder = new CardViewHolder();
+        viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card_notification);
+        viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item_notification);
+        viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item_notification);
+        viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
+        viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
+        viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
 
-                    builder.setMessage("Vous serez mis en contact, via la messagerie.\n" +
-                            "L'aidant sera notifié de votre réponse.")
-                            .setTitle("Selectionner cet aidant?");
+        viewHolder.acceptOnclickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                //send request and hide other views
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setMessage("Vous serez mis en contact, via la messagerie.\n" +
+                        "L'aidant sera notifié de votre réponse.")
+                        .setTitle("Selectionner cet aidant?");
 
 
-                    final AlertDialog dialog = builder.create();
-                    dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            PlannedRequester plannedRequester = new PlannedRequester();
-                            plannedRequester.deleteResponsePlanned(context,
-                                    String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
-                                        @Override
-                                        public void onPlannedPosted(Boolean success) {
-                                            if (success) {
-                                            } else {
-                                            }
-                                        }
-                                    });
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sélectionner",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    PlannedRequester plannedRequester = new PlannedRequester();
-                                    plannedRequester.selectAnswerPlanned(context,
-                                            String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
-                                                @Override
-                                                public void onPlannedPosted(Boolean success) {
-                                                    if (success) {
-                                                        Toast.makeText(context, "Succès", Toast.LENGTH_LONG).show();
-                                                    } else {
-                                                        Toast.makeText(context, "ERREUR, REESSAYER", Toast.LENGTH_LONG).show();
-                                                    }
-                                                }
-                                            });
-                                    dialog.dismiss();
-                                }
-                            });
-
-                    dialog.show();
-                }
-            };
-            viewHolder.refuseOnclickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("eee", String.valueOf(view.getId()));
-                }
-            };
-            row.setTag(viewHolder);
-
-            if (responsePlanneds != null) {
-                //display rows of helpers below the planned request, this dynamically adds helpers to the view
-                //plus listeners, loading profile etc
-                viewHolder.firstname = new TextView[responsePlanneds.size()];
-                viewHolder.surname = new TextView[responsePlanneds.size()];
-                viewHolder.pictureContact = new ImageView[responsePlanneds.size()];
-                for (int i = 0; i < responsePlanneds.size(); i++) {
-                    //only add helpers related to the planned request:
-                    if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
-                        View line = inflater.inflate(R.layout.notification_helper_row, null);
-                        LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
-
-                        viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
-                        viewHolder.firstname[i] = ((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
-                        viewHolder.surname[i] = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
-                        //listeners on buttons and ids:
-                        Button refuse = new Button(context);
-                        refuse.setText("Refuser");
-                        Button accpt = new Button(context);
-                        accpt.setText("Accepter");
-                        accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
-                        accpt.setOnClickListener(viewHolder.acceptOnclickListener);
-                        refuse.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
-                        refuse.setOnClickListener(viewHolder.refuseOnclickListener);
-
-                        //load profiles:
-                        PlannedRequester plannedRequester = new PlannedRequester();
-                        final int finalI = i;
-                        plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
-                            @Override
-                            public void getUser(String firstName, String surname, String age, Boolean success) {
-                                if (success) {
-                                    viewHolder.firstname[finalI].setText(firstName);
-                                    viewHolder.surname[finalI].setText(surname);
-
-                                }
-                            }
-                        });
-
-                        ImageRequester imageRequester = new ImageRequester();
-                        imageRequester.getImage(responsePlanneds.get(i).id_helper, context, new ImageRequester.ImageInterface() {
-                            @Override
-                            public void getUrl(String url) {
-                                if (!url.isEmpty())
-                                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact[finalI]);
-
-                            }
-                        });
-
-                        linear.addView(refuse);
-                        linear.addView(accpt);
-                        viewHolder.linearLayoutHelpers.addView(line);
-
+                final AlertDialog dialog = builder.create();
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.dismiss();
                     }
+                });
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sélectionner",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                PlannedRequester plannedRequester = new PlannedRequester();
+                                plannedRequester.selectAnswerPlanned(context,
+                                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
+                                            @Override
+                                            public void onPlannedPosted(Boolean success) {
+                                                if (success) {
+                                                    Toast.makeText(context, "Succès", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Toast.makeText(context, "ERREUR, REESSAYER", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                                dialog.dismiss();
+                            }
+                        });
+
+                dialog.show();
+            }
+        };
+        viewHolder.refuseOnclickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlannedRequester plannedRequester = new PlannedRequester();
+                plannedRequester.deleteResponsePlanned(context,
+                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
+                            @Override
+                            public void onPlannedPosted(Boolean success) {
+                                if (success) {
+                                } else {
+                                }
+                            }
+                        });
+            }
+        };
+        row.setTag(viewHolder);
+
+        if (responsePlanneds != null) {
+            //display rows of helpers below the planned request, this dynamically adds helpers to the view
+            //plus listeners, loading profile etc
+            viewHolder.firstname = new TextView[responsePlanneds.size()];
+            viewHolder.surname = new TextView[responsePlanneds.size()];
+            viewHolder.pictureContact = new ImageView[responsePlanneds.size()];
+            for (int i = 0; i < responsePlanneds.size(); i++) {
+                //only add helpers related to the planned request:
+                if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
+                    View line = inflater.inflate(R.layout.notification_helper_row, null);
+                    LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
+                    
+                    //listeners on buttons and ids:
+                    viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
+                    viewHolder.firstname[i] = ((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
+                    viewHolder.surname[i] = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
+                    Button refuse = new Button(context);
+                    refuse.setText("Refuser");
+                    Button accpt = new Button(context);
+                    accpt.setText("Accepter");
+                    accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
+                    accpt.setOnClickListener(viewHolder.acceptOnclickListener);
+                    refuse.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
+                    refuse.setOnClickListener(viewHolder.refuseOnclickListener);
+
+                    //load profiles:
+                    loadHelperProfileAsync(viewHolder, i);
+
+                    linear.addView(refuse);
+                    linear.addView(accpt);
+                    viewHolder.linearLayoutHelpers.addView(line);
 
                 }
+
             }
-
-
-        } else {
-            viewHolder = (CardViewHolder) row.getTag();
         }
+
+
         final PlannedRequest plannedRequest = getItem(position);
         viewHolder.localisation.setText(plannedRequest.localisation);
 
@@ -251,6 +230,31 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         viewHolder.date.setText(formattedDate);
 
         return row;
+    }
+
+    private void loadHelperProfileAsync(final CardViewHolder viewHolder, int i) {
+        PlannedRequester plannedRequester = new PlannedRequester();
+        final int finalI = i;
+        plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
+            @Override
+            public void getUser(String firstName, String surname, String age, Boolean success) {
+                if (success) {
+                    viewHolder.firstname[finalI].setText(firstName);
+                    viewHolder.surname[finalI].setText(surname);
+
+                }
+            }
+        });
+
+        ImageRequester imageRequester = new ImageRequester();
+        imageRequester.getImage(responsePlanneds.get(i).id_helper, context, new ImageRequester.ImageInterface() {
+            @Override
+            public void getUrl(String url) {
+                if (!url.isEmpty())
+                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact[finalI]);
+
+            }
+        });
     }
 
     private String formatDate(String epoch) {
