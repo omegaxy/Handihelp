@@ -1,7 +1,9 @@
 package com.example.sikanla.maquettehandi.Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
@@ -51,8 +53,8 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         LinearLayout linearLayout;
         LinearLayout linearLayoutHelpers;
         FrameLayout frameLayout;
-        View.OnClickListener onclickListener;
-
+        View.OnClickListener acceptOnclickListener;
+        View.OnClickListener refuseOnclickListener;
     }
 
 
@@ -95,7 +97,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
         final CardViewHolder viewHolder;
         if (row == null) {
@@ -109,7 +111,47 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
             viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
 
-            viewHolder.onclickListener = new View.OnClickListener() {
+            viewHolder.acceptOnclickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    //send request and hide other views
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    builder.setMessage("Vous serez mis en contact, via la messagerie.\n" +
+                            "L'aidant sera notifié de votre réponse.")
+                            .setTitle("Selectionner cet aidant?");
+
+
+                    final AlertDialog dialog = builder.create();
+                    dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sélectionner",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    PlannedRequester plannedRequester = new PlannedRequester();
+                                    plannedRequester.selectAnswerPlanned(context,
+                                            String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
+                                                @Override
+                                                public void onPlannedPosted(Boolean success) {
+                                                    if (success) {
+                                                        Toast.makeText(context, "Succès", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        Toast.makeText(context, "ERREUR, REESSAYER", Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
+                                    dialog.dismiss();
+                                }
+                            });
+
+                    dialog.show();
+                }
+            };
+            viewHolder.refuseOnclickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.e("eee", String.valueOf(view.getId()));
@@ -118,26 +160,32 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             row.setTag(viewHolder);
 
             if (responsePlanneds != null) {
-                viewHolder.firstname=new TextView[responsePlanneds.size()];
-                viewHolder.surname=new TextView[responsePlanneds.size()];
-                viewHolder.pictureContact=new ImageView[responsePlanneds.size()];
+                //display rows of helpers below the planned request, this dynamically adds helpers to the view
+                //plus listeners, loading profile etc
+                viewHolder.firstname = new TextView[responsePlanneds.size()];
+                viewHolder.surname = new TextView[responsePlanneds.size()];
+                viewHolder.pictureContact = new ImageView[responsePlanneds.size()];
                 for (int i = 0; i < responsePlanneds.size(); i++) {
+                    //only add helpers related to the planned request:
                     if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
                         View line = inflater.inflate(R.layout.notification_helper_row, null);
                         LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
 
                         viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
-                        viewHolder.firstname[i]=((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
+                        viewHolder.firstname[i] = ((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
                         viewHolder.surname[i] = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
-
+                        //listeners on buttons and ids:
                         Button refuse = new Button(context);
                         refuse.setText("Refuser");
                         Button accpt = new Button(context);
                         accpt.setText("Accepter");
                         accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
-                        accpt.setOnClickListener(viewHolder.onclickListener);
+                        accpt.setOnClickListener(viewHolder.acceptOnclickListener);
+                        refuse.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
+                        refuse.setOnClickListener(viewHolder.refuseOnclickListener);
 
-                        PlannedRequester plannedRequester= new PlannedRequester();
+                        //load profiles:
+                        PlannedRequester plannedRequester = new PlannedRequester();
                         final int finalI = i;
                         plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
                             @Override
@@ -154,16 +202,14 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                         imageRequester.getImage(responsePlanneds.get(i).id_helper, context, new ImageRequester.ImageInterface() {
                             @Override
                             public void getUrl(String url) {
-                                Log.e("url", url);
                                 if (!url.isEmpty())
                                     Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact[finalI]);
 
                             }
                         });
 
-
-                        linear.addView(accpt);
                         linear.addView(refuse);
+                        linear.addView(accpt);
                         viewHolder.linearLayoutHelpers.addView(line);
 
                     }

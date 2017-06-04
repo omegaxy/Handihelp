@@ -255,5 +255,35 @@ public class PlannedRequester {
         return responsePlanneds;
     }
 
+    public void selectAnswerPlanned(Context context, String idHelper, String idRequest, final PostPlannedCB postPlannedCB) {
+        User user = new User();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("id_request", idRequest);
+        parameters.put("id_helper", idHelper);
+
+        new AllRequest(context, parameters, headers, "/selectresponseplanned", AllRequest.POST, new AllRequest.CallBackConnector() {
+            @Override
+            public void CallBackOnConnect(String response, Boolean success) {
+                if (success) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.get("error").toString() == "false") {
+                            postPlannedCB.onPlannedPosted(true);
+                        } else
+                            postPlannedCB.onPlannedPosted(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    postPlannedCB.onPlannedPosted(false);
+
+                }
+            }
+        });
+    }
+
+
 
 }
