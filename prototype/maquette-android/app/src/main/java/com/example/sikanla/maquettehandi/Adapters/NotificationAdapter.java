@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,7 @@ import java.util.TimeZone;
 public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     private static final String TAG = "PlannedRequestCardAdapter";
 
-    private List<PlannedRequest> plannedRequests = new ArrayList<>();
+    private List<PlannedRequest> localPlannedRequests = new ArrayList<>();
     private List<ResponsePlanned> responsePlanneds = new ArrayList<>();
     private Activity context;
 
@@ -63,10 +62,21 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         this.context = context;
     }
 
+
     @Override
     public void add(PlannedRequest object) {
-        plannedRequests.add(object);
-        super.add(object);
+        localPlannedRequests.add(object);
+    }
+
+    @Override
+    public void clear() {
+        if (localPlannedRequests != null) {
+            for (int i = 0; i < localPlannedRequests.size(); i++) {
+                localPlannedRequests.remove(i);
+
+            }
+        }
+        super.clear();
     }
 
 
@@ -74,8 +84,9 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     public void addAll(ArrayList<PlannedRequest> plannedRequests, ArrayList<ResponsePlanned> responsePlanneds) {
         for (int i = 0; i < plannedRequests.size(); i++) {
             for (int j = 0; j < responsePlanneds.size(); j++) {
-                if (plannedRequests.get(i).idPlanned == responsePlanneds.get(j).id_request) {
-                    add(plannedRequests.get(i));
+                if (plannedRequests.get(i).idPlanned.matches(responsePlanneds.get(j).id_request)) {
+                    if (!localPlannedRequests.contains(plannedRequests.get(i)))
+                        add(plannedRequests.get(i));
                     break;
                 }
 
@@ -87,12 +98,12 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
 
     @Override
     public int getCount() {
-        return this.plannedRequests.size();
+        return this.localPlannedRequests.size();
     }
 
     @Override
     public PlannedRequest getItem(int index) {
-        return this.plannedRequests.get(index);
+        return this.localPlannedRequests.get(index);
     }
 
 
@@ -126,6 +137,16 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                     dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            PlannedRequester plannedRequester = new PlannedRequester();
+                            plannedRequester.deleteResponsePlanned(context,
+                                    String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
+                                        @Override
+                                        public void onPlannedPosted(Boolean success) {
+                                            if (success) {
+                                            } else {
+                                            }
+                                        }
+                                    });
                             dialog.dismiss();
                         }
                     });

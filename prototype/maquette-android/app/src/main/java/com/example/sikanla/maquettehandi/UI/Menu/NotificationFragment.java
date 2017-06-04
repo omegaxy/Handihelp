@@ -41,12 +41,13 @@ public class NotificationFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //  fetchPlannedRequests();
+                  fetchPlannedRequests();
             }
         });
         listView = (ListView) view.findViewById(R.id.lvplanned);
         listView.addHeaderView(new View(getActivity()));
         listView.addFooterView(new View(getActivity()));
+
 
         return view;
     }
@@ -56,6 +57,7 @@ public class NotificationFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         plannedRequester = new PlannedRequester();
+        listView.setAdapter(adapter);
         fetchPlannedRequests();
         //refreshForNewRequests();
         swipeContainer.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_dark),
@@ -74,13 +76,15 @@ public class NotificationFragment extends Fragment {
                     plannedRequests=s;
                     plannedRequester.getResponsesPlanned(getActivity().getApplicationContext(), new PlannedRequester.ResponsePlannedCB() {
                         @Override
-                        public void onResponsePlanned(ArrayList<ResponsePlanned> s, Boolean success) {
+                        public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
                             if (success){
                                 adapter.clear();
-                                adapter.addAll(plannedRequests,s);
-                                listView.setAdapter(adapter);
+                                adapter.addAll(plannedRequests,t);
                                 swipeContainer.setRefreshing(false);
 
+                            }
+                            else {
+                                swipeContainer.setRefreshing(false);
                             }
                         }
                     });
@@ -88,7 +92,6 @@ public class NotificationFragment extends Fragment {
 
                 } else {
                     swipeContainer.setRefreshing(false);
-                    // todo display error message check your connection
                 }
             }
         });
