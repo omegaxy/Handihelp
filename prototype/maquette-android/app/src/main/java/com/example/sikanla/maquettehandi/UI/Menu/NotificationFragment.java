@@ -29,6 +29,7 @@ public class NotificationFragment extends Fragment {
     private ArrayList<PlannedRequest> plannedRequests;
     private ArrayList<ResponsePlanned> localResponsePlanneds;
     private PlannedRequester plannedRequester;
+    private Thread t;
 
 
     public NotificationFragment() {
@@ -100,7 +101,7 @@ public class NotificationFragment extends Fragment {
     }
 
     private void refreshForNewRequests() {
-        Thread t = new Thread() {
+        t = new Thread() {
 
             @Override
             public void run() {
@@ -117,23 +118,26 @@ public class NotificationFragment extends Fragment {
                                         public void getArrayPlannedRequest(ArrayList<PlannedRequest> s, Boolean success) {
                                             if (success) {
                                                 plannedRequests = s;
-                                                plannedRequester.getResponsesPlanned(getActivity().getApplicationContext(), new PlannedRequester.ResponsePlannedCB() {
-                                                    @Override
-                                                    public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
-                                                        if (success) {
-                                                            if (localResponsePlanneds != null) {
-                                                                if (localResponsePlanneds.size() != t.size()) {
-                                                                    adapter.clear();
-                                                                    adapter.addAll(plannedRequests, t);
-                                                                    adapter.notifyDataSetChanged();
+                                                if (getActivity() != null) {
+                                                    plannedRequester.getResponsesPlanned(getActivity().getApplicationContext(), new PlannedRequester.ResponsePlannedCB() {
+                                                        @Override
+                                                        public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
+                                                            if (success) {
+                                                                if (localResponsePlanneds != null) {
+                                                                    if (localResponsePlanneds.size() != t.size()) {
+                                                                        localResponsePlanneds = t;
+                                                                        adapter.clear();
+                                                                        adapter.addAll(plannedRequests, t);
+                                                                        adapter.notifyDataSetChanged();
+                                                                    }
                                                                 }
+
                                                             }
-
                                                         }
-                                                    }
-                                                });
+                                                    });
 
 
+                                                }
                                             }
                                         }
                                     });
