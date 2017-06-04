@@ -60,7 +60,6 @@ public class DisplayMessageFragment extends DialogFragment {
 
         textViewName = (TextView) view.findViewById(R.id.df_display_message_textview_name);
         textViewName.setText(getArguments().getString("firstname"));
-        //textViewName.setBackgroundColor(getResources().getColor(R.color.oraaange));
         fetchMessages(idContact);
         sendButtonBehaviour();
 

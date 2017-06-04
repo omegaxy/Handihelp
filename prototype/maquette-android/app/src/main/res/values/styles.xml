@@ -22,8 +22,8 @@
         <item name="android:windowBackground">@color/back1</item>
     </style>
 
-    <style name="AnswerTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/back2</item>
+    <style name="AnswerTheme" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/back1</item>
     </style>
 
     <style name="AnswerTheme2" parent="Base.Theme.AppCompat.Dialog.Alert">

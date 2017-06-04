@@ -42,7 +42,7 @@ public class ProfileDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme);
 
         rootView = inflater.inflate(R.layout.fragment_profile, null);
         fistNameTv = (TextView) rootView.findViewById(R.id.firstnamedialog);

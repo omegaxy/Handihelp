@@ -32,6 +32,8 @@ import com.squareup.picasso.Picasso;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.example.sikanla.maquettehandi.R.styleable.NavigationView;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView firstnameHeader;
     private ImageView imageViewHeader;
