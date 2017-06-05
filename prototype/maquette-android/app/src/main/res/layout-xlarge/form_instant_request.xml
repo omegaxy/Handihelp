@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@color/back1"
+    android:theme="@style/AppTheme">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/back1"
+            android:orientation="vertical">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right">
+
+                <Button
+                    android:id="@+id/close_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trans"
+                    android:scaleX="3"
+                    android:scaleY="3"
+                    android:drawableLeft="@drawable/ic_help_prog_cross" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Demande d'aide maintenant"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="80sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Type d'aide que vous souhaitez"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <Button
+                android:id="@+id/aidetype_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type d'aide"
+                android:textSize="@dimen/textSizeXL"/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Votre position"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/textSizeXL"
+                android:background="@color/back2"
+                android:text="20 résidence AAA 10 avenue BBB" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25"
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/textSizeXL"
+                    android:text="Notifier mes Amis" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Commentaires"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Saisissez un commentaire"
+                android:inputType="textPersonName|textMultiLine"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/textSizeXL"
+                android:textColorHint="@color/grey05" />
+
+            <Button
+                android:id="@+id/send_instant_request_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="@color/oraaange"
+                android:text="Envoyer"
+                android:textSize="@dimen/titleSizeXL"
+                android:textColor="@color/back1" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
