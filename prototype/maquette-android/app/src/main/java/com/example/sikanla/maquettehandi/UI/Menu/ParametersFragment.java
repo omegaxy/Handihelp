@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.sikanla.maquettehandi.MainActivity;
+import com.example.sikanla.maquettehandi.UI.Activities.LocationActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.identification.LoginActivity;
@@ -29,17 +29,26 @@ import com.squareup.picasso.Picasso;
  */
 
 public class ParametersFragment extends Fragment {
-    private Button uploadB, decoB;
+    private Button uploadB, decoB, location;
     private ImageView imageView;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.parameters_fragment, container, false);
         decoB = (Button) view.findViewById(R.id.parameters_deco);
+        location = (Button) view.findViewById(R.id.button2);
 
         setUpDecoButton();
         loadImage(view);
         setUpUploadButton(view);
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), LocationActivity.class));
+            }
+        });
+
 
         return view;
     }
@@ -89,7 +98,9 @@ public class ParametersFragment extends Fragment {
                 }
             }
         });
+
     }
+
 
     private void loadImage(View view) {
         User user = new User();
@@ -107,7 +118,6 @@ public class ParametersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
