@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_margin="30dp"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
+    android:background="@color/back1"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/linL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollIndicators="right"
+        android:scrollbars="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20.03"
+            android:text="INSCRIPTION"
+            android:fontFamily="casual"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="@dimen/titleSizeXL"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/errorMsg"
+            android:text=""
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSizeXL"
+            android:textColor="@color/color1"
+            android:textStyle="bold"
+            />
+
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold"
+                android:text="Nom" />
+
+            <EditText
+                android:id="@+id/surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/textSizeXL"
+                android:ems="10"
+                />
+
+
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold"
+                android:text="Prénom" />
+
+            <EditText
+                android:id="@+id/firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/textSizeXL"
+                android:ems="10" />
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:text="Année de naissance"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/birthYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="@dimen/textSizeXL"
+                android:inputType="number" />
+
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold"
+                android:text="Adresse Mail" />
+
+            <EditText
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="@dimen/textSizeXL"
+                android:inputType="textEmailAddress" />
+
+
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:text="Mot de passe"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/password1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textSize="@dimen/textSizeXL"
+                android:inputType="textPassword" />
+
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/textSizeXL"
+                android:textStyle="bold"
+                android:text="Mot de passe"/>
+
+            <EditText
+                android:id="@+id/password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPassword" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:fontFamily="casual"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Mobile" />
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="phone" />
+
+
+
+        <Button
+            android:id="@+id/registrationButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="1"
+            android:fontFamily="casual"
+            android:text="S'INSCRIRE"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
