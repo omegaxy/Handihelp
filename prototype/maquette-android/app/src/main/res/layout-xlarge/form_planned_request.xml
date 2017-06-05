@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@color/back1"
+    android:theme="@style/AppTheme">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/back1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/close_btn"
+                android:layout_weight="0.9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans"
+                android:drawableLeft="@drawable/ic_help_prog_cross" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Demande d'aide pour plus tard"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="75sp" />
+
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Type d'aide que vous souhaitez"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <Button
+                android:id="@+id/aidetype_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type d'aide"
+                android:textSize="@dimen/textSizeXL"/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Localisation"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <EditText
+                android:id="@+id/localisation_fpA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="Saisissez une adresse"
+                android:textSize="@dimen/textSizeXL"
+                android:inputType="textPersonName|textMultiLine"
+                android:textColor="@color/grey05"
+                android:textColorHint="@color/grey05" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dateDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/grey05"
+                        android:textSize="@dimen/textSizeXL" />
+
+                    <Button
+                        android:id="@+id/pickDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_help_prog_date"
+                        android:text="Date"
+                        android:textSize="@dimen/textSizeXL" />
+
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/timeDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/grey05"
+                        android:textSize="@dimen/textSizeXL" />
+
+                    <Button
+                        android:id="@+id/pickTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_help_prog_time"
+                        android:text="Heure"
+                        android:textSize="@dimen/textSizeXL" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25"
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/textSizeXL"
+                    android:text="Notifier mes Amis" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Commentaires"
+                android:gravity="center"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/titleSizeXL" />
+
+            <EditText
+                android:id="@+id/commentaire_fpA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="Saisissez un commentaire"
+                android:textSize="@dimen/textSizeXL"
+                android:inputType="textPersonName|textMultiLine"
+                android:textColor="@color/grey05"
+                android:textColorHint="@color/grey05" />
+
+            <Button
+                android:id="@+id/send_planned_request_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/oraaange"
+                android:text="Envoyer"
+                android:textSize="60sp"
+                android:textColor="@color/grey05" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
