@@ -80,29 +80,11 @@
                 android:background="@color/back2"
                 android:text="20 résidence AAA 10 avenue BBB" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="60dp"
                 android:gravity="center">
-
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX="1.25"
-                    android:scaleY="1.25"
-                    android:textColor="@color/grey05"
-                    android:textSize="@dimen/textSizeXL"
-                    android:text="Notifier mes Amis" />
 
             </LinearLayout>
 
@@ -123,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+
                 android:hint="Saisissez un commentaire"
                 android:inputType="textPersonName|textMultiLine"
                 android:textColor="@color/grey05"

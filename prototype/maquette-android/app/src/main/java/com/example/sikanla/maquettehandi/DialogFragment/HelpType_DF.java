@@ -53,7 +53,7 @@ public class HelpType_DF extends DialogFragment {
         v = inflater.inflate(R.layout.fragment_help_type, null);
         try {
 
-            mListener = (DialogListener) (FormPlannedRequestActi) getActivity();
+            mListener = (DialogListener)  getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement DialogListener");

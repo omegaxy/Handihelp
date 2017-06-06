@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
+import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
 import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
@@ -120,9 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FormPlannedRequestActi.class));
-
-
+                HelpChoice_DF helpChoice_df = new HelpChoice_DF();
+                helpChoice_df.show(getFragmentManager(),"help-choice");
             }
         });
     }
