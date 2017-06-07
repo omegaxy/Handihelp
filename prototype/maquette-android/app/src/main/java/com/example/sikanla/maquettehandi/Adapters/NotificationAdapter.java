@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
+import com.example.sikanla.maquettehandi.DialogFragment.DisplayResponsesPlanned;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
@@ -36,8 +39,8 @@ import java.util.TimeZone;
 public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
     private static final String TAG = "PlannedRequestCardAdapter";
 
-    private List<PlannedRequest> localPlannedRequests = new ArrayList<>();
-    private List<ResponsePlanned> responsePlanneds = new ArrayList<>();
+    private ArrayList<PlannedRequest> localPlannedRequests = new ArrayList<>();
+    private ArrayList<ResponsePlanned> responsePlanneds = new ArrayList<>();
     private Activity context;
 
     static class CardViewHolder {
@@ -124,9 +127,20 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         viewHolder.aideCategoryTv = (TextView) row.findViewById(R.id.aide_type_item_notification);
         viewHolder.date = (TextView) row.findViewById(R.id.date_item_notification);
         viewHolder.linearLayout = (LinearLayout) row.findViewById(R.id.item_color_notification);
-        viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
 
-        viewHolder.acceptOnclickListener = new View.OnClickListener() {
+        viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisplayResponsesPlanned displayResponsesPlanned = new DisplayResponsesPlanned();
+               displayResponsesPlanned.setArrays(localPlannedRequests,responsePlanneds);
+
+                displayResponsesPlanned.show(context.getFragmentManager(), "answerPlanned");
+            }
+        });
+
+    //    viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
+
+    /*    viewHolder.acceptOnclickListener = new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 //send request and hide other views
@@ -168,22 +182,43 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         };
         viewHolder.refuseOnclickListener = new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                PlannedRequester plannedRequester = new PlannedRequester();
-                plannedRequester.deleteResponsePlanned(context,
-                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
-                            @Override
-                            public void onPlannedPosted(Boolean success) {
-                                if (success) {
-                                } else {
-                                }
+            public void onClick(final View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setTitle("Refuser cet aidant?");
+                final AlertDialog dialog = builder.create();
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Refuser",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                PlannedRequester plannedRequester = new PlannedRequester();
+                                plannedRequester.deleteResponsePlanned(context,
+                                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
+                                            @Override
+                                            public void onPlannedPosted(Boolean success) {
+                                                if (success) {
+                                                } else {
+                                                }
+                                            }
+                                        });
                             }
                         });
+
+                dialog.show();
+
             }
         };
+
+        */
         row.setTag(viewHolder);
 
-        if (responsePlanneds != null) {
+     /*   if (responsePlanneds != null) {
             //display rows of helpers below the planned request, this dynamically adds helpers to the view
             //plus listeners, loading profile etc
             viewHolder.firstname = new TextView[responsePlanneds.size()];
@@ -194,7 +229,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                 if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
                     View line = inflater.inflate(R.layout.notification_helper_row, null);
                     LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
-                    
+
                     //listeners on buttons and ids:
                     viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
                     viewHolder.firstname[i] = ((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
@@ -219,6 +254,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
 
             }
         }
+        */
 
 
         final PlannedRequest plannedRequest = getItem(position);
