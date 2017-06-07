@@ -1,35 +1,25 @@
 package com.example.sikanla.maquettehandi.Adapters;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
 import com.example.sikanla.maquettehandi.DialogFragment.DisplayResponsesPlanned;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.network.ImageRequester;
-import com.example.sikanla.maquettehandi.network.PlannedRequester;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -47,16 +37,9 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         TextView localisation;
         TextView aideCategoryTv;
         TextView date;
-
-        ImageView[] pictureContact;
-        TextView[] firstname;
-        TextView[] surname;
-
         LinearLayout linearLayout;
-        LinearLayout linearLayoutHelpers;
         FrameLayout frameLayout;
-        View.OnClickListener acceptOnclickListener;
-        View.OnClickListener refuseOnclickListener;
+
     }
 
 
@@ -92,15 +75,24 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         for (int i = 0; i < plannedRequests.size(); i++) {
             for (int j = 0; j < responsePlanneds.size(); j++) {
                 if (plannedRequests.get(i).idPlanned.matches(responsePlanneds.get(j).id_request)) {
-                    if (!localPlannedRequests.contains(plannedRequests.get(i)))
+                    if (!localContainsObject(responsePlanneds.get(j).id_request)) {
                         add(plannedRequests.get(i));
-                    break;
+                        break;
+                    }
                 }
 
             }
 
         }
         this.responsePlanneds = responsePlanneds;
+    }
+
+    private boolean localContainsObject(String s) {
+        for (int i = 0; i < localPlannedRequests.size(); i++) {
+            if (localPlannedRequests.get(i).idPlanned.matches(s))
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -139,7 +131,6 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
                 displayResponsesPlanned.show(context.getFragmentManager(), "answerPlanned");
             }
         });
-        Log.e("id_planned", getItem(position).idPlanned);
 
         final PlannedRequest plannedRequest = getItem(position);
         viewHolder.localisation.setText(plannedRequest.localisation);

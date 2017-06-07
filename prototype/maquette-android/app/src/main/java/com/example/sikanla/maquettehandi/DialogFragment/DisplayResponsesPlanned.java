@@ -2,6 +2,7 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class DisplayResponsesPlanned extends DialogFragment {
         ArrayList<ResponsePlanned> displayResponsePlanned = new ArrayList<>();
         for (int i = 0; i < responsePlanneds.size(); i++) {
             //only add helpers related to the planned request:
-            if (responsePlanneds.get(i).id_request == getArguments().getString("id_planned")) {
+            if (responsePlanneds.get(i).id_request.matches(getArguments().getString("id_planned"))) {
                 displayResponsePlanned.add(responsePlanneds.get(i));
             }
         }
