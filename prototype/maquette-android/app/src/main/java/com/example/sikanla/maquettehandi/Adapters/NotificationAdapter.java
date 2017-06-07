@@ -132,13 +132,24 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
             @Override
             public void onClick(View view) {
                 DisplayResponsesPlanned displayResponsesPlanned = new DisplayResponsesPlanned();
-               displayResponsesPlanned.setArrays(localPlannedRequests,responsePlanneds);
-
+                Bundle args = new Bundle();
+                args.putString("id_planned", getItem(position).idPlanned);
+                displayResponsesPlanned.setArrays(localPlannedRequests, responsePlanneds);
+                displayResponsesPlanned.setArguments(args);
                 displayResponsesPlanned.show(context.getFragmentManager(), "answerPlanned");
             }
         });
+        Log.e("id_planned", getItem(position).idPlanned);
 
-    //    viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
+        final PlannedRequest plannedRequest = getItem(position);
+        viewHolder.localisation.setText(plannedRequest.localisation);
+
+        getAideType(viewHolder, plannedRequest.helpCategory);
+
+        String formattedDate = formatDate(plannedRequest.scheduledAt);
+        viewHolder.date.setText(formattedDate);
+
+        //    viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
 
     /*    viewHolder.acceptOnclickListener = new View.OnClickListener() {
             @Override
@@ -218,80 +229,9 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         */
         row.setTag(viewHolder);
 
-     /*   if (responsePlanneds != null) {
-            //display rows of helpers below the planned request, this dynamically adds helpers to the view
-            //plus listeners, loading profile etc
-            viewHolder.firstname = new TextView[responsePlanneds.size()];
-            viewHolder.surname = new TextView[responsePlanneds.size()];
-            viewHolder.pictureContact = new ImageView[responsePlanneds.size()];
-            for (int i = 0; i < responsePlanneds.size(); i++) {
-                //only add helpers related to the planned request:
-                if (responsePlanneds.get(i).id_request == getItem(position).idPlanned) {
-                    View line = inflater.inflate(R.layout.notification_helper_row, null);
-                    LinearLayout linear = (LinearLayout) line.findViewById(R.id.notification_linear_row);
-
-                    //listeners on buttons and ids:
-                    viewHolder.pictureContact[i] = (ImageView) line.findViewById(R.id.notification_row_pictureContact);
-                    viewHolder.firstname[i] = ((TextView) line.findViewById(R.id.notification_row_tvItemContactFirstName));
-                    viewHolder.surname[i] = (TextView) line.findViewById(R.id.notification_row_tvItemContactSurname);
-                    Button refuse = new Button(context);
-                    refuse.setText("Refuser");
-                    Button accpt = new Button(context);
-                    accpt.setText("Accepter");
-                    accpt.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
-                    accpt.setOnClickListener(viewHolder.acceptOnclickListener);
-                    refuse.setId(Integer.parseInt(responsePlanneds.get(i).id_helper));
-                    refuse.setOnClickListener(viewHolder.refuseOnclickListener);
-
-                    //load profiles:
-                    loadHelperProfileAsync(viewHolder, i);
-
-                    linear.addView(refuse);
-                    linear.addView(accpt);
-                    viewHolder.linearLayoutHelpers.addView(line);
-
-                }
-
-            }
-        }
-        */
-
-
-        final PlannedRequest plannedRequest = getItem(position);
-        viewHolder.localisation.setText(plannedRequest.localisation);
-
-        getAideType(viewHolder, plannedRequest.helpCategory);
-
-        String formattedDate = formatDate(plannedRequest.scheduledAt);
-        viewHolder.date.setText(formattedDate);
-
         return row;
     }
 
-    private void loadHelperProfileAsync(final CardViewHolder viewHolder, int i) {
-        PlannedRequester plannedRequester = new PlannedRequester();
-        final int finalI = i;
-        plannedRequester.getUser(context, responsePlanneds.get(i).id_helper, new PlannedRequester.GetUserCB() {
-            @Override
-            public void getUser(String firstName, String surname, String age, Boolean success) {
-                if (success) {
-                    viewHolder.firstname[finalI].setText(firstName);
-                    viewHolder.surname[finalI].setText(surname);
-
-                }
-            }
-        });
-
-        ImageRequester imageRequester = new ImageRequester();
-        imageRequester.getImage(responsePlanneds.get(i).id_helper, context, new ImageRequester.ImageInterface() {
-            @Override
-            public void getUrl(String url) {
-                if (!url.isEmpty())
-                    Picasso.with(context.getApplicationContext()).load(url).centerCrop().fit().into(viewHolder.pictureContact[finalI]);
-
-            }
-        });
-    }
 
     private String formatDate(String epoch) {
         long unixSeconds = Long.parseLong(epoch);

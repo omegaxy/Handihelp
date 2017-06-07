@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
     // View lookup cache
     private Activity context;
+    private ArrayList<ResponsePlanned> responsePlanneds;
 
     private static class ViewHolder {
         TextView firstname;
@@ -33,10 +34,16 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
         ImageView pictureContact;
         LinearLayout linearLayout;
     }
+    @Override
+    public ResponsePlanned getItem(int position) {
+        return responsePlanneds.get(position);
+    }
 
     public DisplayResponsesAdapter (Activity context, ArrayList<ResponsePlanned> responsePlanneds) {
         super(context, R.layout.item_response_planned, responsePlanneds);
         this.context = context;
+        this.responsePlanneds= responsePlanneds;
+
     }
 
     @Override
@@ -49,42 +56,39 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_response_planned, parent, false);
-           // viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linear_contact_messages);
-        //    viewHolder.firstname = (TextView) convertView.findViewById(R.id.tvItemContactFirstName);
-          //  viewHolder.surname = (TextView) convertView.findViewById(R.id.tvItemContactSurname);
-         //   viewHolder.pictureContact = (ImageView) convertView.findViewById(R.id.pictureContact);
+            viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.linear_contact_messages);
+            viewHolder.firstname = (TextView) convertView.findViewById(R.id.item_response_firsname_tv);
+            viewHolder.surname = (TextView) convertView.findViewById(R.id.item_response_surname_tv);
+            viewHolder.pictureContact = (ImageView) convertView.findViewById(R.id.item_response_imagev);
 
             convertView.setTag(viewHolder);
-        } else {
-            // View is being recycled, retrieve the viewHolder object from tag
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-      
-        /*PlannedRequester plannedRequester = new PlannedRequester();
-        plannedRequester.getUser(context, responsePlanned.id_helper, new PlannedRequester.GetUserCB() {
-            @Override
-            public void getUser(String firstName, String surname, String age, Boolean success) {
-                if (success) {
-                    viewHolder.firstname.setText(firstName);
-                    viewHolder.surname.setText(surname);
+
+            PlannedRequester plannedRequester = new PlannedRequester();
+            plannedRequester.getUser(context, responsePlanned.id_helper, new PlannedRequester.GetUserCB() {
+                @Override
+                public void getUser(String firstName, String surname, String age, Boolean success) {
+                    if (success) {
+                        viewHolder.firstname.setText(firstName);
+                        viewHolder.surname.setText(surname);
+
+                    }
+                }
+            });
+
+
+            ImageRequester imageRequester = new ImageRequester();
+            imageRequester.getImage(responsePlanned.id_helper, context, new ImageRequester.ImageInterface() {
+                @Override
+                public void getUrl(String url) {
+                    if (!url.isEmpty())
+                        Picasso.with(context).load(url).centerCrop().fit().into(viewHolder.pictureContact);
 
                 }
-            }
-        });
+            });
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
-
-        ImageRequester imageRequester = new ImageRequester();
-        imageRequester.getImage(responsePlanned.id_helper, context, new ImageRequester.ImageInterface() {
-            @Override
-            public void getUrl(String url) {
-                if (!url.isEmpty())
-                    Picasso.with(context).load(url).centerCrop().fit().into(viewHolder.pictureContact);
-
-            }
-        });
-        */
-
-        // Return the completed view to render on screen
         return convertView;
     }
 }

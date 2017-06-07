@@ -36,8 +36,15 @@ public class DisplayResponsesPlanned extends DialogFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.df_display_responses_planned, container, false);
+        ArrayList<ResponsePlanned> displayResponsePlanned = new ArrayList<>();
+        for (int i = 0; i < responsePlanneds.size(); i++) {
+            //only add helpers related to the planned request:
+            if (responsePlanneds.get(i).id_request == getArguments().getString("id_planned")) {
+                displayResponsePlanned.add(responsePlanneds.get(i));
+            }
+        }
 
-        displayResponsesPlannedAdapter = new DisplayResponsesAdapter(getActivity(), responsePlanneds);
+        displayResponsesPlannedAdapter = new DisplayResponsesAdapter(getActivity(), displayResponsePlanned);
         listView = (ListView) view.findViewById(R.id.df_display_responses_lv);
         listView.setAdapter(displayResponsesPlannedAdapter);
         return view;
