@@ -20,7 +20,6 @@ import com.example.sikanla.maquettehandi.R;
 
 public class FormInstantRequestActi extends Activity implements HelpType_DF.DialogListener {
     private Button bSend, bClose, bHelpType;
-    private CheckBox checkBox;
     private EditText comment;
     private TextView adress;
     private String helpType = "";
@@ -39,7 +38,7 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
         bClose = (Button) findViewById(R.id.close_btn);
         bHelpType = (Button) findViewById(R.id.aidetype_btn);
         comment = (EditText) findViewById(R.id.comment);
-        checkBox = (CheckBox) findViewById(R.id.checkBox);
+
 
         bSend.setEnabled(false);
         bSend.setAlpha(.5f);
