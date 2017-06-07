@@ -35,9 +35,10 @@ public class ImageRequester {
     public void getImage(String userId, Context context, final ImageInterface imageInterface) {
         User user = new User();
         Map<String, String> parameters = new HashMap<>();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
-        new AllRequest(context, parameters, headers, "/user/picture/" + userId, AllRequest.GET, new AllRequest.CallBackConnector() {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/user/picture/"+userId, new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 String url = null;
@@ -67,9 +68,10 @@ public class ImageRequester {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("image", encodedImage);
 
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
-        new AllRequest(context, parameters, headers, "/user/picture", AllRequest.POST, new AllRequest.CallBackConnector() {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/picture", new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 if (success) {

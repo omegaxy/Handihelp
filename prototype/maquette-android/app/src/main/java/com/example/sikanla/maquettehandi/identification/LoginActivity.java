@@ -137,36 +137,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToServer(String email, String password) {
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("email", email);
         parameters.put("password", password);
+        AllRequest.getInstance(getApplicationContext())
+                .sendRequest(AllRequest.POST, parameters, headers, "/login", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        User user = new User();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.get("error").toString() == "false") {
+                                user.saveUserOnPhone(getBaseContext(), jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                                        jsonObject.getString("firstname"), jsonObject.getString("surname"),
+                                        jsonObject.getInt("birth_year"), jsonObject.getString("email"));
+                                warnTv.setVisibility(View.INVISIBLE);
+                                user.loadUser(getBaseContext());
+                                user.saveAndroidIdtoServer(getApplicationContext());
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            } else {
+                                loginButton.setEnabled(true);
+                                progressBar.setVisibility(View.GONE);
+                                warnTv.setVisibility(View.VISIBLE);
 
-        new AllRequest(this, parameters, headers, "/login", AllRequest.POST, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                User user = new User();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.get("error").toString() == "false") {
-                        user.saveUserOnPhone(getBaseContext(), jsonObject.getString("apiKey"), jsonObject.getString("id"),
-                                jsonObject.getString("firstname"), jsonObject.getString("surname"),
-                                jsonObject.getInt("birth_year"), jsonObject.getString("email"));
-                        warnTv.setVisibility(View.INVISIBLE);
-                        user.loadUser(getBaseContext());
-                        user.saveAndroidIdtoServer(getBaseContext());
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    } else {
-                        loginButton.setEnabled(true);
-                        progressBar.setVisibility(View.GONE);
-                        warnTv.setVisibility(View.VISIBLE);
-
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                });
     }
 }
 

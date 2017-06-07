@@ -163,26 +163,28 @@ public class User extends Application {
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("androidid", str);
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", getAPIKEY());
-        new AllRequest(context, parameters, headers, "/user/androidid", AllRequest.POST, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/androidid", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
 
-            }
-        });
+                    }
+                });
     }
 
     public void deleteAndroidIFromServer(final Context context) {
 
         Map<String, String> parameters = new HashMap<>();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", getAPIKEY());
-        new AllRequest(context, parameters, headers, "/user/androidid", AllRequest.PUT, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.PUT, parameters, headers, "/user/androidid", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
 
-            }
-        });
+                    }
+                });
     }
 }

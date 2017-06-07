@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         phoneNumberEditText = (EditText) findViewById(R.id.phoneNumber);
         registerButton = (Button) findViewById(R.id.registrationButton);
         text = (TextView) findViewById(R.id.errorMsg);
-       // text.setVisibility(View.GONE);
+        // text.setVisibility(View.GONE);
 
         registerButton.setEnabled(false);
 
@@ -118,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                 || phoneNumberEditText.getText().toString().isEmpty()) {
 
             text.setText("");
-           // text.setVisibility(View.GONE);
+            // text.setVisibility(View.GONE);
             return false;
 
 
@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void connectToServer(String firstname, String surname, String email,
                                  String password, String phoneNumber, String birth_year) {
 
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("firstname", firstname);
         parameters.put("surname", surname);
@@ -164,43 +164,43 @@ public class RegisterActivity extends AppCompatActivity {
         parameters.put("password", password);
         parameters.put("phone_number", phoneNumber);
         parameters.put("birth_year", birth_year);
+        AllRequest.getInstance(getApplicationContext())
+                .sendRequest(AllRequest.POST, parameters, headers, "/register", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        Log.e("serv", response);
+                        User user = new User();
+                        text = (TextView) findViewById(R.id.errorMsg);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
 
-        new AllRequest(this, parameters, headers, "/register", AllRequest.POST, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                Log.e("serv", response);
-                User user = new User();
-                text = (TextView) findViewById(R.id.errorMsg);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
+                            if (response.contains("Sorry, this email already exists")) {
 
-                    if (response.contains("Sorry, this email already exists")) {
+                                text.setText("Email déjà enregistré");
 
-                        text.setText("Email déjà enregistré");
+                            } else if (jsonObject.get("error").toString() == "false") {
+                                text.setText("Inscription acceptée");
+                                user.saveUserOnPhone(getBaseContext(),
+                                        jsonObject.getString("apiKey"), jsonObject.getString("id"),
+                                        jsonObject.getString("firstname"), jsonObject.getString("surname"),
+                                        jsonObject.getInt("birth_year"), jsonObject.getString("email"));
+                                user.loadUser(getBaseContext());
+                                user.saveAndroidIdtoServer(getApplicationContext());
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                    } else if (jsonObject.get("error").toString() == "false") {
-                        text.setText("Inscription acceptée");
-                        user.saveUserOnPhone(getBaseContext(),
-                                jsonObject.getString("apiKey"), jsonObject.getString("id"),
-                                jsonObject.getString("firstname"), jsonObject.getString("surname"),
-                                jsonObject.getInt("birth_year"), jsonObject.getString("email"));
-                        user.loadUser(getBaseContext());
-                        user.saveAndroidIdtoServer(getBaseContext());
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            } else {
+                                text.setText("Inscription refusée");
 
-                    } else {
-                        text.setText("Inscription refusée");
+                                // loginButton.setEnabled(true); //reactivate button
+                                // progressBar.setVisibility(View.GONE); //hide loading wheel
+                                // warnTv.setVisibility(View.VISIBLE); // show error message
 
-                        // loginButton.setEnabled(true); //reactivate button
-                        // progressBar.setVisibility(View.GONE); //hide loading wheel
-                        // warnTv.setVisibility(View.VISIBLE); // show error message
-
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                });
     }
 
     private void startTextWatchers() {

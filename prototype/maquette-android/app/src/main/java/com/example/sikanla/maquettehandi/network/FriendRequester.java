@@ -35,37 +35,41 @@ public class FriendRequester {
 
     public void addFriend(Context context, String id_friend, final AddFriendCB addFriendCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
         parameters.put("id_friend", id_friend);
-        new AllRequest(context, parameters, headers, "/user/friend", AllRequest.POST, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                if (success) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject.get("error").toString() == "false") {
-                            addFriendCB.onFriendAdded(true);
-                        } else
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/friend", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    addFriendCB.onFriendAdded(true);
+                                } else
+                                    addFriendCB.onFriendAdded(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
                             addFriendCB.onFriendAdded(false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    addFriendCB.onFriendAdded(false);
 
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
+
 
     public void getFriends(Context context, final GetFriendCB getFriendCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
-        new AllRequest(context, parameters, headers, "/friends", AllRequest.GET, new AllRequest.CallBackConnector() {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/friends", new AllRequest.CallBackConnector() {
+
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 ArrayList<String> arrayList = new ArrayList<>();
@@ -105,11 +109,12 @@ public class FriendRequester {
     }
     public void deleteFriend(Context context, String id_friend, final DeleteFriendCB deleteFriendCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
         parameters.put("id_friend", id_friend);
-        new AllRequest(context, parameters, headers, "/user/unfriend", AllRequest.POST, new AllRequest.CallBackConnector() {
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/unfriend", new AllRequest.CallBackConnector() {
             @Override
             public void CallBackOnConnect(String response, Boolean success) {
                 if (success) {

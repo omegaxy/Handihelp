@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,41 +12,45 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Sikanla on 02/05/2017.
  */
-
+//Singleton class
 public class AllRequest {
+
     public static String SERVERURL = "http://178.62.33.9/handi_help_server/v1";
 
-    private RequestQueue requestQueue;
-    private String route;
-    private Map parameters;
-    private Map headers;
-    private CallBackConnector callBackConnector;
-
-    public interface CallBackConnector {
-        void CallBackOnConnect(String response, Boolean success);
-    }
-
-    public AllRequest(Context context, Map<String, String> parameters, Map<String, String> headers,
-                      String route, int method, CallBackConnector callBackConnector) {
-        requestQueue = Volley.newRequestQueue(context);
-        this.headers = headers;
-        this.route = route;
-        this.parameters = parameters;
-        this.callBackConnector = callBackConnector;
-        sendRequest(method, parameters, route);
-    }
+    private static AllRequest mInstance;
+    private RequestQueue mRequestQueue;
+    private static Context mCtx;
 
     public static int GET = 0;
     public static int POST = 1;
     public static int PUT = 2;
     public static int DELETE = 3;
 
-    private void sendRequest(int method, final Map parameters, final String route) {
+
+    private AllRequest(Context context) {
+        mCtx = context;
+        mRequestQueue = getRequestQueue();
+    }
+
+    public static synchronized AllRequest getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new AllRequest(context);
+        }
+        return mInstance;
+    }
+
+
+    public interface CallBackConnector {
+        void CallBackOnConnect(String response, Boolean success);
+    }
+
+    public void sendRequest(int method, final Map parameters, final HashMap headers, final String route, final CallBackConnector callBackConnector) {
 
         StringRequest jsonObjRequest = new StringRequest(method, SERVERURL + route,
                 new Response.Listener<String>() {
@@ -78,11 +83,22 @@ public class AllRequest {
                 return headers;
             }
         };
-        requestQueue.add(jsonObjRequest);
+        addToRequestQueue(jsonObjRequest);
 
     }
 
+    private RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            // getApplicationContext() is key, it keeps you from leaking the
+            // Activity or BroadcastReceiver if someone passes one in.
+            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+        }
+        return mRequestQueue;
+    }
 
+    private <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
+    }
 
 
 }

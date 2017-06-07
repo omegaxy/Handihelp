@@ -35,32 +35,33 @@ public class MessageRequester {
 
     public void getContacts(Context context, final MessagesCB messagesCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
-        new AllRequest(context, parameters, headers, "/messages", AllRequest.GET, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                ArrayList<Contact> arrayList = new ArrayList<>();
-                if (success) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray(jsonObject.get("contacts").toString());
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/messages", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        ArrayList<Contact> arrayList = new ArrayList<>();
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = new JSONArray(jsonObject.get("contacts").toString());
 
-                        if (jsonObject.get("error").toString() == "false") {
-                            messagesCB.getArrayContacts(contactsFromJson(jsonArray), true);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    messagesCB.getArrayContacts(contactsFromJson(jsonArray), true);
 
-                        } else
+                                } else
+                                    messagesCB.getArrayContacts(arrayList, false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
                             messagesCB.getArrayContacts(arrayList, false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    messagesCB.getArrayContacts(arrayList, false);
 
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
 
     // Factory method to convert an array of JSON objects into a list of objects
@@ -82,60 +83,62 @@ public class MessageRequester {
 
     public void sendMessage(Context context, String message, String idReceiver, final SendMessagesCB sendMessagesCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
         parameters.put("message", message);
         parameters.put("id_receiver", idReceiver);
-        new AllRequest(context, parameters, headers, "/message/user", AllRequest.POST, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                if (success) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject.get("error").toString() == "false") {
-                            sendMessagesCB.onMessageReceived(true);
-                        } else
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/message/user", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    sendMessagesCB.onMessageReceived(true);
+                                } else
+                                    sendMessagesCB.onMessageReceived(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
                             sendMessagesCB.onMessageReceived(false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    sendMessagesCB.onMessageReceived(false);
 
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
 
     public void getMessage(Context context, final String idContact, final GetMessagesCB getMessagesCB) {
         User user = new User();
-        Map<String, String> headers = new HashMap<>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
         Map<String, String> parameters = new HashMap<>();
-        new AllRequest(context, parameters, headers, "/messages/"+idContact, AllRequest.GET, new AllRequest.CallBackConnector() {
-            @Override
-            public void CallBackOnConnect(String response, Boolean success) {
-                ArrayList<Message> arrayList = new ArrayList<>();
-                if (success) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = new JSONArray(jsonObject.get("messages").toString());
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/messages/" + idContact, new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        ArrayList<Message> arrayList = new ArrayList<>();
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = new JSONArray(jsonObject.get("messages").toString());
 
-                        if (jsonObject.get("error").toString() == "false") {
-                            getMessagesCB.onMessagesReceived(messagesFromJson(jsonArray, idContact), true);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    getMessagesCB.onMessagesReceived(messagesFromJson(jsonArray, idContact), true);
 
-                        } else
+                                } else
+                                    getMessagesCB.onMessagesReceived(arrayList, false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
                             getMessagesCB.onMessagesReceived(arrayList, false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    getMessagesCB.onMessagesReceived(arrayList, false);
 
-                }
-            }
-        });
+                        }
+                    }
+                });
     }
 
     // Factory method to convert an array of JSON objects into a list of objects
