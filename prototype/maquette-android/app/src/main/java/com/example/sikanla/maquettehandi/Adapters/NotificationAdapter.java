@@ -3,7 +3,6 @@ package com.example.sikanla.maquettehandi.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         TextView date;
         LinearLayout linearLayout;
         FrameLayout frameLayout;
-
     }
 
 
@@ -140,84 +138,6 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         String formattedDate = formatDate(plannedRequest.scheduledAt);
         viewHolder.date.setText(formattedDate);
 
-        //    viewHolder.linearLayoutHelpers = (LinearLayout) row.findViewById(R.id.list_helpers);
-
-    /*    viewHolder.acceptOnclickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                //send request and hide other views
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setMessage("Vous serez mis en contact, via la messagerie.\n" +
-                        "L'aidant sera notifié de votre réponse.")
-                        .setTitle("Selectionner cet aidant?");
-
-
-                final AlertDialog dialog = builder.create();
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sélectionner",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                PlannedRequester plannedRequester = new PlannedRequester();
-                                plannedRequester.selectAnswerPlanned(context,
-                                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
-                                            @Override
-                                            public void onPlannedPosted(Boolean success) {
-                                                if (success) {
-                                                    Toast.makeText(context, "Succès", Toast.LENGTH_LONG).show();
-                                                } else {
-                                                    Toast.makeText(context, "ERREUR, REESSAYER", Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        });
-                                dialog.dismiss();
-                            }
-                        });
-
-                dialog.show();
-            }
-        };
-        viewHolder.refuseOnclickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setTitle("Refuser cet aidant?");
-                final AlertDialog dialog = builder.create();
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Refuser",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                PlannedRequester plannedRequester = new PlannedRequester();
-                                plannedRequester.deleteResponsePlanned(context,
-                                        String.valueOf(view.getId()), getItem(position).idPlanned, new PlannedRequester.PostPlannedCB() {
-                                            @Override
-                                            public void onPlannedPosted(Boolean success) {
-                                                if (success) {
-                                                } else {
-                                                }
-                                            }
-                                        });
-                            }
-                        });
-
-                dialog.show();
-
-            }
-        };
-
-        */
         row.setTag(viewHolder);
 
         return row;
