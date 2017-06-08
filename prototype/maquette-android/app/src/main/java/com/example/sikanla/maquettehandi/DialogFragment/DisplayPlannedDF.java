@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
@@ -39,7 +40,7 @@ public class DisplayPlannedDF extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme2);
 
         rootView = inflater.inflate(R.layout.display_planned_request, null);
         linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);
@@ -72,31 +73,34 @@ public class DisplayPlannedDF extends DialogFragment {
         scheduledTv.setText(formattedDate);
 
         loadUserProfile();
+        User user = new User();
+        final AlertDialog.Builder builder1 = builder.setView(rootView);
 
+        //display buttons only if user is not yourself
+        if (!id.matches(user.getUserId())) {
+            builder1.setNeutralButton("Envoyer un message", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                    Bundle args = new Bundle();
+                    args.putString("firstname", fistNameTv.getText().toString());
+                    args.putString("id", id);
+                    sendMessageDialog.setArguments(args);
+                    sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
-        final AlertDialog.Builder builder1 = builder.setView(rootView)
-                .setNeutralButton("Envoyer un message", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SendMessageDialog sendMessageDialog = new SendMessageDialog();
-                        Bundle args = new Bundle();
-                        args.putString("firstname", fistNameTv.getText().toString());
-                        args.putString("id", id);
-                        sendMessageDialog.setArguments(args);
-                        sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
-
-                    }
-                })
-                .setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int i) {
-                        AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                        Bundle args = new Bundle();
-                        args.putString("idPlanned", getArguments().getString("idPlanned"));
-                        args.putString("id", id);
-                        answerPLannedDF.setArguments(args);
-                        answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
-                    }
-                });
+                }
+            });
+            builder1.setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int i) {
+                    AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
+                    Bundle args = new Bundle();
+                    args.putString("idPlanned", getArguments().getString("idPlanned"));
+                    args.putString("id", id);
+                    answerPLannedDF.setArguments(args);
+                    answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
+                }
+            });
+        }
 
         return builder1.create();
 
