@@ -168,12 +168,22 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
                 dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Sélectionner",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                PlannedRequester plannedRequester = new PlannedRequester();
+                                final PlannedRequester plannedRequester = new PlannedRequester();
                                 plannedRequester.selectAnswerPlanned(context,
                                         responsePlanned.id_helper, responsePlanned.id_request, new PlannedRequester.PostPlannedCB() {
                                             @Override
                                             public void onPlannedPosted(Boolean success) {
                                                 if (success) {
+                                                    plannedRequester.deleteResponsePlanned(context, responsePlanned.id_helper, responsePlanned.id_request, new PlannedRequester.PostPlannedCB() {
+                                                        @Override
+                                                        public void onPlannedPosted(Boolean success) {
+
+                                                        }
+                                                    });
+                                                    for (int i = 0; i < responsePlanneds.size(); i++) {
+                                                        responsePlanneds.remove(i);
+                                                    }
+                                                    notifyDataSetChanged();
                                                     Toast.makeText(context, "Succès", Toast.LENGTH_LONG).show();
                                                 } else {
                                                     Toast.makeText(context, "ERREUR, REESSAYER", Toast.LENGTH_LONG).show();
