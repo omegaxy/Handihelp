@@ -41,7 +41,7 @@
                     android:layout_weight="0.19"
                     android:text="Type d'Aide:"
                     android:textColor="@color/grey05"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:layout_weight="0.15"
                     android:text="Localisation: "
                     android:textColor="@color/grey05"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -96,7 +96,7 @@
                     android:layout_weight="0.30"
                     android:text="Date: "
                     android:textColor="@color/grey05"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
