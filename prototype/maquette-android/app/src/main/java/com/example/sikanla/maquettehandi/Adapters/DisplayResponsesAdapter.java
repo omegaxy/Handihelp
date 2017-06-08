@@ -19,6 +19,7 @@ import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.example.sikanla.maquettehandi.network.UserRequester;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,8 +72,8 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
 
             convertView.setTag(viewHolder);
 
-            PlannedRequester plannedRequester = new PlannedRequester();
-            plannedRequester.getUser(context, responsePlanned.id_helper, new PlannedRequester.GetUserCB() {
+            UserRequester userRequester = new UserRequester();
+            userRequester.getUser(context, responsePlanned.id_helper, new UserRequester.GetUserCB() {
                 @Override
                 public void getUser(String firstName, String surname, String age, Boolean success) {
                     if (success) {

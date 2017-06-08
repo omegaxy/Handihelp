@@ -20,6 +20,9 @@ public class UserRequester {
     public interface UserRequestCB {
         void onRequest(Boolean success);
     }
+    public interface GetUserCB {
+        void getUser(String firstName, String surname, String age, Boolean success);
+    }
 
 
     public void modifyPassword(Context context, String password, final UserRequestCB userRequestCB) {
@@ -49,6 +52,36 @@ public class UserRequester {
                     }
                 });
     }
+
+    public void getUser(Context context, String userId, final GetUserCB getUserCB) {
+        User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/user/" + userId, new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    getUserCB.getUser(jsonObject.getString("firstname"),
+                                            jsonObject.getString("surname"), jsonObject.getString("birth_year"), true);
+                                } else
+                                    getUserCB.getUser("", "", "", false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            getUserCB.getUser("", "", "", false);
+
+                        }
+                    }
+                });
+    }
+
 
 
     public void saveAndroidIdtoServer(final Context context) {

@@ -17,6 +17,7 @@ import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.example.sikanla.maquettehandi.network.UserRequester;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -116,8 +117,8 @@ public class DisplayPlannedDF extends DialogFragment {
                 Picasso.with(getActivity()).load(s).centerCrop().fit().into(imageViewPP);
             }
         });
-        PlannedRequester plannedRequester = new PlannedRequester();
-        plannedRequester.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
+        UserRequester userRequester = new UserRequester();
+        userRequester.getUser(getActivity(), id, new UserRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 if (success) {

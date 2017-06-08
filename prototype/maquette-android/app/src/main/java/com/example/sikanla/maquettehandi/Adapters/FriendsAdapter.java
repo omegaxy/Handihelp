@@ -16,6 +16,7 @@ import com.example.sikanla.maquettehandi.Model.Contact;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.example.sikanla.maquettehandi.network.UserRequester;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -73,8 +74,8 @@ public class FriendsAdapter extends ArrayAdapter<String> {
                 profileDialogFragment.show(context.getFragmentManager(), "answerPlanned");
             }
         });
-        PlannedRequester plannedRequester = new PlannedRequester();
-        plannedRequester.getUser(context, id, new PlannedRequester.GetUserCB() {
+        UserRequester  userRequester = new UserRequester();
+        userRequester.getUser(context, id, new UserRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 if (success) {

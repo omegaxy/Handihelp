@@ -28,11 +28,6 @@ public class PlannedRequester {
         void onResponsePlanned(ArrayList<ResponsePlanned> s, Boolean success);
     }
 
-
-    public interface GetUserCB {
-        void getUser(String firstName, String surname, String age, Boolean success);
-    }
-
     public interface PostPlannedCB {
         void onPlannedPosted(Boolean success);
     }
@@ -119,34 +114,6 @@ public class PlannedRequester {
         return plannedRequests;
     }
 
-    public void getUser(Context context, String userId, final GetUserCB getUserCB) {
-        User user = new User();
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", user.getAPIKEY());
-        Map<String, String> parameters = new HashMap<>();
-        AllRequest.getInstance(context)
-                .sendRequest(AllRequest.GET, parameters, headers, "/user/" + userId, new AllRequest.CallBackConnector() {
-                    @Override
-                    public void CallBackOnConnect(String response, Boolean success) {
-                        if (success) {
-
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                if (jsonObject.get("error").toString() == "false") {
-                                    getUserCB.getUser(jsonObject.getString("firstname"),
-                                            jsonObject.getString("surname"), jsonObject.getString("birth_year"), true);
-                                } else
-                                    getUserCB.getUser("", "", "", false);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            getUserCB.getUser("", "", "", false);
-
-                        }
-                    }
-                });
-    }
 
     public void sendPlannedRequest(Context context, String help_category, String description,
                                    String scheduled_at, String localisation, String notifyFriends, final PostPlannedCB postPlannedCB) {

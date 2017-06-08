@@ -19,6 +19,7 @@ import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
+import com.example.sikanla.maquettehandi.network.UserRequester;
 import com.squareup.picasso.Picasso;
 
 import android.widget.Toast;
@@ -145,8 +146,8 @@ public class ProfileDialogFragment extends DialogFragment {
         }
 
 
-        PlannedRequester plannedRequest = new PlannedRequester();
-        plannedRequest.getUser(getActivity(), id, new PlannedRequester.GetUserCB() {
+        UserRequester userRequester = new UserRequester();
+        userRequester.getUser(getActivity(), id, new UserRequester.GetUserCB() {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 fistNameTv.setText(firstName);
