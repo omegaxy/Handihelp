@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/close_btn"
+        android:layout_weight="0.9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/trans"
+        android:drawableLeft="@drawable/ic_help_prog_cross" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,32 +22,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Demander de l'aide "
+            android:text="Demander de l'aide pour:"
             android:textColor="@color/grey05"
-            android:textSize="@dimen/titleSizeXL"
+            android:textSize="@dimen/titleSize"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="50dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <Button
-                android:id="@+id/help_choice_button_instant"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="0.5"
-                android:text="Aide maintenant (géolocalisée)"
-                android:textAllCaps="false" />
+                android:background="@color/oraaange"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/help_choice_button_planned"
-                android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/help_choice_button_instant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="Maintenant"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textSize" />
+
+                <ImageView
+                    android:id="@+id/imageInstant"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_instant"
+                    android:tint="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aide plannifiée"
-                android:textAllCaps="false"
-                android:layout_weight="0.5"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.5"
+                android:background="@color/dd"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/help_choice_button_planned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:text="Plus Tard"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textSize" />
+
+                <ImageView
+                    android:id="@+id/imageProg"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_prog"
+                    android:tint="@color/black" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

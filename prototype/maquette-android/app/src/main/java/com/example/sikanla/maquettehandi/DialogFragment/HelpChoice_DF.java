@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,8 @@ import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 public class HelpChoice_DF extends DialogFragment {
     private View rootView;
-    private TextView textView;
-    private Button buttonInstant, buttonPlanned;
+    private ImageView imageInstant, imageProg;
+    private Button buttonInstant, buttonPlanned, bClose;
 
 
     @NonNull
@@ -41,9 +42,28 @@ public class HelpChoice_DF extends DialogFragment {
         rootView = inflater.inflate(R.layout.help_choice, null);
         buttonInstant = (Button) rootView.findViewById(R.id.help_choice_button_instant);
         buttonPlanned = (Button) rootView.findViewById(R.id.help_choice_button_planned);
+        imageInstant = (ImageView) rootView.findViewById(R.id.imageInstant);
+        imageProg = (ImageView) rootView.findViewById(R.id.imageProg);
+        bClose = (Button) rootView.findViewById(R.id.close_btn);
+
+        bClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
 
         buttonInstant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                startActivity(new Intent(getActivity(), FormInstantRequestActi.class));
+
+            }
+        });
+
+        imageInstant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -59,6 +79,16 @@ public class HelpChoice_DF extends DialogFragment {
                 startActivity(new Intent(getActivity(), FormPlannedRequestActi.class));
             }
         });
+
+        imageProg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                startActivity(new Intent(getActivity(), FormPlannedRequestActi.class));
+            }
+        });
+
+
         builder.setView(rootView);
 
 
