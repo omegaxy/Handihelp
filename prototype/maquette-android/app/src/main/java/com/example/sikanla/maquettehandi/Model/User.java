@@ -156,6 +156,8 @@ public class User extends Application {
         this.email = email;
     }
 
+
+
     public void saveAndroidIdtoServer(final Context context) {
 
         SharedPreferences prefs = context.getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);

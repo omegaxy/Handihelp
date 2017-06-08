@@ -27,7 +27,8 @@ import com.example.sikanla.maquettehandi.R;
 
 public class LocationActivity extends Activity {
 
-    TextView myLocationText, myLocationText2, distanceText;
+    private TextView myLocationText;
+    private Location l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,6 @@ public class LocationActivity extends Activity {
         setContentView(R.layout.location_fragment);
 
         myLocationText = (TextView)findViewById(R.id.textView1);
-        myLocationText2 = (TextView)findViewById(R.id.textView2);
-        distanceText = (TextView)findViewById(R.id.textView3);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -63,35 +62,36 @@ public class LocationActivity extends Activity {
             return;
         }
 
-
-        Location l = locationManager.getLastKnownLocation(provider1);
-        Location l2 = new Location("");
-        l2.setLatitude(48.820238d);
-        l2.setLongitude(2.364482d);
-        l2.setAltitude(0);
-
+        l = locationManager.getLastKnownLocation(provider1);
 
         updateWithNewLocation(l, myLocationText);
-        updateWithNewLocation(l2, myLocationText2);
-        distanceText.setText(String.valueOf(l.distanceTo(l2)));
 
         //requestLocationUpdates(String provider, long minTime, float minDistance, LocationListener listener)
-        locationManager.requestLocationUpdates(provider1, 20, 10, locationListener);
+        locationManager.requestLocationUpdates(provider1, 1, 1, locationListener);
 
     }
 
 
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            //updateWithNewLocation(location);
+            updateWithNewLocation(location, myLocationText);
         }
-        public void onProviderDisabled(String provider) {}
-        public void onProviderEnabled(String provider) {}
-        public void onStatusChanged(String provider, int Status, Bundle extras) {}
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int Status, Bundle extras) {
+        }
     };
 
 
     private void updateWithNewLocation(Location l, TextView t) {
+        //envoyer la localisation à la bdd
+
+
 
         String latLongString = "Aucun Emplacement trouvé";
         String adresseString = "Aucune adresse trouvée";
@@ -100,9 +100,8 @@ public class LocationActivity extends Activity {
         {
             double lat = l.getLatitude();
             double lng = l.getLongitude();
-            double alt = l.getAltitude();
 
-            latLongString = "Latitude:" + lat + "\nLongitude:" +lng + "\nAltitude:" + alt;
+            latLongString = "Latitude:" + lat + "\nLongitude:" +lng;
 
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
@@ -116,16 +115,15 @@ public class LocationActivity extends Activity {
                     for(int i=0; i<adresse.getMaxAddressLineIndex(); ++i)
                         stringBuilder.append(adresse.getAddressLine(i)).append("\n");
 
-                    stringBuilder.append(adresse.getLocality()).append("\n");
-                    stringBuilder.append(adresse.getPostalCode()).append("\n");
                     stringBuilder.append(adresse.getCountryName());
 
                 }
                 adresseString = stringBuilder.toString();
             }catch(IOException e){}
         }
-        t.setText("Position :\n" + latLongString + "\nAdresse :\n" + adresseString);
+        t.setText("Position :\n" + latLongString + "\nAdresse : " + adresseString+"\n");
 
     }
+
 
 }

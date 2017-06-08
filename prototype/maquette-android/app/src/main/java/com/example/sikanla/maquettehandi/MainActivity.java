@@ -1,7 +1,6 @@
 package com.example.sikanla.maquettehandi;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,29 +11,35 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
-import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
-import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
+import com.example.sikanla.maquettehandi.network.AllRequest;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 
-import io.fabric.sdk.android.Fabric;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static com.example.sikanla.maquettehandi.R.styleable.NavigationView;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView firstnameHeader;
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
     private NavigationView navigationView;
+    private Switch onOffSwitch;
 
 
     @Override
@@ -49,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+        onOffSwitch = (Switch) findViewById(R.id.switch1);
+
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
@@ -56,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
 
-
     }
+
 
 
     private void instantiateNavigationView() {
@@ -89,6 +97,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Picasso.with(getApplicationContext()).load(url).centerCrop().fit().into(imageViewHeader);
             }
         });
+
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // switch sur on, isChecked = true
+                // envoyer le boolean au serveur
+
+
+
+            }
+
+        });
     }
 
     private void instantiateTabToolbarDrawer() {
@@ -115,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
+
+
 
     private void instantiateFAB() {
         floatingActionButton = new FloatingActionButton(this);

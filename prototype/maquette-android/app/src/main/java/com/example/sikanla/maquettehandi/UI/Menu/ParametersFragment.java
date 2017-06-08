@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.UI.Activities.LocationActivity;
 import com.example.sikanla.maquettehandi.R;
@@ -31,12 +32,14 @@ import com.squareup.picasso.Picasso;
 public class ParametersFragment extends Fragment {
     private Button uploadB, decoB, location;
     private ImageView imageView;
+    private TextView myLocationText;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.parameters_fragment, container, false);
         decoB = (Button) view.findViewById(R.id.parameters_deco);
         location = (Button) view.findViewById(R.id.button2);
+        myLocationText = (TextView)view.findViewById(R.id.textView1);
 
         setUpDecoButton();
         loadImage(view);
@@ -155,7 +158,6 @@ public class ParametersFragment extends Fragment {
                         }
                     }
                 });
-
 
             }
         }
