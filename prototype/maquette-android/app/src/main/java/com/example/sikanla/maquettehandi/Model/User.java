@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.example.sikanla.maquettehandi.network.AllRequest;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
+import com.example.sikanla.maquettehandi.network.UserRequester;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,36 +158,13 @@ public class User extends Application {
     }
 
 
-
     public void saveAndroidIdtoServer(final Context context) {
-
-        SharedPreferences prefs = context.getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
-        String str = prefs.getString("androidid", "");
-
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("androidid", str);
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", getAPIKEY());
-        AllRequest.getInstance(context)
-                .sendRequest(AllRequest.POST, parameters, headers, "/user/androidid", new AllRequest.CallBackConnector() {
-                    @Override
-                    public void CallBackOnConnect(String response, Boolean success) {
-
-                    }
-                });
+        UserRequester userRequester = new UserRequester();
+        userRequester.saveAndroidIdtoServer(context);
     }
 
     public void deleteAndroidIFromServer(final Context context) {
-
-        Map<String, String> parameters = new HashMap<>();
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", getAPIKEY());
-        AllRequest.getInstance(context)
-                .sendRequest(AllRequest.PUT, parameters, headers, "/user/androidid", new AllRequest.CallBackConnector() {
-                    @Override
-                    public void CallBackOnConnect(String response, Boolean success) {
-
-                    }
-                });
+        UserRequester userRequester = new UserRequester();
+        userRequester.deleteAndroidIFromServer(context);
     }
 }
