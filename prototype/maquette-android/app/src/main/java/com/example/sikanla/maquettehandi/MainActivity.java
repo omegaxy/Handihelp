@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         if (!item.isChecked()) {
+            floatingActionButton.setVisibility(View.GONE);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             Fragment fragment = new Fragment();
 
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             switch (item.getItemId()) {
                 case R.id.nav_accueil:
+                    floatingActionButton.setVisibility(View.VISIBLE);
                     fragment = new TabFragment();
                     navigationView.setCheckedItem(R.id.nav_accueil);
                     break;
