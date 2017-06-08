@@ -92,7 +92,6 @@ public class LocationActivity extends Activity {
         //envoyer la localisation à la bdd
 
 
-
         String latLongString = "Aucun Emplacement trouvé";
         String adresseString = "Aucune adresse trouvée";
 
