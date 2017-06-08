@@ -35,41 +35,62 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/parameter_modify_passwd"
+            android:layout_gravity="center"
+            android:text="Modifier Mot de Passe" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/parameters_deco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="62dp"
+            android:layout_gravity="center"
             android:backgroundTint="@color/type10"
-            android:text="Déconnection"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:text="Déconnection" />
 
-        <Button
-            android:id="@+id/button2"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="125dp"
-            android:text="Button" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="TextView"
-            android:textSize="20dp"
-            android:layout_below="@+id/button2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="39dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/color1"
+                android:text="Supprimer votre compte" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@android:drawable/ic_delete" />
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

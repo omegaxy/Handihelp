@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.identification;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private void loginToServer(String email, String password) {
+    private void loginToServer(String email, final String password) {
         HashMap<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("email", email);
@@ -154,6 +155,10 @@ public class LoginActivity extends AppCompatActivity {
                                         jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                                 warnTv.setVisibility(View.INVISIBLE);
                                 user.loadUser(getBaseContext());
+                                SharedPreferences prefs = getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("password",password);
+                                editor.commit();
                                 user.saveAndroidIdtoServer(getApplicationContext());
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             } else {

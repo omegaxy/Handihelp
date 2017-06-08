@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.identification;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -154,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void connectToServer(String firstname, String surname, String email,
-                                 String password, String phoneNumber, String birth_year) {
+                                 final String password, String phoneNumber, String birth_year) {
 
         HashMap<String, String> headers = new HashMap<>();
         Map<String, String> parameters = new HashMap<>();
@@ -185,6 +186,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         jsonObject.getString("firstname"), jsonObject.getString("surname"),
                                         jsonObject.getInt("birth_year"), jsonObject.getString("email"));
                                 user.loadUser(getBaseContext());
+                                SharedPreferences prefs = getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("password",password);
+                                editor.commit();
                                 user.saveAndroidIdtoServer(getApplicationContext());
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
 

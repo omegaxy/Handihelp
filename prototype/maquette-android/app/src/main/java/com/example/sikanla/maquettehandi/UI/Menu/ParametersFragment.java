@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.sikanla.maquettehandi.UI.Activities.LocationActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
+import com.example.sikanla.maquettehandi.UI.Activities.ModifyPassordAct;
 import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
@@ -30,7 +31,7 @@ import com.squareup.picasso.Picasso;
  */
 
 public class ParametersFragment extends Fragment {
-    private Button uploadB, decoB, location;
+    private Button uploadB, decoB, modifyPasswdBtt;
     private ImageView imageView;
     private TextView myLocationText;
 
@@ -38,19 +39,20 @@ public class ParametersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.parameters_fragment, container, false);
         decoB = (Button) view.findViewById(R.id.parameters_deco);
-        location = (Button) view.findViewById(R.id.button2);
+        modifyPasswdBtt = (Button) view.findViewById(R.id.parameter_modify_passwd);
         myLocationText = (TextView)view.findViewById(R.id.textView1);
 
         setUpDecoButton();
         loadImage(view);
         setUpUploadButton(view);
 
-        location.setOnClickListener(new View.OnClickListener() {
+        modifyPasswdBtt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), LocationActivity.class));
+                startActivity(new Intent(getContext(), ModifyPassordAct.class));
             }
         });
+
 
 
         return view;
