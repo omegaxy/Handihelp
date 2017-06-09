@@ -41,7 +41,7 @@
                     android:layout_weight="0.19"
                     android:text="Type d'Aide:"
                     android:textColor="@color/grey05"
-                    android:textSize="30dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:layout_weight="0.15"
                     android:text="Localisation: "
                     android:textColor="@color/grey05"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -78,7 +78,7 @@
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/grey05"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textSize"
                     android:typeface="serif" />
             </LinearLayout>
 
@@ -96,7 +96,7 @@
                     android:layout_weight="0.30"
                     android:text="Date: "
                     android:textColor="@color/grey05"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -106,7 +106,7 @@
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/grey05"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textSize"
                     android:typeface="serif" />
             </LinearLayout>
 
