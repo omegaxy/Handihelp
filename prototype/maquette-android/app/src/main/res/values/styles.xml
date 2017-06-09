@@ -27,7 +27,7 @@
     </style>
 
     <style name="AnswerTheme2" parent="Base.Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@color/back2</item>
+        <item name="android:background">@color/trans</item>
         <item name="android:textColor">@color/grey05</item>
     </style>
 

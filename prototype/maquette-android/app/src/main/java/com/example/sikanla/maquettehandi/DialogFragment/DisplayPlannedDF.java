@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ public class DisplayPlannedDF extends DialogFragment {
     private LinearLayout linearLayout;
     private String id;
 
+    private Button sendMessage, help;
+
 
     @NonNull
     @Override
@@ -44,6 +47,8 @@ public class DisplayPlannedDF extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme2);
 
         rootView = inflater.inflate(R.layout.display_planned_request, null);
+
+
         linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);
         fistNameTv = (TextView) rootView.findViewById(R.id.answ_firstname);
         surnameTv = (TextView) rootView.findViewById(R.id.answ_surname);
@@ -52,6 +57,9 @@ public class DisplayPlannedDF extends DialogFragment {
         descriptionTv = (TextView) rootView.findViewById(R.id.answ_description);
         scheduledTv = (TextView) rootView.findViewById(R.id.answ_scheduled);
         imageViewPP = (ImageView) rootView.findViewById(R.id.answ_pic);
+        sendMessage = (Button) rootView.findViewById(R.id.send_answer);
+        help = (Button) rootView.findViewById(R.id.help_answer);
+
         id = getArguments().getString("id");
 
         imageViewPP.setOnClickListener(new View.OnClickListener() {
@@ -79,34 +87,39 @@ public class DisplayPlannedDF extends DialogFragment {
 
         //display buttons only if user is not yourself
         if (!id.matches(user.getUserId())) {
-            builder1.setNeutralButton("Envoyer un message", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    SendMessageDialog sendMessageDialog = new SendMessageDialog();
-                    Bundle args = new Bundle();
-                    args.putString("firstname", fistNameTv.getText().toString());
-                    args.putString("id", id);
-                    sendMessageDialog.setArguments(args);
-                    sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
+          sendMessage.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                                                 Bundle args = new Bundle();
+                                                 args.putString("firstname", fistNameTv.getText().toString());
+                                                 args.putString("id", id);
+                                                 sendMessageDialog.setArguments(args);
+                                                 sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
-                }
-            });
-            builder1.setPositiveButton("Aider!", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int i) {
-                    AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                    Bundle args = new Bundle();
-                    args.putString("idPlanned", getArguments().getString("idPlanned"));
-                    args.putString("id", id);
-                    answerPLannedDF.setArguments(args);
-                    answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
-                }
-            });
-        }
+                                             }
+                                         });
 
-        return builder1.create();
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
+                Bundle args = new Bundle();
+                args.putString("idPlanned", getArguments().getString("idPlanned"));
+                args.putString("id", id);
+                answerPLannedDF.setArguments(args);
+                answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
+
+            }
+        });
 
 
     }
+        return builder1.create();
+    }
+
+
 
     private void loadUserProfile() {
         ImageRequester imageRequest = new ImageRequester();
@@ -130,6 +143,7 @@ public class DisplayPlannedDF extends DialogFragment {
         });
     }
 
+
     private String formatDate(String epoch) {
         long unixSeconds = Long.parseLong(epoch);
         Date date = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
@@ -137,6 +151,7 @@ public class DisplayPlannedDF extends DialogFragment {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+2")); // give a timezone reference for formating (see comment at the bottom
         return sdf.format(date);
     }
+
 
     private void getAideType(String aideType) {
         switch (aideType) {

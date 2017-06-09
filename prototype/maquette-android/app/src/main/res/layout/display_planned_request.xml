@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back2"
     android:theme="@style/AppTheme"
+    android:background="@drawable/planned_request_background"
     android:orientation="vertical">
 
     <ScrollView
@@ -166,5 +166,33 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:id="@+id/send_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="Envoyer un message" />
+
+
+        <Button
+            android:id="@+id/help_answer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:text="Aider" />
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
