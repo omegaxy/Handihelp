@@ -2,6 +2,7 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.UserRequester;
 
 /**
@@ -49,7 +52,23 @@ public class DeleteAccountDF extends DialogFragment implements TextWatcher{
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserRequester userRequester;
+                final User user = new User();
+                UserRequester userRequester = new UserRequester();
+                userRequester.deleteUser(getActivity(), email.getText().toString()
+                        , password.getText().toString(), new UserRequester.UserRequestCB() {
+                            @Override
+                            public void onRequest(Boolean success) {
+                                if (success){
+                                    getDialog().dismiss();
+                                    user.deleteLocalUser(getActivity());
+                                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                                }else {
+                                    textView.setText("Erreur, veuillez Réessayer");
+                                    textView.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+                        });
 
             }
         });

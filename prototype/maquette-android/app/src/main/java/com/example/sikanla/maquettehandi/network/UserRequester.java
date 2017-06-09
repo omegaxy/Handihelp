@@ -20,6 +20,7 @@ public class UserRequester {
     public interface UserRequestCB {
         void onRequest(Boolean success);
     }
+
     public interface GetUserCB {
         void getUser(String firstName, String surname, String age, Boolean success);
     }
@@ -82,6 +83,34 @@ public class UserRequester {
                 });
     }
 
+    public void deleteUser(Context context, String email, String password, final UserRequestCB userRequestCB) {
+        final User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("email", email);
+        parameters.put("password", password);
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/delete", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    userRequestCB.onRequest(true);
+                                } else
+                                    userRequestCB.onRequest(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            userRequestCB.onRequest(false);
+
+                        }
+                    }
+                });
+    }
 
 
     public void saveAndroidIdtoServer(final Context context) {
