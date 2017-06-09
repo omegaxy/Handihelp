@@ -40,7 +40,7 @@
             android:fontFamily="casual"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textColor="@color/color1"
+            android:textColor="@color/color4"
             android:textStyle="bold"
             />
 

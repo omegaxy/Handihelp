@@ -41,7 +41,7 @@
             android:fontFamily="casual"
             android:textAlignment="center"
             android:textSize="@dimen/textSizeXL"
-            android:textColor="@color/color1"
+            android:textColor="@color/color4"
             android:textStyle="bold"
             />
 
