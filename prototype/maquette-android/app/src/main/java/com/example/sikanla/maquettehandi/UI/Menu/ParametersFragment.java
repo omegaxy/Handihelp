@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.DialogFragment.DeleteAccountDF;
 import com.example.sikanla.maquettehandi.UI.Activities.LocationActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
@@ -31,7 +32,7 @@ import com.squareup.picasso.Picasso;
  */
 
 public class ParametersFragment extends Fragment {
-    private Button uploadB, decoB, modifyPasswdBtt;
+    private Button uploadB, decoB, modifyPasswdBtt, deleteAccount;
     private ImageView imageView;
     private TextView myLocationText;
 
@@ -41,6 +42,7 @@ public class ParametersFragment extends Fragment {
         decoB = (Button) view.findViewById(R.id.parameters_deco);
         modifyPasswdBtt = (Button) view.findViewById(R.id.parameter_modify_passwd);
         myLocationText = (TextView)view.findViewById(R.id.textView1);
+        deleteAccount = (Button) view.findViewById(R.id.parameter_deleteAcc);
 
         setUpDecoButton();
         loadImage(view);
@@ -52,6 +54,16 @@ public class ParametersFragment extends Fragment {
                 startActivity(new Intent(getContext(), ModifyPassordAct.class));
             }
         });
+
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeleteAccountDF deleteAccountDF= new DeleteAccountDF();
+                deleteAccountDF.show(getActivity().getFragmentManager(),"delte");
+            }
+        });
+
+
 
 
 
