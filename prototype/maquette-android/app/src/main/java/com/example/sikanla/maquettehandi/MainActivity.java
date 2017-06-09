@@ -47,16 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private FloatingActionButton floatingActionButton;
     private NavigationView navigationView;
-    private Switch onOffSwitch;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        onOffSwitch = (Switch) findViewById(R.id.switch1);
-
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
@@ -98,16 +94,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // switch sur on, isChecked = true
-                // envoyer le boolean au serveur
-
-
-
-            }
-
-        });
     }
 
     private void instantiateTabToolbarDrawer() {

@@ -55,6 +55,7 @@ public class User extends Application {
     public void deleteLocalUser(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("password","");
         editor.putString("APIKEY", "");
         editor.putString("userid", "");
         editor.putString("firstname", "");
