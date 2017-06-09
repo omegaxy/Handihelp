@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_margin="30dp"
+    android:layout_margin="10dp"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
     android:background="@color/back1"
@@ -29,31 +29,36 @@
             android:fontFamily="casual"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textSize="@dimen/titleSizeXL"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/errorMsg"
             android:text=""
-            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
             android:textAlignment="center"
-            android:textSize="@dimen/textSizeXL"
+            android:textSize="20sp"
             android:textColor="@color/color4"
             android:textStyle="bold"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="130dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold"
                 android:text="Nom" />
 
@@ -61,23 +66,28 @@
                 android:id="@+id/surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/top"
                 android:layout_weight="1"
-                android:textSize="@dimen/textSizeXL"
                 android:ems="10"
                 />
 
+        </LinearLayout>
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold"
                 android:text="Prénom" />
 
@@ -85,43 +95,56 @@
                 android:id="@+id/firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/top"
                 android:layout_weight="1"
-                android:textSize="@dimen/textSizeXL"
                 android:ems="10" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:text="Année de naissance"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/birthYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/top"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="@dimen/textSizeXL"
                 android:inputType="number" />
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold"
                 android:text="Adresse Mail" />
 
@@ -129,43 +152,57 @@
                 android:id="@+id/mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/top"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="@dimen/textSizeXL"
                 android:inputType="textEmailAddress" />
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:text="Mot de passe"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/password1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/top"
                 android:layout_weight="1"
                 android:ems="10"
-                android:textSize="@dimen/textSizeXL"
                 android:inputType="textPassword" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textSizeXL"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold"
                 android:text="Mot de passe"/>
 
@@ -174,18 +211,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@color/top"
                 android:ems="10"
                 android:inputType="textPassword" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="130dp"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:fontFamily="casual"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="18sp"
+                android:textSize="@dimen/textSize"
                 android:textStyle="bold"
                 android:text="Mobile" />
 
@@ -195,16 +239,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:backgroundTint="@color/top"
                 android:inputType="phone" />
 
-
+        </LinearLayout>
 
         <Button
             android:id="@+id/registrationButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="60dp"
             android:layout_weight="1"
             android:fontFamily="casual"
             android:text="S'INSCRIRE"
