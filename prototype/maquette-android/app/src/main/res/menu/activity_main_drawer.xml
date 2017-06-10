@@ -13,23 +13,27 @@
             android:id="@+id/nav_friend"
             android:icon="@drawable/ic_menu_friend"
             android:title="Mes amis" />
-        <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_collection"
-            android:title="Historique" />
-        <item
-            android:id="@+id/nav_myapplication"
-            android:icon="@drawable/ic_menu_demandes"
-            android:title="Mes demandes" />
+
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_menu_notif"
-            android:title="Mes notifications" />
+            android:title="Sélectionner" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_menu_collection"
+            android:title="Mes Rencontres" />
+
+        <item
+            android:id="@+id/nav_myapplication"
+            android:icon="@drawable/ic_menu_demandes"
+            android:title="Historique" />
     </group>
     <group
         android:id="@+id/group2"
         android:title="Options"
         android:checkableBehavior="single">
+
 
 
         <item
