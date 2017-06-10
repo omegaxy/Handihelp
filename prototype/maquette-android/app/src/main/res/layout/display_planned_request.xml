@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/AppTheme"
     android:background="@drawable/planned_request_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/AppTheme">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,9 +13,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,8 +77,8 @@
                 android:gravity="center"
                 android:text="Type d'Aide"
                 android:textAllCaps="false"
-                android:textSize="18sp"
                 android:textColor="@color/grey05"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -104,8 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:textColor="@color/grey05"
                 android:text="Localisation"
+                android:textColor="@color/grey05"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -124,8 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:textColor="@color/grey05"
                 android:text="Date et Heure"
+                android:textColor="@color/grey05"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -144,8 +144,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:textColor="@color/grey05"
                 android:text="Description"
+                android:textColor="@color/grey05"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -175,14 +175,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
 
+
         <Button
             android:id="@+id/send_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/orange_button"
             android:text="Envoyer un message"
+            android:textColor="@color/back1"
             />
+
 
 
         <Button
@@ -190,7 +195,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:layout_weight="0.5"
+            android:background="@drawable/green_button"
+            android:textColor="@color/back1"
             android:text="Aider"
             />
 
@@ -200,11 +208,11 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/color1"
             android:text="Supprimer "
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textColor="@color/grey05" />
 
 
     </LinearLayout>
-
 
 
 </LinearLayout>

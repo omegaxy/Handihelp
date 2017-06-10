@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,7 @@ public class DisplayPlannedDF extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme2);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme3);
 
         rootView = inflater.inflate(R.layout.display_planned_request, null);
 
@@ -92,7 +93,7 @@ public class DisplayPlannedDF extends DialogFragment {
         //display buttons only if user is not yourself
         if (!id.matches(user.getUserId())) {
             deletePlannedButton.setVisibility(View.GONE);
-            sendMessage.setOnClickListener(new View.OnClickListener() {
+sendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SendMessageDialog sendMessageDialog = new SendMessageDialog();
@@ -119,7 +120,6 @@ public class DisplayPlannedDF extends DialogFragment {
                 }
             });
 
-
         } else {
             deletePlannedButton.setVisibility(View.VISIBLE);
             deletePlannedButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +144,7 @@ public class DisplayPlannedDF extends DialogFragment {
                                         Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
 
                                     }else {
-                                        getDialog().dismiss();
+                                        dismiss();
                                     }
                                 }
                             });
