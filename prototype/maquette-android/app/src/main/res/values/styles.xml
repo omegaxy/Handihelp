@@ -85,4 +85,9 @@
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
+    <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">24sp</item>
+        <item name="android:minHeight">80sp</item>
+    </style>
+
 </resources>

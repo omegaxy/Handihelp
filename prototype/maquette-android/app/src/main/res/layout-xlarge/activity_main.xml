@@ -9,8 +9,9 @@
 
 
     <android.support.design.widget.NavigationView
+        app:itemTextAppearance="@style/NavDrawerTextStyle"
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/back1"
