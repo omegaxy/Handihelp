@@ -1,11 +1,15 @@
 package com.example.sikanla.maquettehandi;
 
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,6 +64,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
 
+
+        askGpsPermission();
+
+    }
+
+    private void askGpsPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+            }
+        } else{
+            fetchPosition();
+        }
+    }
+
+    private void fetchPosition() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fetchPosition();
+
+
+
+                } else {
+
+
+                }
+                return;
+            }
+
+
+        }
     }
 
 
