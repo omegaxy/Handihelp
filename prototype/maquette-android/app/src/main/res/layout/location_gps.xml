@@ -3,4 +3,4 @@
 android:id="@+id/map"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-class="com.example.sikanla.maquettehandi.UI.Activities.LocationActivity" />
+class="com.example.sikanla.maquettehandi.LocationActivity" />

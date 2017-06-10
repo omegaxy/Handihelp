@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void fetchPosition() {
+        GPSTracker gps = new GPSTracker(this);
+        if(gps.canGetLocation()){
+           Log.e("gps", String.valueOf(gps.getLatitude())); // returns latitude
+            gps.getLongitude();
+        }
 
     }
 

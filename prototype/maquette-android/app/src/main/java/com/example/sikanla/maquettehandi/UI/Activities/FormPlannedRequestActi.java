@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -18,12 +21,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
+import com.example.sikanla.maquettehandi.GPSTracker;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class FormPlannedRequestActi extends Activity implements HelpType_DF.DialogListener {
 
@@ -35,6 +42,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
     private Button mPickTime;
     private int mHour;
     private int mMinute;
+    private Button getMyPosition;
     private Button bClose;
     private Button bHelpType;
     private EditText localisationEt;
@@ -67,6 +75,38 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
         localisationEt = (EditText) findViewById(R.id.localisation_fpA);
         commentaireEt = (EditText) findViewById(R.id.commentaire_fpA);
         checkBox = (CheckBox) findViewById(R.id.checkBox_fpA);
+        getMyPosition = (Button) findViewById(R.id.localisation_get_my_position_fpA);
+        final GPSTracker gps = new GPSTracker(this);
+        final Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+
+        getMyPosition.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (gps.canGetLocation()) {
+
+                    try {
+                        List<Address> adresses = geocoder.getFromLocation(gps.getLatitude(), gps.getLongitude(), 1);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        if (adresses.size() > 0) {
+                            Address adresse = adresses.get(0);
+
+                            for (int i = 0; i < adresse.getMaxAddressLineIndex(); ++i)
+                                stringBuilder.append(adresse.getAddressLine(i)).append("\n");
+
+                            stringBuilder.append(adresse.getCountryName());
+
+                        }
+                        String adresseString = stringBuilder.toString();
+                        localisationEt.setText(adresseString);
+
+
+                    } catch (IOException e) {
+                    }
+
+                }
+            }
+        });
 
         bsend.setEnabled(false);
         bsend.setAlpha(.5f);

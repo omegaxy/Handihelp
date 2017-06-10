@@ -32,7 +32,7 @@ public class DisplayMessageFragment extends DialogFragment {
     private ArrayList<Message> arrayOfMessages;
     private EditText textTosend;
     private Button sendText;
-    private MessageRequester messageRequester;
+    private  MessageRequester messageRequester;
     String idContact;
     private ArrayList<Message> messages;
     private Thread t;
@@ -67,7 +67,7 @@ public class DisplayMessageFragment extends DialogFragment {
         return view;
     }
 
-    private void refreshForMessages() {
+    private synchronized void refreshForMessages() {
         t = new Thread() {
 
             @Override

@@ -63,6 +63,13 @@
                 android:gravity="center"
                 android:textColor="@color/grey05"
                 android:textSize="@dimen/titleSizeXL" />
+            <Button
+                android:id="@+id/localisation_get_my_position_fpA"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ma Position"
+                android:textSize="@dimen/textSizeXL"
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/localisation_fpA"

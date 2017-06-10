@@ -70,6 +70,12 @@
                 android:textAlignment="center"
                 android:textColor="@color/grey05"
                 android:textSize="24sp" />
+            <Button
+                android:id="@+id/localisation_get_my_position_fpA"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ma Position"
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/localisation_fpA"

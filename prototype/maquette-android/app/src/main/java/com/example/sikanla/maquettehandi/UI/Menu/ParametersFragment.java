@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.DialogFragment.DeleteAccountDF;
-import com.example.sikanla.maquettehandi.UI.Activities.LocationActivity;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Activities.ModifyPassordAct;
