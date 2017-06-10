@@ -1,8 +1,11 @@
 package com.example.sikanla.maquettehandi.DialogFragment;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 public class DisplayMessageFragment extends DialogFragment {
     private DisplayMessageAdapter displayMessageAdapter;
     private ListView listView;
+    private View view;
     private TextView textViewName;
     private ArrayList<Message> arrayOfMessages;
     private EditText textTosend;
@@ -37,8 +41,14 @@ public class DisplayMessageFragment extends DialogFragment {
     private ArrayList<Message> messages;
     private Thread t;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.df_display_message, container, false);
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme3);
+
+        view = inflater.inflate(R.layout.df_display_message, null);
+
         arrayOfMessages = new ArrayList<Message>();
         displayMessageAdapter = new DisplayMessageAdapter(getActivity(), arrayOfMessages);
         listView = (ListView) view.findViewById(R.id.lv_display_message);
@@ -64,8 +74,12 @@ public class DisplayMessageFragment extends DialogFragment {
         sendButtonBehaviour();
 
         refreshForMessages();
-        return view;
+
+        final AlertDialog.Builder builder1 = builder.setView(view);
+
+        return builder1.create();
     }
+
 
     private synchronized void refreshForMessages() {
         t = new Thread() {
