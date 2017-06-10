@@ -3,19 +3,23 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.example.sikanla.maquettehandi.network.UserRequester;
@@ -36,7 +40,7 @@ public class DisplayPlannedDF extends DialogFragment {
     private LinearLayout linearLayout;
     private String id;
 
-    private Button sendMessage, help;
+    private Button sendMessage, help, deletePlannedButton;
 
 
     @NonNull
@@ -59,7 +63,7 @@ public class DisplayPlannedDF extends DialogFragment {
         imageViewPP = (ImageView) rootView.findViewById(R.id.answ_pic);
         sendMessage = (Button) rootView.findViewById(R.id.send_answer);
         help = (Button) rootView.findViewById(R.id.help_answer);
-
+        deletePlannedButton = (Button) rootView.findViewById(R.id.delete_planned);
         id = getArguments().getString("id");
 
         imageViewPP.setOnClickListener(new View.OnClickListener() {
@@ -87,38 +91,75 @@ public class DisplayPlannedDF extends DialogFragment {
 
         //display buttons only if user is not yourself
         if (!id.matches(user.getUserId())) {
-          sendMessage.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 SendMessageDialog sendMessageDialog = new SendMessageDialog();
-                                                 Bundle args = new Bundle();
-                                                 args.putString("firstname", fistNameTv.getText().toString());
-                                                 args.putString("id", id);
-                                                 sendMessageDialog.setArguments(args);
-                                                 sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
+            deletePlannedButton.setVisibility(View.GONE);
+            sendMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                    Bundle args = new Bundle();
+                    args.putString("firstname", fistNameTv.getText().toString());
+                    args.putString("id", id);
+                    sendMessageDialog.setArguments(args);
+                    sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
-                                             }
-                                         });
-
-
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                Bundle args = new Bundle();
-                args.putString("idPlanned", getArguments().getString("idPlanned"));
-                args.putString("id", id);
-                answerPLannedDF.setArguments(args);
-                answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
-
-            }
-        });
+                }
+            });
 
 
-    }
+            help.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
+                    Bundle args = new Bundle();
+                    args.putString("idPlanned", getArguments().getString("idPlanned"));
+                    args.putString("id", id);
+                    answerPLannedDF.setArguments(args);
+                    answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
+
+                }
+            });
+
+
+        } else {
+            deletePlannedButton.setVisibility(View.VISIBLE);
+            deletePlannedButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setMessage("Supprimer la demande?");
+                    alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Annuler",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Supprimer", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            PlannedRequester plannedRequester = new PlannedRequester();
+                            plannedRequester.deletePlannedRequest(getActivity(), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
+                                @Override
+                                public void onPlannedPosted(Boolean success) {
+                                    if (!success) {
+                                        Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
+
+                                    }else {
+                                        getDialog().dismiss();
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                    alertDialog.show();
+                }
+            });
+            help.setVisibility(View.GONE);
+            sendMessage.setVisibility(View.GONE);
+
+        }
         return builder1.create();
     }
-
 
 
     private void loadUserProfile() {
@@ -135,7 +176,6 @@ public class DisplayPlannedDF extends DialogFragment {
             @Override
             public void getUser(String firstName, String surname, String age, Boolean success) {
                 if (success) {
-
                     fistNameTv.setText(firstName);
                     surnameTv.setText(surname);
                 }

@@ -171,15 +171,18 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:weightSum="1"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
+
         <Button
             android:id="@+id/send_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="Envoyer un message" />
+            android:text="Envoyer un message"
+            />
 
 
         <Button
@@ -188,7 +191,16 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.5"
-            android:text="Aider" />
+            android:text="Aider"
+            />
+
+        <Button
+            android:id="@+id/delete_planned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/color1"
+            android:text="Supprimer "
+            android:visibility="visible" />
 
 
     </LinearLayout>

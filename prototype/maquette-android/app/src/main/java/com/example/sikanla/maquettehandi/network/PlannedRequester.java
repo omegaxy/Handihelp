@@ -284,5 +284,33 @@ public class PlannedRequester {
                 });
     }
 
+    public void deletePlannedRequest(Context context, String idRequest, final PostPlannedCB postPlannedCB) {
+        User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/deleteplannedrequest/"+idRequest, new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    postPlannedCB.onPlannedPosted(true);
+                                } else
+                                    postPlannedCB.onPlannedPosted(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            postPlannedCB.onPlannedPosted(false);
+
+                        }
+                    }
+                });
+    }
+
+
 
 }
