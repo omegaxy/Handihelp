@@ -2,17 +2,19 @@ package com.example.sikanla.maquettehandi.UI.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
+import com.example.sikanla.maquettehandi.GPSTracker;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.network.InstantRequester;
 
 /**
  * Created by Cecile on 22/05/2017.
@@ -21,8 +23,10 @@ import com.example.sikanla.maquettehandi.R;
 public class FormInstantRequestActi extends Activity implements HelpType_DF.DialogListener {
     private Button bSend, bClose, bHelpType;
     private EditText comment;
-    private TextView adress;
+    private TextView adress, textViewError;
     private String helpType = "";
+    private ImageView imageView;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -38,7 +42,10 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
         bClose = (Button) findViewById(R.id.close_btn);
         bHelpType = (Button) findViewById(R.id.aidetype_btn);
         comment = (EditText) findViewById(R.id.comment);
-
+        textViewError = (TextView) findViewById(R.id.error_tv_fiA);
+        imageView = (ImageView) findViewById(R.id.imageView_fiA2);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar_fiA);
+        
 
         bSend.setEnabled(false);
         bSend.setAlpha(.5f);
@@ -58,8 +65,38 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
             }
         });
 
+        final GPSTracker gps = new GPSTracker(this);
+
+        if (gps.canGetLocation()){
+            progressBar.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+
+        }
+
+
         bSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (gps.canGetLocation()) {
+                    InstantRequester instantRequester = new InstantRequester();
+                    instantRequester.sendInstantRequest(getApplicationContext(), helpType, comment.getText().toString(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.PostInstantCB() {
+                        @Override
+                        public void onInstantCB(boolean success) {
+                            if (success) {
+                                gps.stopUsingGPS();
+                                finish();
+                            } else {
+                                textViewError.setVisibility(View.VISIBLE);
+                                textViewError.setText("Erreur, Demande non Créée");
+
+                            }
+                        }
+                    });
+
+                } else {
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText("Position Non Trouvée");
+
+                }
             }
         });
     }

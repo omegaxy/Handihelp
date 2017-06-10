@@ -157,6 +157,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
                             @Override
                             public void onPlannedPosted(Boolean success) {
                                 if (success) {
+                                    gps.stopUsingGPS();
                                     finish();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "ERREUR", Toast.LENGTH_LONG).show();
