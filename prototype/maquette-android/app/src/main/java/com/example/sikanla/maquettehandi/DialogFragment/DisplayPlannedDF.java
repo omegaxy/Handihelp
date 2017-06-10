@@ -67,14 +67,24 @@ public class DisplayPlannedDF extends DialogFragment {
         deletePlannedButton = (Button) rootView.findViewById(R.id.delete_planned);
         id = getArguments().getString("id");
 
+        fistNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadProfile();
+            }
+        });
+
+        surnameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadProfile();
+            }
+        });
+
         imageViewPP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
-                Bundle args = new Bundle();
-                args.putString("id", id);
-                profileDialogFragment.setArguments(args);
-                profileDialogFragment.show(getActivity().getFragmentManager(), "answerPlanned");
+                loadProfile();
 
             }
         });
@@ -93,7 +103,7 @@ public class DisplayPlannedDF extends DialogFragment {
         //display buttons only if user is not yourself
         if (!id.matches(user.getUserId())) {
             deletePlannedButton.setVisibility(View.GONE);
-sendMessage.setOnClickListener(new View.OnClickListener() {
+            sendMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SendMessageDialog sendMessageDialog = new SendMessageDialog();
@@ -143,7 +153,7 @@ sendMessage.setOnClickListener(new View.OnClickListener() {
                                     if (!success) {
                                         Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
 
-                                    }else {
+                                    } else {
                                         dismiss();
                                     }
                                 }
@@ -159,6 +169,14 @@ sendMessage.setOnClickListener(new View.OnClickListener() {
 
         }
         return builder1.create();
+    }
+
+    private void loadProfile() {
+        ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        profileDialogFragment.setArguments(args);
+        profileDialogFragment.show(getActivity().getFragmentManager(), "answerPlanned");
     }
 
 
