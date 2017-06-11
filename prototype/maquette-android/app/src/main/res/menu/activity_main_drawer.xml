@@ -15,9 +15,13 @@
             android:title="Mes amis" />
 
         <item
+            android:id="@+id/nav_instant"
+            android:title="Instantané" />
+
+        <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_menu_notif"
-            android:title="Sélectionner" />
+            android:title="Planifié" />
 
         <item
             android:id="@+id/nav_history"

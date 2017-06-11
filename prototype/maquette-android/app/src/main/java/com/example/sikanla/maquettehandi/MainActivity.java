@@ -29,6 +29,7 @@ import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
+import com.example.sikanla.maquettehandi.UI.Menu.InstantFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
@@ -238,6 +239,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragment = new TabFragment();
                     navigationView.setCheckedItem(R.id.nav_accueil);
                     break;
+
+                case R.id.nav_instant:
+                    fragment = new InstantFragment();
+                    navigationView.setCheckedItem(R.id.nav_accueil);
+                    break;
+
                 case R.id.nav_friend:
                     fragment = new FriendsFragment();
                     navigationView.setCheckedItem(R.id.nav_friend);

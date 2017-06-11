@@ -70,7 +70,7 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
         CardViewHolder viewHolder;
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.planned_item_card, parent, false);
+            row = inflater.inflate(R.layout.item_planned_card, parent, false);
             viewHolder = new CardViewHolder();
             viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card);
             viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item);

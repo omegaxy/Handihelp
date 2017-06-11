@@ -3,17 +3,14 @@ package com.example.sikanla.maquettehandi.UI;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.sikanla.maquettehandi.Adapters.PlannedRequestCardAdapter;
-import com.example.sikanla.maquettehandi.Model.Message;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.network.MessageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class PlannedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
 
-        adapter = new PlannedRequestCardAdapter(getActivity(), R.layout.planned_item_card);
+        adapter = new PlannedRequestCardAdapter(getActivity(), R.layout.item_planned_card);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

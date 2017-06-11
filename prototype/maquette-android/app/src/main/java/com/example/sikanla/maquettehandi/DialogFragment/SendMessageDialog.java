@@ -3,21 +3,17 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.MessageRequester;
 
 /**
@@ -38,7 +34,7 @@ public class SendMessageDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
 
-        rootView = inflater.inflate(R.layout.send_message_dialog, null);
+        rootView = inflater.inflate(R.layout.df_send_message_dialog, null);
         title = (TextView) rootView.findViewById(R.id.df_message_title);
         errorTv = (TextView) rootView.findViewById(R.id.df_erreur_tv);
         messageText = (EditText) rootView.findViewById(R.id.df_message_edit_text);

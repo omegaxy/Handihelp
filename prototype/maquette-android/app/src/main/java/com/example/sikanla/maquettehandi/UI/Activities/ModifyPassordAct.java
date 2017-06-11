@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,7 @@ public class ModifyPassordAct extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInst) {
         super.onCreate(savedInst);
-        setContentView(R.layout.modify_password_activity);
+        setContentView(R.layout.activ_modify_password_);
 
         oldPass = (EditText) findViewById(R.id.password_oldpass);
         newPass1 = (EditText) findViewById(R.id.password_new1);

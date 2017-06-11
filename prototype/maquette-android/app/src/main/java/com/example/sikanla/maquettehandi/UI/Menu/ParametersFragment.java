@@ -37,7 +37,7 @@ public class ParametersFragment extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.parameters_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_parameters, container, false);
         decoB = (Button) view.findViewById(R.id.parameters_deco);
         modifyPasswdBtt = (Button) view.findViewById(R.id.parameter_modify_passwd);
         myLocationText = (TextView)view.findViewById(R.id.textView1);

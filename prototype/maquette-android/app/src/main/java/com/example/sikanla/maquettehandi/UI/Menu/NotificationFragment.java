@@ -38,7 +38,7 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
-        adapter = new NotificationAdapter(getActivity(), R.layout.notification_item_card);
+        adapter = new NotificationAdapter(getActivity(), R.layout.item_notification_card);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerNotification);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

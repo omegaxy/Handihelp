@@ -41,7 +41,7 @@ public class MyPlannedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scheduled, container, false);
 
-        adapter = new PlannedRequestCardAdapter(getActivity(), R.layout.planned_item_card);
+        adapter = new PlannedRequestCardAdapter(getActivity(), R.layout.item_planned_card);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainerPlanned);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

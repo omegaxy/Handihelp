@@ -12,11 +12,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.MainActivity;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.AllRequest;
 
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         User user = new User();
         //test if user is already logged in
         if (user.isUserLoggedIn(this)) {
@@ -45,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.activ_login_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emailEditText = (EditText) findViewById(R.id.aa);

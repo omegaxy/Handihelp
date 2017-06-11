@@ -3,12 +3,9 @@ package com.example.sikanla.maquettehandi.DialogFragment;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.text.TextPaint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +17,6 @@ import android.widget.Toast;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.example.sikanla.maquettehandi.network.UserRequester;
@@ -51,7 +47,7 @@ public class DisplayPlannedDF extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme3);
 
-        rootView = inflater.inflate(R.layout.display_planned_request, null);
+        rootView = inflater.inflate(R.layout.df_display_planned_request, null);
 
 
         linearLayout = (LinearLayout) rootView.findViewById(R.id.planned_color_answer);

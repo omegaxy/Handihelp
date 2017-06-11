@@ -37,7 +37,7 @@ public class DeleteAccountDF extends DialogFragment implements TextWatcher{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
 
-        rootView = inflater.inflate(R.layout.delete_account_df, null);
+        rootView = inflater.inflate(R.layout.df_delete_account, null);
         textView = (TextView) rootView.findViewById(R.id.delete_acct_tverror);
         email = (EditText) rootView.findViewById(R.id.delete_acct_email);
         password = (EditText) rootView.findViewById(R.id.delete_acct_pwd);

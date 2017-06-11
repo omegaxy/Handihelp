@@ -32,7 +32,7 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.form_instant_request);
+        setContentView(R.layout.activ_form_instant_request);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         View view = this.getWindow().getDecorView();
@@ -45,7 +45,7 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
         textViewError = (TextView) findViewById(R.id.error_tv_fiA);
         imageView = (ImageView) findViewById(R.id.imageView_fiA2);
         progressBar = (ProgressBar) findViewById(R.id.progressBar_fiA);
-        
+
 
         bSend.setEnabled(false);
         bSend.setAlpha(.5f);

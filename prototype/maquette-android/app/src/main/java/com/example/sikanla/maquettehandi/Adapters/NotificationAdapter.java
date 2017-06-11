@@ -110,7 +110,7 @@ public class NotificationAdapter extends ArrayAdapter<PlannedRequest> {
         final CardViewHolder viewHolder;
 
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        row = inflater.inflate(R.layout.notification_item_card, parent, false);
+        row = inflater.inflate(R.layout.item_notification_card, parent, false);
         viewHolder = new CardViewHolder();
         viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame_card_notification);
         viewHolder.localisation = (TextView) row.findViewById(R.id.localisation_item_notification);

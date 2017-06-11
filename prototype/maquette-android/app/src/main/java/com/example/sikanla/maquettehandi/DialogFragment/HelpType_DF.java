@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.UI.Activities.FormPlannedRequestActi;
 
 /**
  * Created by Nicolas on 15/05/2017.
@@ -50,7 +49,7 @@ public class HelpType_DF extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        v = inflater.inflate(R.layout.fragment_help_type, null);
+        v = inflater.inflate(R.layout.df_help_type, null);
         try {
 
             mListener = (DialogListener)  getActivity();

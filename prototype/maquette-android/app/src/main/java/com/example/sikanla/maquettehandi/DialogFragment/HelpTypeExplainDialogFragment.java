@@ -30,7 +30,7 @@ public class HelpTypeExplainDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        v = inflater.inflate(R.layout.fragment_help_type_explain, null);
+        v = inflater.inflate(R.layout.df_help_type_explain, null);
 
         final AlertDialog.Builder builder1 = builder.setView(v);
 

@@ -9,13 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.sikanla.maquettehandi.Model.PlannedRequest;
 import com.example.sikanla.maquettehandi.R;
-import com.example.sikanla.maquettehandi.network.MessageRequester;
 import com.example.sikanla.maquettehandi.network.PlannedRequester;
 
 /**
@@ -32,7 +28,7 @@ public class AnswerPLannedDF extends DialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme2);
-        rootView = inflater.inflate(R.layout.answer_planned, null);
+        rootView = inflater.inflate(R.layout.df_answer_planned, null);
         textView = (TextView) rootView.findViewById(R.id.df_answerTVerror);
 
         final AlertDialog.Builder builder1 = builder.setView(rootView)
