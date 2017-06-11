@@ -1,5 +1,6 @@
 package com.example.sikanla.maquettehandi.UI.Menu;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -7,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
+import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class InstantFragment extends Fragment {
 
     private TextView countDownTv;
     private LinearLayout layoutRequest, layoutNoRequest;
+    private Button createInstantButt;
 
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -33,19 +37,32 @@ public class InstantFragment extends Fragment {
         countDownTv = (TextView) view.findViewById(R.id.count_down);
         layoutRequest = (LinearLayout) view.findViewById(R.id.instant_request_enabled);
         layoutNoRequest = (LinearLayout) view.findViewById(R.id.instant_no_request);
+        createInstantButt = (Button) view.findViewById(R.id.instant_create_instant);
 
+        instantRequestBehaviour();
+
+
+        // fetchMessages();
+        return view;
+    }
+
+    private void instantRequestBehaviour() {
         Long tsLong = System.currentTimeMillis() / 1000;
         SharedPreferences prefs = getActivity().getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
         //if an instant request has been created
         if (-prefs.getLong("instantRequest", 0) + tsLong < 5 * 60) {
             layoutNoRequest.setVisibility(View.GONE);
             layoutRequest.setVisibility(View.VISIBLE);
-            //request lasts 5mintes
+            //request lasts 5 mintes
             new CountDownTimer((5 * 60 - (-prefs.getLong("instantRequest", 0) + tsLong)) * 1000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
-                    countDownTv.setText("Temps restant: " + (millisUntilFinished / 1000) / 60 + ":" + (millisUntilFinished / 1000) % 60);
-                    //here you can have your logic to set text to edittext
+                    if ((millisUntilFinished / 1000) % 60 < 10) {
+                        countDownTv.setText("Temps restant: " + (millisUntilFinished / 1000) / 60 + ":" + "0" + (millisUntilFinished / 1000) % 60);
+
+                    } else {
+                        countDownTv.setText("Temps restant: " + (millisUntilFinished / 1000) / 60 + ":" + (millisUntilFinished / 1000) % 60);
+                    }
                 }
 
                 public void onFinish() {
@@ -59,11 +76,22 @@ public class InstantFragment extends Fragment {
             layoutNoRequest.setVisibility(View.VISIBLE);
             layoutRequest.setVisibility(View.GONE);
 
+            createInstantButt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), FormInstantRequestActi.class));
+                }
+            });
+
+
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        instantRequestBehaviour();
 
 
-        // fetchMessages();
-        return view;
     }
 
     private void fetchMessages() {
