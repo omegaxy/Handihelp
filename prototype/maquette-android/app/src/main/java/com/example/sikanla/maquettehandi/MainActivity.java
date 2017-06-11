@@ -2,7 +2,6 @@ package com.example.sikanla.maquettehandi;
 
 
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,13 +14,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -34,15 +30,8 @@ import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
-import com.example.sikanla.maquettehandi.network.AllRequest;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -56,16 +45,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
+        
         launchFragment(new TabFragment(), "Accueil");
+
         ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
-
-
         askGpsPermission();
 
     }
@@ -83,42 +72,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
             }
-        } else{
+        } else {
             fetchPosition();
         }
     }
 
     private void fetchPosition() {
         GPSTracker gps = new GPSTracker(this);
-        if(gps.canGetLocation()){
-           Log.e("gps", String.valueOf(gps.getLatitude())); // returns latitude
+        if (gps.canGetLocation()) {
             gps.getLongitude();
         }
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fetchPosition();
-
-
-
-                } else {
-
-
                 }
                 return;
             }
-
-
         }
     }
-
 
 
     private void instantiateNavigationView() {
@@ -179,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     private void instantiateFAB() {
         floatingActionButton = new FloatingActionButton(this);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabBtn);
@@ -187,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 HelpChoice_DF helpChoice_df = new HelpChoice_DF();
-                helpChoice_df.show(getFragmentManager(),"help-choice");
+                helpChoice_df.show(getFragmentManager(), "help-choice");
             }
         });
     }
@@ -215,6 +192,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setCheckedItem(R.id.nav_settings);
+            Fragment fragment = new ParametersFragment();
+            launchFragment(fragment, item.getTitle().toString());
             return true;
         }
 
