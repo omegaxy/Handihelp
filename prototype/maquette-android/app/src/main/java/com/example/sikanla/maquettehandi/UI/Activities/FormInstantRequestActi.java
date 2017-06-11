@@ -1,6 +1,7 @@
 package com.example.sikanla.maquettehandi.UI.Activities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.example.sikanla.maquettehandi.DialogFragment.HelpType_DF;
 import com.example.sikanla.maquettehandi.GPSTracker;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
+import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.InstantRequester;
 
@@ -82,6 +84,10 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
                         @Override
                         public void onInstantCB(boolean success) {
                             if (success) {
+                                SharedPreferences prefs = getSharedPreferences(User.MY_PREFS_NAME, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putLong("instantRequest",System.currentTimeMillis()/1000);
+                                editor.apply();
                                 gps.stopUsingGPS();
                                 finish();
                             } else {
