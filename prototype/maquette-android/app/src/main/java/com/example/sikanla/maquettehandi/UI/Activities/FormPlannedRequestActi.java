@@ -209,7 +209,7 @@ public class FormPlannedRequestActi extends Activity implements HelpType_DF.Dial
                         .append(mYear).append("   "));
                 break;
             case 1:
-                mPickTime.setText(new StringBuilder().append(pad(mHour)).append(":").append((mMinute)));
+                mPickTime.setText(new StringBuilder().append(pad(mHour)).append(":").append((pad(mMinute))));
                 break;
 
         }

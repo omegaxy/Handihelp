@@ -98,15 +98,17 @@ public class PlannedFragment extends Fragment {
                 for (int i = plannedRequests.size(); i < arrayList.size(); i++) {
                     //only display messages from other partie
                     adapter.add(arrayList.get(i));
+                    adapter.notifyDataSetChanged();
                     listView.setSelection(listView.getAdapter().getCount() - 1);
                 }
                 plannedRequests = arrayList;
             }
             //if requests get out of date
             if (arrayList.size()<plannedRequests.size()){
-                plannedRequests=arrayList;
+                this.plannedRequests=arrayList;
                 adapter.clear();
                 adapter.addAll(plannedRequests);
+                adapter.notifyDataSetChanged();
 
             }
         }
