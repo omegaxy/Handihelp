@@ -31,6 +31,7 @@ import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.example.sikanla.maquettehandi.network.InstantRequester;
 import com.squareup.picasso.Picasso;
 
 import io.fabric.sdk.android.Fabric;
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        askGpsPermission();
+    }
+
     private void askGpsPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -80,8 +87,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void fetchPosition() {
         GPSTracker gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
-            gps.getLongitude();
+            InstantRequester instantRequester= new InstantRequester();
+            instantRequester.updatePosition(getBaseContext(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.PostInstantCB() {
+                @Override
+                public void onInstantCB(boolean success) {
+
+                }
+            });
         }
+        gps.stopUsingGPS();
 
     }
 
