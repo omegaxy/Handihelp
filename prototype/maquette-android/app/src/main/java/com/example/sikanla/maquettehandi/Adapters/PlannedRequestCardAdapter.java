@@ -29,7 +29,6 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
     private static final String TAG = "PlannedRequestCardAdapter";
     private List<PlannedRequest> plannedRequests = new ArrayList<>();
     private Activity context;
-    private boolean tomark = false;
 
     static class CardViewHolder {
         TextView localisation;
@@ -43,12 +42,6 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
     public PlannedRequestCardAdapter(Activity context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
-    }
-
-    public PlannedRequestCardAdapter(Activity context, int textViewResourceId, boolean b) {
-        super(context, textViewResourceId);
-        this.context = context;
-        this.tomark = b;
     }
 
     @Override
@@ -108,8 +101,6 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
                 args.putString("id", plannedRequest.id);
                 args.putString("idPlanned",plannedRequest.idPlanned);
                 args.putString("description", plannedRequest.description);
-                args.putString("tomark", String.valueOf(tomark));
-
                 answerPlan.setArguments(args);
 
                 answerPlan.show(context.getFragmentManager(), "answerPlanned");
