@@ -8,8 +8,5 @@
         android:width="5dp"
         android:color="@color/grey05">
     </stroke>
-    <padding
-        android:left="10dp"
-        android:right="10dp" />
 </shape>
 
