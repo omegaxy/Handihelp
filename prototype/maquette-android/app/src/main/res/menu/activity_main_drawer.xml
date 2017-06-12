@@ -24,14 +24,9 @@
             android:title="Planifié" />
 
         <item
-        android:id="@+id/nav_history"
-        android:icon="@drawable/ic_menu_collection"
-        android:title="Mes Rencontres" />
-
-        <item
-            android:id="@+id/nav_mark"
+            android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_collection"
-            android:title="A noter" />
+            android:title="Mes Rencontres" />
 
         <item
             android:id="@+id/nav_myapplication"
