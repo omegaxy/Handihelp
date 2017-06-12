@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.example.sikanla.maquettehandi.DialogFragment.DisplayPlannedDF;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -25,6 +26,11 @@ public class NotificationService extends FirebaseMessagingService {
                         .setContentText(remoteMessage.getData().get("message"));
 
         Intent resultIntent = new Intent(this, MainActivity.class);
+
+        if( remoteMessage.getData().get("title").contains("Proposition d'aide") ) {
+            resultIntent.putExtra("menuFragment", "NotificationFragment");
+        }
+
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.

@@ -1,6 +1,8 @@
 package com.example.sikanla.maquettehandi;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -58,6 +60,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protectedHuaweyApps.ifHuaweiAlert(this);
         askGpsPermission();
 
+        notificationIntent();
+
+    }
+
+    private void notificationIntent() {
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // If menuFragment is defined, then this activity was launched with a fragment selection
+        if (menuFragment != null) {
+            // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
+            if (menuFragment.equals("NotificationFragment")) {
+                NotificationFragment notificationFragment = new NotificationFragment();
+                TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+                tabLayout.setVisibility(View.GONE);
+                launchFragment(notificationFragment,"Planifié");
+                floatingActionButton.setVisibility(View.GONE);
+                navigationView.setCheckedItem(R.id.nav_notification);
+            }
+        } else {
+            launchFragment(new TabFragment(), "Accueil");
+        }
     }
 
     @Override
