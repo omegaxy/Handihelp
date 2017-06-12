@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +33,15 @@ import java.util.TimeZone;
 
 public class DisplayPlannedDF extends DialogFragment {
     private View rootView;
-    private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv;
-    private ImageView imageViewPP;
+    private TextView fistNameTv, surnameTv, typeAideTv, localisationTv, descriptionTv, scheduledTv,
+            fistNameTv2, surnameTv2, aidantTv;
+    private ImageView imageViewPP, imageView2;
     private LinearLayout linearLayout;
     private String id;
 
     private Button sendMessage, help, deletePlannedButton;
+    private RatingBar mark;
+    private LinearLayout layout_mark;
 
 
     @NonNull
@@ -61,6 +65,14 @@ public class DisplayPlannedDF extends DialogFragment {
         sendMessage = (Button) rootView.findViewById(R.id.send_answer);
         help = (Button) rootView.findViewById(R.id.help_answer);
         deletePlannedButton = (Button) rootView.findViewById(R.id.delete_planned);
+
+        aidantTv = (TextView) rootView.findViewById(R.id.textView28);
+        fistNameTv2 = (TextView) rootView.findViewById(R.id.textView29);
+        surnameTv2 = (TextView) rootView.findViewById(R.id.textView30);
+        imageView2 = (ImageView) rootView.findViewById(R.id.imageView2);
+        mark = (RatingBar) rootView.findViewById(R.id.ratingBar2);
+        layout_mark = (LinearLayout) rootView.findViewById(R.id.layout_mark);
+
         id = getArguments().getString("id");
 
         fistNameTv.setOnClickListener(new View.OnClickListener() {
@@ -96,76 +108,91 @@ public class DisplayPlannedDF extends DialogFragment {
         User user = new User();
         final AlertDialog.Builder builder1 = builder.setView(rootView);
 
-        //display buttons only if user is not yourself
-        if (!id.matches(user.getUserId())) {
-            deletePlannedButton.setVisibility(View.GONE);
-            sendMessage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SendMessageDialog sendMessageDialog = new SendMessageDialog();
-                    Bundle args = new Bundle();
-                    args.putString("firstname", fistNameTv.getText().toString());
-                    args.putString("id", id);
-                    sendMessageDialog.setArguments(args);
-                    sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
+        if(getArguments().getString("tomark").equals("true")){
+            displayMarkButttons();
+        }
+        else {
+            layout_mark.setVisibility(View.GONE);
+            //display buttons only if user is not yourself
+            if (!id.matches(user.getUserId())) {
+                deletePlannedButton.setVisibility(View.GONE);
+                sendMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SendMessageDialog sendMessageDialog = new SendMessageDialog();
+                        Bundle args = new Bundle();
+                        args.putString("firstname", fistNameTv.getText().toString());
+                        args.putString("id", id);
+                        sendMessageDialog.setArguments(args);
+                        sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
-                }
-            });
+                    }
+                });
 
 
-            help.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                    Bundle args = new Bundle();
-                    args.putString("idPlanned", getArguments().getString("idPlanned"));
-                    args.putString("id", id);
-                    answerPLannedDF.setArguments(args);
-                    answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
+                help.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
+                        Bundle args = new Bundle();
+                        args.putString("idPlanned", getArguments().getString("idPlanned"));
+                        args.putString("id", id);
+                        answerPLannedDF.setArguments(args);
+                        answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
 
-                }
-            });
+                    }
+                });
 
-        } else {
-            deletePlannedButton.setVisibility(View.VISIBLE);
-            deletePlannedButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
-                    alertDialog.setMessage("Supprimer la demande?");
-                    alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Annuler",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Supprimer", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            PlannedRequester plannedRequester = new PlannedRequester();
-                            plannedRequester.deletePlannedRequest(getActivity(), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
-                                @Override
-                                public void onPlannedPosted(Boolean success) {
-                                    if (!success) {
-                                        Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
-
-                                    } else {
-                                        dismiss();
+            } else {
+                deletePlannedButton.setVisibility(View.VISIBLE);
+                deletePlannedButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setMessage("Supprimer la demande?");
+                        alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Annuler",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
                                     }
-                                }
-                            });
+                                });
+                        alertDialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Supprimer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                PlannedRequester plannedRequester = new PlannedRequester();
+                                plannedRequester.deletePlannedRequest(getActivity(), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
+                                    @Override
+                                    public void onPlannedPosted(Boolean success) {
+                                        if (!success) {
+                                            Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
 
-                        }
-                    });
-                    alertDialog.show();
-                }
-            });
-            help.setVisibility(View.GONE);
-            sendMessage.setVisibility(View.GONE);
+                                        } else {
+                                            dismiss();
+                                        }
+                                    }
+                                });
+
+                            }
+                        });
+                        alertDialog.show();
+                    }
+                });
+                help.setVisibility(View.GONE);
+                sendMessage.setVisibility(View.GONE);
+
+            }
 
         }
+
         return builder1.create();
     }
+
+    private void displayMarkButttons(){
+        deletePlannedButton.setVisibility(View.GONE);
+        sendMessage.setVisibility(View.GONE);
+        help.setVisibility(View.GONE);
+    }
+
 
     private void loadProfile() {
         ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
