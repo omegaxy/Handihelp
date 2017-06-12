@@ -80,7 +80,7 @@ public class FormInstantRequestActi extends Activity implements HelpType_DF.Dial
             public void onClick(View v) {
                 if (gps.canGetLocation()) {
                     InstantRequester instantRequester = new InstantRequester();
-                    instantRequester.sendInstantRequest(getApplicationContext(), helpType, comment.getText().toString(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.PostInstantCB() {
+                    instantRequester.sendInstantRequest(getApplicationContext(), helpType, comment.getText().toString(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.InstantCB() {
                         @Override
                         public void onInstantCB(boolean success) {
                             if (success) {

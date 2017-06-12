@@ -1,8 +1,6 @@
 package com.example.sikanla.maquettehandi;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         GPSTracker gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
             InstantRequester instantRequester= new InstantRequester();
-            instantRequester.updatePosition(getBaseContext(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.PostInstantCB() {
+            instantRequester.updatePosition(getBaseContext(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.InstantCB() {
                 @Override
                 public void onInstantCB(boolean success) {
 
