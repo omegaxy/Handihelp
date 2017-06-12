@@ -162,6 +162,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="TextView"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/grey05"
                 android:textSize="24sp" />
         </LinearLayout>
