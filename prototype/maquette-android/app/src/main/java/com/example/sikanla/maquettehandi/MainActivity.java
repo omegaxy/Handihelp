@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
@@ -35,8 +34,6 @@ import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.example.sikanla.maquettehandi.network.InstantRequester;
 import com.squareup.picasso.Picasso;
-
-import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView firstnameHeader;
@@ -53,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
-        
-        launchFragment(new TabFragment(), "Accueil");
 
         ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
@@ -67,24 +62,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void notificationIntent() {
         String menuFragment = getIntent().getStringExtra("menuFragment");
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // If menuFragment is defined, then this activity was launched with a fragment selection
         if (menuFragment != null) {
             // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
             if (menuFragment.equals("NotificationFragment")) {
-                NotificationFragment notificationFragment = new NotificationFragment();
-                TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
-                tabLayout.setVisibility(View.GONE);
-                launchFragment(notificationFragment,"Planifié");
-                floatingActionButton.setVisibility(View.GONE);
+                prepareLayout();
                 navigationView.setCheckedItem(R.id.nav_notification);
+                launchFragment(new NotificationFragment(),"Planifié");
             }
         } else {
             launchFragment(new TabFragment(), "Accueil");
         }
     }
+
 
     @Override
     public void onResume(){
@@ -232,9 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
-            tabLayout.setVisibility(View.GONE);
-            floatingActionButton.setVisibility(View.GONE);
+            prepareLayout();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setCheckedItem(R.id.nav_settings);
             Fragment fragment = new ParametersFragment();
@@ -250,12 +237,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         if (!item.isChecked()) {
-            floatingActionButton.setVisibility(View.GONE);
+            prepareLayout();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             Fragment fragment = new Fragment();
-
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
-            tabLayout.setVisibility(View.GONE);
 
             switch (item.getItemId()) {
                 case R.id.nav_accueil:
@@ -298,6 +282,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void prepareLayout() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+        tabLayout.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
     }
 
     private void launchFragment(Fragment fragment, String title) {
