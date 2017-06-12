@@ -206,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+            tabLayout.setVisibility(View.GONE);
+            floatingActionButton.setVisibility(View.GONE);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setCheckedItem(R.id.nav_settings);
             Fragment fragment = new ParametersFragment();
