@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 prepareLayout();
                 navigationView.setCheckedItem(R.id.nav_notification);
                 launchFragment(new NotificationFragment(),"Planifié");
+            } else if (menuFragment.equals("InstantFragment")) {
+                prepareLayout();
+                navigationView.setCheckedItem(R.id.nav_notification);
+                launchFragment(new InstantFragment(),"Instantanée");
             }
         } else {
             launchFragment(new TabFragment(), "Accueil");

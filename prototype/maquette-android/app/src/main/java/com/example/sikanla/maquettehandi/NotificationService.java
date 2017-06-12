@@ -29,6 +29,10 @@ public class NotificationService extends FirebaseMessagingService {
             resultIntent.putExtra("menuFragment", "NotificationFragment");
         }
 
+        if( remoteMessage.getData().get("title").contains("Demande d'aide") ) {
+            resultIntent.putExtra("menuFragment", "InstantFragment");
+        }
+
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
