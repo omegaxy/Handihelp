@@ -2,17 +2,85 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeContainerNotification"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/lvnotification"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:dividerHeight="10dp"
-        android:paddingBottom="60dp" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/notificationFG_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/hint1_myPlannedFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Vous n'avez pas reçu de réponses à vos demandes"
+                android:textColor="@color/grey05"
+                android:textSize="@dimen/textSize"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/hint2_myPlannedFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Les demandes apparaîtront lorsque vous reçevrez une réponse"
+                android:textColor="@color/grey05"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/notificationFG_linear2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/notificationFG_linear3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Demandes ayant obtenu une réponse"
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <ListView
+                android:id="@+id/lvnotification"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:dividerHeight="10dp"
+                android:listSelector="@android:color/transparent"
+                android:paddingBottom="60dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </android.support.v4.widget.SwipeRefreshLayout>
