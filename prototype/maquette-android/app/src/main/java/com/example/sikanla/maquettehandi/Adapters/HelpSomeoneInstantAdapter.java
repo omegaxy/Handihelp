@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,13 +35,14 @@ public class HelpSomeoneInstantAdapter extends ArrayAdapter<InstantRequest> {
         TextView firstname;
         TextView surname;
         ImageView pictureContact;
-        LinearLayout linearLayout;
+        Button halpButton;
     }
 
     public HelpSomeoneInstantAdapter(Activity context) {
         super(context, R.layout.item_answer_instant);
         this.context = context;
     }
+
     public void addAll(ArrayList<InstantRequest> instantRequests) {
         this.instantRequests = instantRequests;
         super.addAll(instantRequests);
@@ -57,8 +59,34 @@ public class HelpSomeoneInstantAdapter extends ArrayAdapter<InstantRequest> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_answer_instant, parent, false);
+            viewHolder.firstname = (TextView) convertView.findViewById(R.id.answer_instant_firstname);
+            viewHolder.surname = (TextView) convertView.findViewById(R.id.answer_instant_surname);
+            viewHolder.pictureContact = (ImageView) convertView.findViewById(R.id.answer_instant_image);
+            viewHolder.halpButton = (Button) convertView.findViewById(R.id.answer_instant_helpbutton);
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(viewHolder);
+
+            UserRequester  userRequester = new UserRequester();
+            userRequester.getUser(context, id.getId(), new UserRequester.GetUserCB() {
+                @Override
+                public void getUser(String firstName, String surname, String age, Boolean success) {
+                    if (success) {
+                        viewHolder.firstname.setText(firstName);
+                        viewHolder.surname.setText(surname);
+
+                    }
+                }
+            });
+
+            ImageRequester imageRequester = new ImageRequester();
+            imageRequester.getImage(id.getId(), context, new ImageRequester.ImageInterface() {
+                @Override
+                public void getUrl(String url) {
+                    if (!url.isEmpty())
+                        Picasso.with(context).load(url).centerCrop().fit().into(viewHolder.pictureContact);
+
+                }
+            });
         } else {
             // View is being recycled, retrieve the viewHolder object from tag
             viewHolder = (ViewHolder) convertView.getTag();

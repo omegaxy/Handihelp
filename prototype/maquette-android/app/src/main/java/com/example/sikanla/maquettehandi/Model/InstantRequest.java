@@ -14,6 +14,34 @@ public class InstantRequest {
     public String createdAt;
     public String idInstant;
 
+    public String getHelpCategory() {
+        return helpCategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCloseUsers() {
+        return closeUsers;
+    }
+
+    public String getLocalisation() {
+        return localisation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getIdInstant() {
+        return idInstant;
+    }
+
     public InstantRequest(String helpCategory, String description, String closeUsers,
                           String createdAt, String id, String idInstant) {
         this.helpCategory = helpCategory;
