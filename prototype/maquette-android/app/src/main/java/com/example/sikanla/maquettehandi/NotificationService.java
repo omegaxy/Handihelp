@@ -11,7 +11,6 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class NotificationService extends FirebaseMessagingService {
-    private String TAG = "messageNotif";
 
     public NotificationService() {
     }
@@ -26,10 +25,15 @@ public class NotificationService extends FirebaseMessagingService {
 
         Intent resultIntent = new Intent(this, MainActivity.class);
 
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
+        if( remoteMessage.getData().get("title").contains("Proposition d'aide") ) {
+            resultIntent.putExtra("menuFragment", "NotificationFragment");
+        }
+
+        if( remoteMessage.getData().get("title").contains("Demande d'aide") ) {
+            resultIntent.putExtra("menuFragment", "InstantFragment");
+        }
+
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);

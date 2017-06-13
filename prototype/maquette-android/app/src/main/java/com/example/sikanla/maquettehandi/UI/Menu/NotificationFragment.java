@@ -6,7 +6,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Adapters.NotificationAdapter;
 import com.example.sikanla.maquettehandi.Model.PlannedRequest;
@@ -25,9 +27,9 @@ public class NotificationFragment extends Fragment {
     public SwipeRefreshLayout swipeContainer;
     public ListView listView;
     private NotificationAdapter adapter;
-
+    private LinearLayout linear1, linear2;
     private ArrayList<PlannedRequest> plannedRequests;
-    private ArrayList<ResponsePlanned> localResponsePlanneds;
+    private ArrayList<ResponsePlanned> localResponsePlanneds = new ArrayList<>();
     private PlannedRequester plannedRequester;
     private Thread t;
 
@@ -49,6 +51,12 @@ public class NotificationFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.lvnotification);
         listView.addHeaderView(new View(getActivity()));
         listView.addFooterView(new View(getActivity()));
+
+        linear1 = (LinearLayout) view.findViewById(R.id.notificationFG_linear1);
+        linear2 = (LinearLayout) view.findViewById(R.id.notificationFG_linear2);
+
+        linear1.setVisibility(View.VISIBLE);
+        linear2.setVisibility(View.GONE);
 
 
         return view;
@@ -80,10 +88,27 @@ public class NotificationFragment extends Fragment {
                         @Override
                         public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
                             if (success) {
-                                adapter.clear();
-                                localResponsePlanneds = t;
-                                adapter.addAll(plannedRequests, t);
-                                adapter.notifyDataSetChanged();
+                                Boolean b = false;
+                                if (t != null && t.size() > 0) {
+                                    adapter.clear();
+                                    localResponsePlanneds = t;
+                                    adapter.addAll(plannedRequests, t);
+                                    adapter.notifyDataSetChanged();
+                                    for (int i = 0; i < plannedRequests.size(); i++) {
+                                        for (int j = 0; j < t.size(); j++) {
+                                            if (plannedRequests.get(i).idPlanned.matches(t.get(j).id_request)) {
+                                                b = true;
+                                            }
+                                        }
+                                    }
+                                    if (b) {
+                                        linear2.setVisibility(View.VISIBLE);
+                                        linear1.setVisibility(View.GONE);
+                                    } else {
+                                        linear1.setVisibility(View.VISIBLE);
+                                        linear2.setVisibility(View.GONE);
+                                    }
+                                }
                                 swipeContainer.setRefreshing(false);
 
                             } else {
@@ -123,12 +148,27 @@ public class NotificationFragment extends Fragment {
                                                         @Override
                                                         public void onResponsePlanned(ArrayList<ResponsePlanned> t, Boolean success) {
                                                             if (success) {
+                                                                Boolean b = false;
                                                                 if (localResponsePlanneds != null) {
                                                                     if (localResponsePlanneds.size() != t.size()) {
                                                                         localResponsePlanneds = t;
                                                                         adapter.clear();
                                                                         adapter.addAll(plannedRequests, t);
                                                                         adapter.notifyDataSetChanged();
+                                                                        for (int i = 0; i < plannedRequests.size(); i++) {
+                                                                            for (int j = 0; j < t.size(); j++) {
+                                                                                if (plannedRequests.get(i).idPlanned.matches(t.get(j).id_request)) {
+                                                                                    b = true;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        if (b) {
+                                                                            linear2.setVisibility(View.VISIBLE);
+                                                                            linear1.setVisibility(View.GONE);
+                                                                        } else {
+                                                                            linear1.setVisibility(View.VISIBLE);
+                                                                            linear2.setVisibility(View.GONE);
+                                                                        }
                                                                     }
                                                                 }
 

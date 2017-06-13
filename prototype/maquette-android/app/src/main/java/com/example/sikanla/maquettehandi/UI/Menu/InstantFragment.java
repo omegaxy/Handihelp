@@ -5,19 +5,28 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.Adapters.HelpSomeoneInstantAdapter;
+import com.example.sikanla.maquettehandi.Adapters.NotificationAdapter;
+import com.example.sikanla.maquettehandi.Model.InstantRequest;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
+import com.example.sikanla.maquettehandi.network.InstantRequester;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -30,10 +39,17 @@ public class InstantFragment extends Fragment {
     private TextView countDownTv;
     private LinearLayout layoutRequest, layoutNoRequest;
     private Button createInstantButt;
+    private ListView listView;
+    private HelpSomeoneInstantAdapter adapter;
 
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_instant_request, container, false);
+
+        adapter = new HelpSomeoneInstantAdapter(getActivity());
+        listView = (ListView) view.findViewById(R.id.fragment_instant_listview);
+        listView.setAdapter(adapter);
+
         countDownTv = (TextView) view.findViewById(R.id.count_down);
         layoutRequest = (LinearLayout) view.findViewById(R.id.instant_request_enabled);
         layoutNoRequest = (LinearLayout) view.findViewById(R.id.instant_no_request);
@@ -42,7 +58,7 @@ public class InstantFragment extends Fragment {
         instantRequestBehaviour();
 
 
-        // fetchMessages();
+        fetchInstantRequests();
         return view;
     }
 
@@ -94,19 +110,57 @@ public class InstantFragment extends Fragment {
 
     }
 
-    private void fetchMessages() {
-        FriendRequester friendRequester = new FriendRequester();
-        friendRequester.getFriends(getActivity(), new FriendRequester.GetFriendCB() {
+    private void fetchInstantRequests() {
+        InstantRequester instantRequester = new InstantRequester();
+        instantRequester.getInstantRequests(getActivity(), new InstantRequester.InstantRequestCB() {
             @Override
-            public void getArrayFriends(ArrayList<String> arrayList, Boolean success) {
-                if (success) {
-
-
-                } else {
-
-                }
+            public void getArrayInstantRequest(ArrayList<InstantRequest> s, Boolean success) {
+                adapter.clear();
+                adapter.addAll(filterHelpRequests(s));
+                adapter.notifyDataSetChanged();
             }
         });
+
+    }
+
+    private ArrayList<InstantRequest> filterHelpRequests(ArrayList<InstantRequest> arrayList) {
+
+        //check if deamand is 5 minutes old
+        ArrayList<InstantRequest> arrayList2 = new ArrayList<>();
+        for (int i = 0; i < arrayList.size(); i++) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String startTime = arrayList.get(i).getCreatedAt();
+            Date date = new Date();
+            String nowTime = sdf.format(date);
+
+            try {
+                Date d1 = sdf.parse(startTime);
+                Date d2 = sdf.parse(nowTime);
+                //gmt+2
+                long elapsed = (d2.getTime() - d1.getTime() - 7200000)/1000;
+
+                if (elapsed < 5 * 60) {
+                    arrayList2.add(arrayList.get(i));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //check if demand contains user id
+        User user = new User();
+        ArrayList<InstantRequest> arrayList1 = new ArrayList<>();
+        for (int i = 0; i < arrayList2.size(); i++) {
+            String[] parts = arrayList2.get(i).getCloseUsers().split(",");
+            for (int j = 0; j < parts.length; j++) {
+                if (user.getUserId().matches(parts[j])) {
+                    arrayList1.add(arrayList2.get(i));
+                }
+            }
+        }
+
+        return arrayList1;
+
 
     }
 }

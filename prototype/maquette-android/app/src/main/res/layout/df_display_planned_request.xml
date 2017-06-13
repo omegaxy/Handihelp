@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,6 +69,12 @@
 
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/grey05"/>
 
             <TextView
                 android:id="@+id/textView15"
@@ -155,64 +162,68 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="TextView"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@color/grey05"
                 android:textSize="24sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+
+                <Button
+                    android:id="@+id/send_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/orange_button"
+                    android:gravity="center"
+                    android:text="Envoyer un message"
+                    android:textColor="@color/back1" />
+
+
+                <Button
+                    android:id="@+id/help_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/green_button"
+                    android:text="Aider"
+                    android:textColor="@color/back1" />
+
+                <Button
+                    android:id="@+id/delete_planned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color1"
+                    android:text="Supprimer "
+                    android:textColor="@color/grey05"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="0.5" />
+
+
         </LinearLayout>
 
 
     </ScrollView>
-
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
-
-
-        <Button
-            android:id="@+id/send_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/orange_button"
-            android:text="Envoyer un message"
-            android:textColor="@color/back1"
-            />
-
-
-
-        <Button
-            android:id="@+id/help_answer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/green_button"
-            android:textColor="@color/back1"
-            android:text="Aider"
-            />
-
-        <Button
-            android:id="@+id/delete_planned"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/color1"
-            android:text="Supprimer "
-            android:visibility="visible"
-            android:textColor="@color/grey05" />
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

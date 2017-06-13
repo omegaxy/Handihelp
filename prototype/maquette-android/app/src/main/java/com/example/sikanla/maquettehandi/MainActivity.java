@@ -20,20 +20,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.InstantFragment;
+import com.example.sikanla.maquettehandi.UI.Menu.MarkFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MyPlannedFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.NotificationFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.ParametersFragment;
 import com.example.sikanla.maquettehandi.UI.TabFragment;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
+import com.example.sikanla.maquettehandi.network.InstantRequester;
 import com.squareup.picasso.Picasso;
-
-import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView firstnameHeader;
@@ -50,13 +49,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         instantiateNavigationView();
         instantiateFAB();
         instantiateTabToolbarDrawer();
-        
-        launchFragment(new TabFragment(), "Accueil");
 
         ProtectedHuaweyApps protectedHuaweyApps = new ProtectedHuaweyApps();
         protectedHuaweyApps.ifHuaweiAlert(this);
         askGpsPermission();
 
+        notificationIntent();
+
+    }
+
+    private void notificationIntent() {
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+
+        if (menuFragment != null) {
+            // Here we can decide what do to -- perhaps load other parameters from the intent extras such as IDs, etc
+            if (menuFragment.equals("NotificationFragment")) {
+                prepareLayout();
+                navigationView.setCheckedItem(R.id.nav_notification);
+                launchFragment(new NotificationFragment(),"Planifié");
+            } else if (menuFragment.equals("InstantFragment")) {
+                prepareLayout();
+                navigationView.setCheckedItem(R.id.nav_notification);
+                launchFragment(new InstantFragment(),"Instantanée");
+            }
+        } else {
+            launchFragment(new TabFragment(), "Accueil");
+        }
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        askGpsPermission();
     }
 
     private void askGpsPermission() {
@@ -80,8 +105,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void fetchPosition() {
         GPSTracker gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
-            gps.getLongitude();
+            InstantRequester instantRequester= new InstantRequester();
+            instantRequester.updatePosition(getBaseContext(), String.valueOf(gps.getLongitude()), String.valueOf(gps.getLatitude()), new InstantRequester.InstantCB() {
+                @Override
+                public void onInstantCB(boolean success) {
+
+                }
+            });
         }
+        gps.stopUsingGPS();
 
     }
 
@@ -192,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            prepareLayout();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setCheckedItem(R.id.nav_settings);
             Fragment fragment = new ParametersFragment();
@@ -207,12 +240,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         if (!item.isChecked()) {
-            floatingActionButton.setVisibility(View.GONE);
+            prepareLayout();
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             Fragment fragment = new Fragment();
-
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
-            tabLayout.setVisibility(View.GONE);
 
             switch (item.getItemId()) {
                 case R.id.nav_accueil:
@@ -246,6 +276,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     fragment = new NotificationFragment();
                     break;
+
+                case R.id.nav_mark:
+                    navigationView.setCheckedItem(R.id.nav_mark);
+
+                    fragment = new MarkFragment();
+                    break;
             }
 
             launchFragment(fragment, item.getTitle().toString());
@@ -255,6 +291,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void prepareLayout() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mytabs);
+        tabLayout.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
     }
 
     private void launchFragment(Fragment fragment, String title) {

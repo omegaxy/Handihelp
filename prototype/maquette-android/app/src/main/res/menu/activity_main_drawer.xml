@@ -16,21 +16,24 @@
 
         <item
             android:id="@+id/nav_instant"
+            android:icon="@drawable/ic_instant"
             android:title="Instantané" />
 
         <item
             android:id="@+id/nav_notification"
-            android:icon="@drawable/ic_menu_notif"
+            android:icon="@drawable/ic_prog"
             android:title="Planifié" />
 
         <item
-            android:id="@+id/nav_history"
+
+            android:id="@+id/nav_mark"
             android:icon="@drawable/ic_menu_collection"
-            android:title="Mes Rencontres" />
+            android:title="Demandes à noter" />
+
 
         <item
             android:id="@+id/nav_myapplication"
-            android:icon="@drawable/ic_menu_demandes"
+            android:icon="@drawable/ic_menu_collection"
             android:title="Historique" />
     </group>
     <group

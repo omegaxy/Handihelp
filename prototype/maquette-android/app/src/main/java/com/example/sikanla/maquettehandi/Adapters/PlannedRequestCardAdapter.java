@@ -101,6 +101,7 @@ public class PlannedRequestCardAdapter extends ArrayAdapter<PlannedRequest> {
                 args.putString("id", plannedRequest.id);
                 args.putString("idPlanned",plannedRequest.idPlanned);
                 args.putString("description", plannedRequest.description);
+
                 answerPlan.setArguments(args);
 
                 answerPlan.show(context.getFragmentManager(), "answerPlanned");
