@@ -69,28 +69,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Aucune demandes autour de vous"
+            android:text="Aucune demande autour de vous"
             android:textColor="@color/grey05"
             android:textSize="20sp" />
 
         <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="Les demandes d'aide des autres personnes s'affichent ici"
             android:textColor="@color/grey05"
             android:textSize="16sp" />
 
-           </LinearLayout>
+        <ListView
+            android:id="@+id/fragment_instant_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -104,7 +104,7 @@ public class InstantRequester {
                         if (success) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                JSONArray jsonArray = new JSONArray(jsonObject.get("planned_requests").toString());
+                                JSONArray jsonArray = new JSONArray(jsonObject.get("instant_requests").toString());
 
                                 if (jsonObject.get("error").toString() == "false") {
                                     instantCB.getArrayInstantRequest(fromJson(jsonArray), true);

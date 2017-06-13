@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.Adapters.HelpSomeoneInstantAdapter;
+import com.example.sikanla.maquettehandi.Adapters.NotificationAdapter;
+import com.example.sikanla.maquettehandi.Model.InstantRequest;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
+import com.example.sikanla.maquettehandi.network.InstantRequester;
 
 import java.util.ArrayList;
 
@@ -30,10 +35,17 @@ public class InstantFragment extends Fragment {
     private TextView countDownTv;
     private LinearLayout layoutRequest, layoutNoRequest;
     private Button createInstantButt;
+    private ListView listView;
+    private HelpSomeoneInstantAdapter adapter;
 
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_instant_request, container, false);
+
+        adapter = new HelpSomeoneInstantAdapter(getActivity());
+        listView = (ListView) view.findViewById(R.id.fragment_instant_listview);
+        listView.setAdapter(adapter);
+
         countDownTv = (TextView) view.findViewById(R.id.count_down);
         layoutRequest = (LinearLayout) view.findViewById(R.id.instant_request_enabled);
         layoutNoRequest = (LinearLayout) view.findViewById(R.id.instant_no_request);
@@ -42,7 +54,7 @@ public class InstantFragment extends Fragment {
         instantRequestBehaviour();
 
 
-        // fetchMessages();
+        fetchInstantRequests();
         return view;
     }
 
@@ -94,17 +106,16 @@ public class InstantFragment extends Fragment {
 
     }
 
-    private void fetchMessages() {
-        FriendRequester friendRequester = new FriendRequester();
-        friendRequester.getFriends(getActivity(), new FriendRequester.GetFriendCB() {
+    private void fetchInstantRequests() {
+        InstantRequester instantRequester = new InstantRequester();
+        instantRequester.getInstantRequests(getActivity(), new InstantRequester.InstantRequestCB() {
             @Override
-            public void getArrayFriends(ArrayList<String> arrayList, Boolean success) {
-                if (success) {
+            public void getArrayInstantRequest(ArrayList<InstantRequest> s, Boolean success) {
+                adapter.clear();
+                adapter.addAll(s);
+                adapter.notifyDataSetChanged();
 
 
-                } else {
-
-                }
             }
         });
 
