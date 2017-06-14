@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:orientation="vertical"
-    android:background="@color/back1">
+    android:background="@color/back1"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Prénom"
-            android:textColor="@color/grey05"
             android:textAlignment="center"
+            android:textColor="@color/grey05"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/grey05"
             android:text="Age"
             android:textAlignment="center"
+            android:textColor="@color/grey05"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -86,8 +86,8 @@
         android:id="@+id/fp_relative2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/profileImageV2"
@@ -123,20 +123,23 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Commentaires"
-        android:textColor="@color/grey05"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/grey05"
         android:textStyle="bold" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/df_profile_lv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_height="match_parent">
+
+        </ListView>
+    </LinearLayout>
 
 
 </LinearLayout>

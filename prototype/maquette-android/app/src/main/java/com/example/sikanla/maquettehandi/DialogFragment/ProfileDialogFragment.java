@@ -11,14 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.sikanla.maquettehandi.Adapters.CommentsAdapter;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.network.FriendRequester;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
-import com.example.sikanla.maquettehandi.network.PlannedRequester;
 import com.example.sikanla.maquettehandi.network.UserRequester;
 import com.squareup.picasso.Picasso;
 
@@ -28,11 +30,13 @@ import java.util.ArrayList;
 
 public class ProfileDialogFragment extends DialogFragment {
 
-
+    private ListView listView;
+    private CommentsAdapter commentsAdapter;
     private View rootView;
     private TextView fistNameTv;
     private TextView ageTv;
     private ImageView imageViewPP, imageViewPP2;
+    private RatingBar ratingBar;
     private String id;
     private Button message, addFriend;
     private RelativeLayout relativeLayout1, relativeLayout2;
@@ -43,11 +47,12 @@ public class ProfileDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AnswerTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme);
 
-        rootView = inflater.inflate(R.layout.fragment_profile, null);
+        rootView = inflater.inflate(R.layout.df_profile, null);
         fistNameTv = (TextView) rootView.findViewById(R.id.firstnamedialog);
         ageTv = (TextView) rootView.findViewById(R.id.agedialog);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
 
         id = getArguments().getString("id");
@@ -163,7 +168,34 @@ public class ProfileDialogFragment extends DialogFragment {
                     }
                 });
 
+
+        listView = (ListView) rootView.findViewById(R.id.df_profile_lv);
+        commentsAdapter = new CommentsAdapter(getActivity());
+        listView.setAdapter(commentsAdapter);
+
+        fetchComments();
+
         return builder1.create();
+
+
+    }
+
+    private void fetchComments() {
+        UserRequester userRequester = new UserRequester();
+        userRequester.getRatings(getActivity(), id, new UserRequester.GetRatingsCB() {
+            @Override
+            public void getRatings(String ratings, ArrayList<String> comments, Boolean success) {
+                if (success) {
+                    ratingBar.setRating(Float.valueOf(ratings));
+
+                    commentsAdapter.clear();
+                    commentsAdapter.addAll(comments);
+                    commentsAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+        });
 
 
     }
@@ -177,4 +209,6 @@ public class ProfileDialogFragment extends DialogFragment {
         }
         return false;
     }
+
+
 }
