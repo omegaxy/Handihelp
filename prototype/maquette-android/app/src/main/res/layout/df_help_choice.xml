@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/planned_request_background"
+    android:layout_margin="20dp">
 
     <Button
         android:id="@+id/close_btn"
@@ -42,7 +44,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.5"
-                android:background="@color/oraaange"
+                android:background="@drawable/orange_button"
                 android:orientation="vertical">
 
                 <Button
@@ -72,7 +74,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.5"
-                android:background="@color/dd"
+                android:background="@drawable/green_button"
                 android:orientation="vertical">
 
                 <Button

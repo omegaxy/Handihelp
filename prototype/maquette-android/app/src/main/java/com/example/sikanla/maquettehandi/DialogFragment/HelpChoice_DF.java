@@ -30,7 +30,7 @@ public class HelpChoice_DF extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme2);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AnswerTheme3);
         rootView = inflater.inflate(R.layout.df_help_choice, null);
         buttonInstant = (Button) rootView.findViewById(R.id.help_choice_button_instant);
         buttonPlanned = (Button) rootView.findViewById(R.id.help_choice_button_planned);
