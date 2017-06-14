@@ -20,18 +20,15 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/close_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
-                    android:scaleX="3"
-                    android:scaleY="3"
-                    android:drawableLeft="@drawable/ic_help_prog_cross" />
+                    android:drawableLeft="@drawable/ic_help_prog_cross"/>
 
             </LinearLayout>
 
@@ -40,9 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Demande d'aide maintenant"
-                android:gravity="center"
+                android:textAlignment="center"
                 android:textColor="@color/grey05"
-                android:textSize="80sp" />
+                android:textSize="60sp" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -50,9 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:text="Type d'aide que vous souhaitez"
-                android:gravity="center"
+                android:textAlignment="center"
                 android:textColor="@color/grey05"
-                android:textSize="@dimen/titleSizeXL" />
+                android:textSize="@dimen/textSizeXL" />
 
             <Button
                 android:id="@+id/aidetype_btn"
@@ -67,27 +64,59 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:text="Votre position"
-                android:gravity="center"
+                android:textAlignment="center"
                 android:textColor="@color/grey05"
-                android:textSize="@dimen/titleSizeXL" />
+                android:textSize="@dimen/textSizeXL" />
 
             <TextView
                 android:id="@+id/position"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey05"
-                android:textSize="@dimen/textSizeXL"
-                android:background="@color/back2"
                 android:text="20 résidence AAA 10 avenue BBB" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/error_tv_fiA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:text="Position Non Trouvée"
+                android:textColor="@color/oraaange2"
+                android:textSize="@dimen/textSizeXL"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+
                 android:gravity="center">
 
             </LinearLayout>
 
+
+            <ProgressBar
+                android:id="@+id/progressBar_fiA"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageView_fiA2"
+                android:layout_width="60dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_checked" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -95,22 +124,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
                 android:text="Commentaires"
-                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/grey05"
-                android:textSize="@dimen/titleSizeXL" />
+                android:textSize="@dimen/textSizeXL" />
 
             <EditText
                 android:id="@+id/comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-
+                android:gravity="center"
                 android:hint="Saisissez un commentaire"
                 android:inputType="textPersonName|textMultiLine"
                 android:textColor="@color/grey05"
-                android:textSize="@dimen/textSizeXL"
-                android:textColorHint="@color/grey05" />
+                android:textColorHint="@color/grey05"
+                android:textSize="@dimen/textSizeXL"/>
 
             <Button
                 android:id="@+id/send_instant_request_btn"
@@ -119,7 +147,7 @@
                 android:layout_marginTop="60dp"
                 android:background="@color/oraaange"
                 android:text="Envoyer"
-                android:textSize="@dimen/titleSizeXL"
+                android:textSize="@dimen/textSizeXL"
                 android:textColor="@color/back1" />
 
 
