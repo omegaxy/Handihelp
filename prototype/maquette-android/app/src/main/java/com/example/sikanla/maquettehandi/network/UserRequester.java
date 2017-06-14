@@ -3,11 +3,14 @@ package com.example.sikanla.maquettehandi.network;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.Model.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +26,10 @@ public class UserRequester {
 
     public interface GetUserCB {
         void getUser(String firstName, String surname, String age, Boolean success);
+    }
+
+    public interface GetRatingsCB {
+        void getRatings(String ratings, ArrayList<String> comments, Boolean success);
     }
 
 
@@ -144,6 +151,80 @@ public class UserRequester {
 
                     }
                 });
+    }
+
+    private void getRatings(Context context, String userId, final GetRatingsCB getRatingsCB) {
+        User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.GET, parameters, headers, "/user/rating/" + userId, new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = new JSONArray(jsonObject.get("users").toString());
+
+                                if (jsonObject.get("error").toString() == "false") {
+                                    getRatingsCB.getRatings(getUserRating(jsonArray),
+                                            getUserComments(jsonArray), true);
+                                } else
+                                    getRatingsCB.getRatings(null, null, false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            getRatingsCB.getRatings(null, null, false);
+
+                        }
+                    }
+                });
+    }
+
+    // Factory method to convert an array of JSON objects into a list of objects
+    private String getUserRating(JSONArray jsonObjects) {
+        float sum = 0;
+        int count = 0;
+        User user = new User();
+
+        for (int i = 0; i < jsonObjects.length(); i++) {
+            try {
+                if (user.getUserId() == jsonObjects.getJSONObject(i).getString("id_helper")) {
+                    sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helper"));
+                    count+=1;
+                } else {
+                    sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helped"));
+                    count+=1;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return String.valueOf(sum/count);
+    }
+
+    private ArrayList<String> getUserComments(JSONArray jsonObjects) {
+        ArrayList<String> comments = new ArrayList<>();
+        User user = new User();
+
+        for (int i = 0; i < jsonObjects.length(); i++) {
+            try {
+                if (user.getUserId() == jsonObjects.getJSONObject(i).getString("id_helper")) {
+                    comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helper"));
+                } else {
+                    comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helped"));
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return comments;
     }
 
 
