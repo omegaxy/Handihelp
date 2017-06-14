@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.ResponsePlanned;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
@@ -81,6 +83,14 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
                         viewHolder.surname.setText(surname);
 
                     }
+                }
+            });
+
+            viewHolder.pictureContact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadProfile(responsePlanned.id_helper);
+
                 }
             });
 
@@ -198,5 +208,13 @@ public class DisplayResponsesAdapter extends ArrayAdapter<ResponsePlanned> {
             }
 
         });
+    }
+
+    private void loadProfile(String id) {
+        ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("id", id);
+        profileDialogFragment.setArguments(args);
+        profileDialogFragment.show(context.getFragmentManager(), "answerPlanned");
     }
 }
