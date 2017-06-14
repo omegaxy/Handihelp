@@ -139,4 +139,34 @@ public class InstantRequester {
         return instantRequests;
     }
 
+
+    public void respondInstant(Context context, String idHelped, String idRequest, final InstantCB instantCB) {
+        User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("id_request", idRequest);
+        parameters.put("id_helped", idHelped);
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/respondinstant", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString() == "false") {
+                                    instantCB.onInstantCB(true);
+                                } else
+                                    instantCB.onInstantCB(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            instantCB.onInstantCB(false);
+
+                        }
+                    }
+                });
+    }
+
 }
