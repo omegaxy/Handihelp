@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.Adapters.HelpSomeoneInstantAdapter;
-import com.example.sikanla.maquettehandi.Adapters.NotificationAdapter;
 import com.example.sikanla.maquettehandi.Model.InstantRequest;
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
 import com.example.sikanla.maquettehandi.UI.Activities.FormInstantRequestActi;
-import com.example.sikanla.maquettehandi.network.FriendRequester;
 import com.example.sikanla.maquettehandi.network.InstantRequester;
 
 import java.text.ParseException;
@@ -41,6 +38,11 @@ public class InstantFragment extends Fragment {
     private Button createInstantButt;
     private ListView listView;
     private HelpSomeoneInstantAdapter adapter;
+    private TextView textView;
+    private Thread t;
+    private InstantRequester instantRequester;
+
+    private ArrayList<InstantRequest> instantRequests;
 
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -54,11 +56,19 @@ public class InstantFragment extends Fragment {
         layoutRequest = (LinearLayout) view.findViewById(R.id.instant_request_enabled);
         layoutNoRequest = (LinearLayout) view.findViewById(R.id.instant_no_request);
         createInstantButt = (Button) view.findViewById(R.id.instant_create_instant);
+        textView = (TextView) view.findViewById(R.id.fragment_instant_textv);
+        instantRequests = new ArrayList<>();
+        instantRequester = new InstantRequester();
+
 
         instantRequestBehaviour();
 
 
         fetchInstantRequests();
+
+        refreshForInstantRequests();
+
+
         return view;
     }
 
@@ -111,13 +121,21 @@ public class InstantFragment extends Fragment {
     }
 
     private void fetchInstantRequests() {
-        InstantRequester instantRequester = new InstantRequester();
         instantRequester.getInstantRequests(getActivity(), new InstantRequester.InstantRequestCB() {
             @Override
             public void getArrayInstantRequest(ArrayList<InstantRequest> s, Boolean success) {
-                adapter.clear();
-                adapter.addAll(filterHelpRequests(s));
-                adapter.notifyDataSetChanged();
+                if (success) {
+                    adapter.clear();
+                    adapter.addAll(filterHelpRequests(s));
+                    adapter.notifyDataSetChanged();
+                    if (filterHelpRequests(s).size() > 0) {
+                        textView.setVisibility(View.GONE);
+
+                    } else {
+                        textView.setVisibility(View.VISIBLE);
+                    }
+                }
+
             }
         });
 
@@ -137,7 +155,7 @@ public class InstantFragment extends Fragment {
                 Date d1 = sdf.parse(startTime);
                 Date d2 = sdf.parse(nowTime);
                 //gmt+2
-                long elapsed = (d2.getTime() - d1.getTime() - 7200000)/1000;
+                long elapsed = (d2.getTime() - d1.getTime() - 7200000) / 1000;
 
                 if (elapsed < 5 * 60) {
                     arrayList2.add(arrayList.get(i));
@@ -163,4 +181,53 @@ public class InstantFragment extends Fragment {
 
 
     }
+
+    private synchronized void refreshForInstantRequests() {
+        t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(5000);
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    instantRequester.getInstantRequests(getActivity(), new InstantRequester.InstantRequestCB() {
+                                        @Override
+                                        public void getArrayInstantRequest(ArrayList<InstantRequest> s, Boolean success) {
+                                            if (success) {
+                                                if (instantRequests.size() != filterHelpRequests(s).size()) {
+                                                    instantRequests = filterHelpRequests(s);
+                                                    adapter.clear();
+                                                    adapter.addAll(filterHelpRequests(s));
+                                                    adapter.notifyDataSetChanged();
+                                                    if (filterHelpRequests(s).size() > 0) {
+                                                        textView.setVisibility(View.GONE);
+
+                                                    } else {
+                                                        textView.setVisibility(View.VISIBLE);
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+
+    }
+
 }
