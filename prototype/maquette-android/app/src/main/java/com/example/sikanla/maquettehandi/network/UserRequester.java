@@ -153,7 +153,7 @@ public class UserRequester {
                 });
     }
 
-    private void getRatings(Context context, String userId, final GetRatingsCB getRatingsCB) {
+    public void getRatings(Context context, final String userId, final GetRatingsCB getRatingsCB) {
         User user = new User();
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", user.getAPIKEY());
@@ -169,8 +169,8 @@ public class UserRequester {
                                 JSONArray jsonArray = new JSONArray(jsonObject.get("users").toString());
 
                                 if (jsonObject.get("error").toString() == "false") {
-                                    getRatingsCB.getRatings(getUserRating(jsonArray),
-                                            getUserComments(jsonArray), true);
+                                    getRatingsCB.getRatings(getUserRating(jsonArray, userId),
+                                            getUserComments(jsonArray, userId), true);
                                 } else
                                     getRatingsCB.getRatings(null, null, false);
                             } catch (JSONException e) {
@@ -185,38 +185,41 @@ public class UserRequester {
     }
 
     // Factory method to convert an array of JSON objects into a list of objects
-    private String getUserRating(JSONArray jsonObjects) {
+    private String getUserRating(JSONArray jsonObjects, String userId) {
         float sum = 0;
         int count = 0;
-        User user = new User();
 
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
-                if (user.getUserId() == jsonObjects.getJSONObject(i).getString("id_helper")) {
-                    sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helper"));
-                    count+=1;
+                if (userId.matches(jsonObjects.getJSONObject(i).getString("id_helper"))) {
+                    if (!jsonObjects.getJSONObject(i).getString("rating_given_helper").isEmpty()) {
+                        sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helper"));
+                        count += 1;
+                    }
                 } else {
-                    sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helped"));
-                    count+=1;
+                    if (!jsonObjects.getJSONObject(i).getString("rating_given_helped").isEmpty()) {
+                        sum += Float.parseFloat(jsonObjects.getJSONObject(i).getString("rating_given_helped"));
+                        count += 1;
+                    }
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return String.valueOf(sum/count);
+        return String.valueOf(sum / count);
     }
 
-    private ArrayList<String> getUserComments(JSONArray jsonObjects) {
+    private ArrayList<String> getUserComments(JSONArray jsonObjects, String userId) {
         ArrayList<String> comments = new ArrayList<>();
-        User user = new User();
 
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
-                if (user.getUserId() == jsonObjects.getJSONObject(i).getString("id_helper")) {
-                    comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helper"));
+                if (userId.matches(jsonObjects.getJSONObject(i).getString("id_helper"))) {
+                    if (!jsonObjects.getJSONObject(i).getString("comment_given_helper").isEmpty())
+                        comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helper"));
                 } else {
-                    comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helped"));
+                    if (!jsonObjects.getJSONObject(i).getString("comment_given_helped").isEmpty())
+                        comments.add(jsonObjects.getJSONObject(i).getString("comment_given_helped"));
 
                 }
 
