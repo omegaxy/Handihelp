@@ -25,9 +25,10 @@
             android:title="Planifié" />
 
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_encounter"
-            android:title="Mes Rencontres" />
+
+            android:id="@+id/nav_mark"
+            android:icon="@drawable/ic_star"
+            android:title="Demandes à noter" />
 
         <item
             android:id="@+id/nav_myapplication"
