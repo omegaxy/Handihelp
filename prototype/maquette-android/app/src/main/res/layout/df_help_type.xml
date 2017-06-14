@@ -57,7 +57,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type1"
-                android:text="Mobilité" />
+                android:text="Mobilité"
+                android:drawableLeft="@drawable/ic_helptype_car"/>
 
         </LinearLayout>
 
@@ -73,7 +74,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type2"
-                android:text="Vision" />
+                android:text="Vision"
+                android:drawableLeft="@drawable/ic_helptype_eye" />
 
         </LinearLayout>
 
@@ -89,7 +91,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type3"
-                android:text="Travaux manuels" />
+                android:text="Travaux manuels"
+                android:drawableLeft="@drawable/ic_helptype_work"/>
 
         </LinearLayout>
 
@@ -105,7 +108,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type4"
-                android:text="Tâches ménagères" />
+                android:text="Tâches ménagères"
+                android:drawableLeft="@drawable/ic_helptype_broom"/>
 
         </LinearLayout>
 
@@ -121,7 +125,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type5"
-                android:text="Force physique" />
+                android:text="Force physique"
+                android:drawableLeft="@drawable/ic_helptype_muscle"/>
 
         </LinearLayout>
 
@@ -137,7 +142,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type6"
-                android:text="Tâches techniques" />
+                android:text="Tâches techniques"
+                android:drawableLeft="@drawable/ic_helptype_printer"/>
 
         </LinearLayout>
 
@@ -153,7 +159,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type7"
-                android:text="Communication" />
+                android:text="Communication"
+                android:drawableLeft="@drawable/ic_helptype_braille"/>
 
         </LinearLayout>
 
@@ -169,7 +176,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type8"
-                android:text="administratives" />
+                android:text="administratives"
+                android:drawableLeft="@drawable/ic_helptype_paper"/>
 
         </LinearLayout>
 
@@ -185,7 +193,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type9"
-                android:text="Jardins" />
+                android:text="Jardins"
+                android:drawableLeft="@drawable/ic_helptype_grass"/>
 
         </LinearLayout>
 
@@ -201,7 +210,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type10"
-                android:text="Social" />
+                android:text="Social"
+                android:drawableLeft="@drawable/ic_helptype_communication"/>
 
         </LinearLayout>
 
@@ -217,7 +227,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:background="@color/type11"
-                android:text="Autres" />
+                android:text="Autres"
+                android:drawableLeft="@drawable/ic_helptype_other"/>
 
         </LinearLayout>
 
