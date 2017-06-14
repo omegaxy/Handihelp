@@ -5,12 +5,16 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sikanla.maquettehandi.Model.User;
 import com.example.sikanla.maquettehandi.R;
@@ -25,7 +29,6 @@ import com.squareup.picasso.Picasso;
 
 //TODO get benevole id for display name and photo
 //TODO send mark and comment to Server
-//TODO note + comment
 
 
 public class DisplayMarkDF extends DialogFragment {
@@ -34,7 +37,8 @@ public class DisplayMarkDF extends DialogFragment {
     private ImageView imageView1, imageView2;
     private String id, id2;
 
-    private RatingBar mark;
+    private RatingBar ratingBar;
+    private Button btnSubmit;
     private EditText commentaire;
 
 
@@ -55,8 +59,9 @@ public class DisplayMarkDF extends DialogFragment {
         surnameTv2 = (TextView) rootView.findViewById(R.id.surname2);
         imageView2 = (ImageView) rootView.findViewById(R.id.imageView2);
 
-        mark = (RatingBar) rootView.findViewById(R.id.note);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
         commentaire = (EditText) rootView.findViewById(R.id.commentaire);
+        btnSubmit = (Button) rootView.findViewById(R.id.btnSubmit);
 
         id = getArguments().getString("id");
 
@@ -85,6 +90,9 @@ public class DisplayMarkDF extends DialogFragment {
 
             }
         });
+
+
+        //TODO
 /*
         fistNameTv2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,91 +118,50 @@ public class DisplayMarkDF extends DialogFragment {
 */
 
         loadUserProfile();
+        //TODO
         //loadUser2Profile();
 
         User user = new User();
         final AlertDialog.Builder builder1 = builder.setView(rootView);
-/*
-        if(getArguments().getString("tomark").equals("true")){
-            displayMarkButttons();
-        }
-        else {
-            layout_mark.setVisibility(View.GONE);
-            //display buttons only if user is not yourself
-            if (!id.matches(user.getUserId())) {
-                deletePlannedButton.setVisibility(View.GONE);
-                sendMessage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SendMessageDialog sendMessageDialog = new SendMessageDialog();
-                        Bundle args = new Bundle();
-                        args.putString("firstname", fistNameTv.getText().toString());
-                        args.putString("id", id);
-                        sendMessageDialog.setArguments(args);
-                        sendMessageDialog.show(getActivity().getFragmentManager(), "displayPlanned");
 
-                    }
-                });
+        btnSubmit.setEnabled(false);
+        btnSubmit.setAlpha(0.5f);
 
+        addListenerOnRatingBar();
+        addListenerOnButton();
 
-                help.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AnswerPLannedDF answerPLannedDF = new AnswerPLannedDF();
-                        Bundle args = new Bundle();
-                        args.putString("idPlanned", getArguments().getString("idPlanned"));
-                        args.putString("id", id);
-                        answerPLannedDF.setArguments(args);
-                        answerPLannedDF.show(getActivity().getFragmentManager(), "answerPlanned");
-
-                    }
-                });
-
-            } else {
-                deletePlannedButton.setVisibility(View.VISIBLE);
-                deletePlannedButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setMessage("Supprimer la demande?");
-                        alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Annuler",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Supprimer", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                PlannedRequester plannedRequester = new PlannedRequester();
-                                plannedRequester.deletePlannedRequest(getActivity(), getArguments().getString("idPlanned"), new PlannedRequester.PostPlannedCB() {
-                                    @Override
-                                    public void onPlannedPosted(Boolean success) {
-                                        if (!success) {
-                                            Toast.makeText(getActivity(), "ERREUR", Toast.LENGTH_LONG).show();
-
-                                        } else {
-                                            dismiss();
-                                        }
-                                    }
-                                });
-
-                            }
-                        });
-                        alertDialog.show();
-                    }
-                });
-                help.setVisibility(View.GONE);
-                sendMessage.setVisibility(View.GONE);
-
-            }
-
-        } */
 
         return builder1.create();
+
     }
 
 
+    public void addListenerOnRatingBar() {
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                btnSubmit.setEnabled(true);
+                btnSubmit.setAlpha(1f);
+
+            }
+        });
+    }
+
+    public void addListenerOnButton() {
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO send mark and comment to Serve
+                //float : ratingBar.getRating()
+                //String : commentaire.getText().toString()
+
+            }
+
+        });
+
+    }
 
     private void loadProfile() {
         ProfileDialogFragment profileDialogFragment = new ProfileDialogFragment();

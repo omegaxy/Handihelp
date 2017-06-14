@@ -32,7 +32,8 @@
                         android:text="Aidé : "
                         android:textColor="@color/grey05"
                         android:textSize="19sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"/>
 
                 </LinearLayout>
 
@@ -58,6 +59,7 @@
                         android:id="@+id/surname1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:text="TextView"
                         android:textColor="@color/grey05"
@@ -101,7 +103,8 @@
                         android:text="Aidant : "
                         android:textColor="@color/grey05"
                         android:textSize="19sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"/>
 
                 </LinearLayout>
 
@@ -161,21 +164,23 @@
                 android:text="Note : "
                 android:textColor="@color/grey05"
                 android:textSize="19sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
 
-            <RatingBar
-                android:id="@+id/note"
-                style="@style/Widget.AppCompat.RatingBar.Indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:numStars="5" />
+
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="1.0"/>
+
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/textView33"
@@ -186,20 +191,34 @@
                 android:text="Commentaire : "
                 android:textColor="@color/grey05"
                 android:textSize="19sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
 
             <EditText
                 android:id="@+id/commentaire"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="Saisissez un commentaire"
                 android:inputType="textPersonName"
-                android:text="Saisissez un commentaire"
-                android:textSize="19sp" />
+                android:textSize="19sp"
+                android:layout_marginLeft="10dp"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="20dp" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/green_button"
+                android:text="Enregistrer"
+                android:textSize="17dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
         </LinearLayout>
 
