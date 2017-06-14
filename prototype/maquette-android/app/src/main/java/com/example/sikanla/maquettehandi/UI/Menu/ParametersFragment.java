@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.sikanla.maquettehandi.DialogFragment.DeleteAccountDF;
@@ -34,6 +36,7 @@ public class ParametersFragment extends Fragment {
     private Button uploadB, decoB, modifyPasswdBtt, deleteAccount;
     private ImageView imageView;
     private TextView myLocationText;
+    private Switch switch1;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +45,20 @@ public class ParametersFragment extends Fragment {
         modifyPasswdBtt = (Button) view.findViewById(R.id.parameter_modify_passwd);
         myLocationText = (TextView)view.findViewById(R.id.textView1);
         deleteAccount = (Button) view.findViewById(R.id.parameter_deleteAcc);
+        switch1 = (Switch) view.findViewById(R.id.switch1);
+
+        switch1.setChecked(true);
+        switch1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
+                if (bChecked) {
+                    switch1.setText("Oui");
+                } else {
+                    switch1.setText("Non");
+                }
+            }
+
+        });
 
         setUpDecoButton();
         loadImage(view);

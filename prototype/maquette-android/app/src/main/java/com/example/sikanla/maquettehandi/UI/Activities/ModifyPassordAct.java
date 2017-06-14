@@ -32,6 +32,9 @@ public class ModifyPassordAct extends AppCompatActivity {
         super.onCreate(savedInst);
         setContentView(R.layout.activ_modify_password_);
 
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(getResources().getColor(R.color.back1));
+
         oldPass = (EditText) findViewById(R.id.password_oldpass);
         newPass1 = (EditText) findViewById(R.id.password_new1);
         newPAss2 = (EditText) findViewById(R.id.password_new2);

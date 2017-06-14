@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/parameters_image"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="0.4"
@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/orange_button"
-                android:text="  Changer l'image  " />
+                android:text="  Changer l'image  "
+                android:textSize="@dimen/textSize"/>
 
             <Button
                 android:id="@+id/parameter_modify_passwd"
@@ -47,7 +48,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:background="@drawable/green_button"
-                android:text="  Modifier Mot de Passe  " />
+                android:text="  Modifier Mot de Passe  "
+                android:textSize="@dimen/textSize"/>
 
         </LinearLayout>
 
@@ -58,7 +60,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:background="@color/top" />
 
     <TextView
@@ -68,14 +70,14 @@
         android:layout_gravity="center"
         android:text="Disponible pour aider?"
         android:textColor="@color/grey05"
-        android:textSize="@dimen/textSize" />
+        android:textSize="@dimen/textSizeXL" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Oui"
         android:textColor="@color/white"
         android:textSize="@dimen/textSize" />
@@ -84,7 +86,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:background="@color/top" />
 
 
@@ -119,7 +121,8 @@
             android:background="@drawable/red_button"
             android:drawableLeft="@drawable/ic_cross"
             android:text="  Supprimer votre compte  "
-            android:textColor="@color/grey05" />
+            android:textColor="@color/grey05"
+            android:textSize="@dimen/textSize"/>
 
 
         <Button
@@ -129,7 +132,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/logout_button"
-            android:text="  Se déconnecter  " />
+            android:text="  Se déconnecter  "
+            android:textSize="@dimen/textSize"/>
 
 
     </LinearLayout>
