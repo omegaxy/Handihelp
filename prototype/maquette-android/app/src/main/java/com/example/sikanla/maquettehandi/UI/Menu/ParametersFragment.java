@@ -53,8 +53,12 @@ public class ParametersFragment extends Fragment {
         final SharedPreferences.Editor editor = prefs.edit();
         if (prefs.getBoolean("notif", true)) {
             switch1.setChecked(true);
+            switch1.setText("Oui");
+
         } else {
             switch1.setChecked(false);
+            switch1.setText("Non");
+
         }
 
 
