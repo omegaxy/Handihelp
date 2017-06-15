@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back1"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Notre Mission"
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/titleSizeXL" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="La mission de notre association est de faciliter le quotidien des personnes en situation de handicap, et par la même occasion de faciliter leurs insertions dans la société. Pour cela, l’association propose à ces personnes via ce site internet de poster des annonces et ainsi de pouvoir se faire aider dans leurs tâches."
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/textSize" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/top" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="100dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Qui sommes nous ?"
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/titleSizeXL" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Handifusion est une association de bénévoles. Nous avons décidé de moderniser notre activité en proposant un site internet qui permet de mettre en relation les bénévoles et les personnes qui ont besoin de leur aide plus efficacement. "
+                    android:textColor="@color/grey05"
+                    android:textSize="@dimen/textSize" />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

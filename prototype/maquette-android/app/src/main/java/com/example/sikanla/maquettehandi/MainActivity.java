@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.sikanla.maquettehandi.DialogFragment.HelpChoice_DF;
 import com.example.sikanla.maquettehandi.DialogFragment.ProfileDialogFragment;
 import com.example.sikanla.maquettehandi.Model.User;
+import com.example.sikanla.maquettehandi.UI.Menu.AboutFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.FriendsFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.InstantFragment;
 import com.example.sikanla.maquettehandi.UI.Menu.MarkFragment;
@@ -281,6 +282,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationView.setCheckedItem(R.id.nav_mark);
 
                     fragment = new MarkFragment();
+                    break;
+
+                case R.id.nav_propos:
+                    navigationView.setCheckedItem(R.id.nav_propos);
+                    fragment = new AboutFragment();
                     break;
             }
 
