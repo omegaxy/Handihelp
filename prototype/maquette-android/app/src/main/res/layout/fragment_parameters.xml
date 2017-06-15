@@ -65,8 +65,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:text="Disponible pour aider?"
+        android:gravity="center"
+        android:text="Disponible pour de l'aide instanée ?"
         android:textColor="@color/grey05"
         android:textSize="@dimen/textSize" />
 

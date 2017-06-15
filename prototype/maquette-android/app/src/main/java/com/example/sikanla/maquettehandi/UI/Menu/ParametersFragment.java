@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import com.example.sikanla.maquettehandi.identification.LoginActivity;
 import com.example.sikanla.maquettehandi.network.ImageRequester;
 import com.squareup.picasso.Picasso;
 
+import static com.example.sikanla.maquettehandi.Model.User.MY_PREFS_NAME;
+
 
 /**
  * Created by Sikanla on 20/05/2017.
@@ -43,18 +46,30 @@ public class ParametersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_parameters, container, false);
         decoB = (Button) view.findViewById(R.id.parameters_deco);
         modifyPasswdBtt = (Button) view.findViewById(R.id.parameter_modify_passwd);
-        myLocationText = (TextView)view.findViewById(R.id.textView1);
+        myLocationText = (TextView) view.findViewById(R.id.textView1);
         deleteAccount = (Button) view.findViewById(R.id.parameter_deleteAcc);
         switch1 = (Switch) view.findViewById(R.id.switch1);
+        SharedPreferences prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, User.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
+        if (prefs.getBoolean("notif", true)) {
+            switch1.setChecked(true);
+        } else {
+            switch1.setChecked(false);
+        }
 
-        switch1.setChecked(true);
-        switch1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
                 if (bChecked) {
                     switch1.setText("Oui");
+
+                    editor.putBoolean("notif", true);
+                    editor.apply();
                 } else {
                     switch1.setText("Non");
+                    editor.putBoolean("notif", false);
+                    editor.apply();
                 }
             }
 
@@ -74,13 +89,10 @@ public class ParametersFragment extends Fragment {
         deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DeleteAccountDF deleteAccountDF= new DeleteAccountDF();
-                deleteAccountDF.show(getActivity().getFragmentManager(),"delte");
+                DeleteAccountDF deleteAccountDF = new DeleteAccountDF();
+                deleteAccountDF.show(getActivity().getFragmentManager(), "delte");
             }
         });
-
-
-
 
 
         return view;
@@ -101,7 +113,7 @@ public class ParametersFragment extends Fragment {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Déconnection", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        User user = new  User();
+                        User user = new User();
                         //delete notification token from server, delete local settings
                         user.deleteAndroidIFromServer(getActivity());
                         user.deleteLocalUser(getActivity());
