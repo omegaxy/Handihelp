@@ -230,5 +230,38 @@ public class UserRequester {
         return comments;
     }
 
+    public void sendRating(Context context, String idRequest,String idHelped,
+                           String idRated, String comment,String rating, final UserRequestCB userRequestCB) {
+        final User user = new User();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", user.getAPIKEY());
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("id_helped", idHelped);
+        parameters.put("id_request", idRequest);
+        parameters.put("comment", comment);
+        parameters.put("rating", rating);
+        parameters.put("id_rated", idRated);
+        AllRequest.getInstance(context)
+                .sendRequest(AllRequest.POST, parameters, headers, "/user/rate", new AllRequest.CallBackConnector() {
+                    @Override
+                    public void CallBackOnConnect(String response, Boolean success) {
+                        if (success) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.get("error").toString().matches("false")) {
+                                    userRequestCB.onRequest(true);
+                                } else
+                                    userRequestCB.onRequest(false);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            userRequestCB.onRequest(false);
+
+                        }
+                    }
+                });
+    }
+
 
 }
