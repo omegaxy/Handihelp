@@ -1,3 +1,3 @@
-# epf-handi-help
+# Handihelp
 
 keep code private, contains API keys
